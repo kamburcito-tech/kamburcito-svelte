@@ -1,4 +1,5 @@
 <script>
+ import '../../styles/20-work.css';
 let workHeroCanvasWrap;
 
   const featuredProjects = [
@@ -9,8 +10,8 @@ let workHeroCanvasWrap;
     'A calming wellness website designed to feel trustworthy, clear, and approachable while guiding visitors toward services and next steps.',
   role: 'Design · Development',
   platform: 'WordPress',
-  image: '/images/spry-society-homepage-project.png',
-  link: '#',
+  image: '/images/work/spry-society-work-project.webp',
+  link: 'https://thesprysociety.com/',
   cta: 'Visit Website →'
 },
 { 
@@ -20,8 +21,8 @@ let workHeroCanvasWrap;
     'A professional law firm website focused on credibility, clear service pages, and a polished experience for potential clients.',
   role: 'Design · Development',
   platform: 'WordPress',
-  image: '/images/law-firm-work-project.webp',
-  link: '#',
+  image: '/images/work/law-firm-work-project.webp',
+  link: 'https://beccarvarela.com/en/',
   cta: 'Visit Website →'
 },
  {
@@ -31,7 +32,7 @@ let workHeroCanvasWrap;
         'A scientific eCommerce website built with WordPress and WooCommerce, designed to support a large product catalog, clear navigation, and a stronger buying experience.',
       role: 'Design · Development · WooCommerce',
       platform: 'WordPress / WooCommerce',
-      image: '/images/conductscience-homepage-project.webp',
+      image: '/images/work/conductscience-work-project.webp',
       link: 'https://conductscience.com/',
       cta: 'View Live Site →'
 },
@@ -42,7 +43,7 @@ let workHeroCanvasWrap;
         'An industrial services website with a cleaner structure, stronger positioning, and a more professional presentation for service-based leads.',
       role: 'Design · Development',
       platform: 'WordPress / Elementor',
-      image: '/images/surfaceworks-homepage-project-kamburcito.png',
+      image: '/images/work/surfaceworks-work-project.webp',
       link: 'https://surfaceworks.com/',
       cta: 'View Live Site →'
     },
@@ -53,7 +54,7 @@ let workHeroCanvasWrap;
         'Healthcare website support focused on visual consistency, content updates, and maintaining a polished user experience across key pages.',
       role: 'Website Support · Design Updates',
       platform: 'WordPress',
-      image: '/images/Shady-grove-fertility-homepage-project.webp',
+      image: '/images/work/shady-grove-fertility-work-project.webp',
       link: 'https://shadygrovefertility.com/',
       cta: 'View Live Site →'
     },
@@ -64,7 +65,7 @@ let workHeroCanvasWrap;
          'A legal services website built to make immigration support feel clear, organized, and easier for visitors to understand.',
       role: 'Design · Development',
       platform: 'WordPress',
-      image: '/images/law-firm-web-design-kamburcito-work.webp',
+      image: '/images/work/din-law-firm-work-project.webp',
       link: 'https://lawfirm.com/',
       cta: 'Visit Website →'
 },
@@ -75,62 +76,29 @@ let workHeroCanvasWrap;
         'A personal brand website with a strong editorial feel, designed to showcase creative work with a clean and memorable visual direction.',
       role: 'Design · Squarespace Build',
       platform: 'Squarespace',
-      image: '/images/takahiro-ogawa-homepage-project.webp',
+      image: '/images/work/takahiro-artist-work-project.webp',
       link: 'https://takahiroogawa.com/',
       cta: 'View Live Site →'
     },
     {
       eyebrow: 'Featured Project',
-      title: 'Cruelty-Free Kitty',
+      title: 'FemSculpt Cosmetic Gynecology',
       description:
-        'A cruelty-free beauty platform with editorial content and shopping-focused sections designed for a clear, useful browsing experience.',
-      role: 'Design · Content Site · Shop',
-      platform: 'WordPress',
-      image: '/images/cruelty-free-homepage-project.webp',
-      link: 'https://crueltyfreekitty.com/',
-      cta: 'View Live Site →'
-    },
-    {
-      eyebrow: 'Featured Project',
-      title: 'Hayward & Stott',
-      description:
-        'A luxury homeware eCommerce website with a refined product experience, strong visual presentation, and WooCommerce functionality.',
-      role: 'Design · Development · WooCommerce',
-      platform: 'WordPress / WooCommerce',
-      image: '/images/hayward-stott-homepage-project.webp',
-      link: 'https://haywardstott.com/',
-      cta: 'View Live Site →'
-    },
-    {
-      eyebrow: 'Featured Project',
-      title: 'Chicago Breast & Body',
-      description:
-        'A medical aesthetics website with a polished visual direction, service-focused structure, and a stronger patient-facing experience.',
+        'A polished healthcare website for a Chicago cosmetic gynecology practice, designed to present specialized treatments clearly and encourage private consultations.',
       role: 'Design · Development',
       platform: 'WordPress',
-      image: '/images/chicago-breast-homepage-project.webp',
-      link: 'https://chicagobreastandbody.com/',
+      image: '/images/work/femsculpt-work-project.webp',
+      link: 'https://femsculpt.com/',
       cta: 'View Live Site →'
     },
     {
       eyebrow: 'Featured Project',
-      title: 'Jamie Ann Hultgren',
+      title: 'Digital Coaching',
       description:
-        'A personal brand website built in Squarespace with a simple, professional layout designed to support credibility and connection.',
-      role: 'Design · Squarespace Build',
-      platform: 'Squarespace',
-      image: '/images/jamie-homepage-project.webp',
-      link: 'https://jamieannhultgren.com/',
-      cta: 'View Live Site →'
-    },
-    {
-      eyebrow: 'Featured Project',
-      title: 'Find a Therapist',
-      description:
-        'A mental health directory website designed to help users browse providers, understand services, and find support more easily.',
-      role: 'Design · Development · Directory',
-      platform: 'WordPress',
-      image: '/images/find-a-therapist-work-project.webp',
+        'A calm, conversion-focused Webflow website for a digital coaching brand, designed to build trust, explain its services clearly, and encourage potential clients to connect.',
+      role: 'Design · Development',
+      platform: 'Webflow',
+      image: '/images/work/lark-work-project.webp',
       link: 'https://www.claritytherapynyc.com/',
       cta: 'View Live Site →'
     }
@@ -138,12 +106,33 @@ let workHeroCanvasWrap;
 </script>
 
 <svelte:head>
-  <title>Work | Kamburcito Studio</title>
+  <title>Selected Website Projects | Kamburcito Studio</title>
+
   <meta
     name="description"
-    content="Selected websites, redesigns, online stores, and creative builds by Kamburcito Studio."
+    content="Explore selected websites, redesigns, e-commerce projects, and digital experiences created by Kamburcito Studio."
   />
+
+  <link rel="canonical" href="https://kamburcito.com/work/" />
+
+  <meta property="og:type" content="website" />
+  <meta
+    property="og:title"
+    content="Selected Website Projects | Kamburcito Studio"
+  />
+  <meta
+    property="og:description"
+    content="A collection of custom websites, redesigns, stores, and digital experiences for real businesses."
+  />
+  <meta property="og:url" content="https://kamburcito.com/work/" />
+  <meta
+    property="og:image"
+    content="https://kamburcito.com/images/kamburcito-work-social-preview.jpg"
+  />
+
+  <meta name="twitter:card" content="summary_large_image" />
 </svelte:head>
+
 <section class="work-page-hero">
   <div class="wide-container work-hero-inner">
     <p class="eyebrow">Kamburcito</p>
@@ -220,7 +209,7 @@ let workHeroCanvasWrap;
       </p>
 
       <div class="cta-actions">
-        <a href="/get-started" class="btn btn-secondary">Start a Project</a>        
+        <a href="/get-started" class="btn btn-primary">Start a Project</a>        
       </div>
     </div>
   </div>

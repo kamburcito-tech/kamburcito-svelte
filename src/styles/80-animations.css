@@ -1,0 +1,51 @@
+/* ================================
+   Animations
+================================ */
+
+@keyframes slideLeft {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(calc(-50% - 12px));
+  }
+}
+
+@keyframes testimonialScroll {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(-50%);
+  }
+}
+
+@keyframes floatLogo {
+  0% {
+    transform: translateY(0) rotate(-1deg);
+  }
+
+  50% {
+    transform: translateY(-16px) rotate(1deg);
+  }
+
+  100% {
+    transform: translateY(0) rotate(-1deg);
+  }
+}
+
+@keyframes liquidMorph {
+  0% {
+    border-radius: 43% 57% 62% 38% / 45% 41% 59% 55%;
+  }
+
+  50% {
+    border-radius: 58% 42% 38% 62% / 52% 61% 39% 48%;
+  }
+
+  100% {
+    border-radius: 43% 57% 62% 38% / 45% 41% 59% 55%;
+  }
+}

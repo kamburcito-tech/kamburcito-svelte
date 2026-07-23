@@ -1,4 +1,6 @@
 <script>
+import '../../styles/40-quote.css';
+
   const purposeOptions = [
     'Get leads or inquiries',
     'Allow customers to book appointments',
@@ -135,11 +137,31 @@
 </script>
 
 <svelte:head>
-  <title>Get Started | Kamburcito Studio</title>
+  <title>Request a Website Quote | Kamburcito Studio</title>
+
   <meta
     name="description"
-    content="Tell Kamburcito Studio about your website project and get a custom proposal."
+    content="Tell Kamburcito Studio about your website project and receive a personalized proposal based on your goals and scope."
   />
+
+  <link rel="canonical" href="https://kamburcito.com/get-started/" />
+
+  <meta property="og:type" content="website" />
+  <meta
+    property="og:title"
+    content="Request a Website Quote | Kamburcito Studio"
+  />
+  <meta
+    property="og:description"
+    content="Share your project details and receive a personalized website proposal."
+  />
+  <meta property="og:url" content="https://kamburcito.com/get-started/" />
+  <meta
+    property="og:image"
+    content="https://kamburcito.com/images/kamburcito-social-preview.jpg"
+  />
+
+  <meta name="twitter:card" content="summary_large_image" />
 </svelte:head>
 
 <section class="quote-page">

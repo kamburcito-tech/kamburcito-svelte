@@ -3,8 +3,94 @@
   import * as THREE from 'three';
   import LiquidMetal from '$lib/components/LiquidMetal.svelte';
   import TextureHoverImage from '$lib/components/TextureHoverImage.svelte';
+   import '../styles/10-homepage.css';
+  import '../styles/90-homepage-responsive.css';
 
-  
+  const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'ProfessionalService',
+      '@id': 'https://kamburcito.com/#business',
+      name: 'Kamburcito Studio',
+      url: 'https://kamburcito.com/',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://kamburcito.com/images/kamburcito-logo.webp'
+      },
+      image: 'https://kamburcito.com/images/kamburcito-social-preview.webp',
+      description:
+        'Kamburcito Studio is a creative web design and development studio creating distinctive, responsive websites for small businesses and growing brands.',
+      founder: {
+        '@id': 'https://kamburcito.com/#patricia-diaz'
+      },
+      areaServed: {
+        '@type': 'Place',
+        name: 'Worldwide'
+      },
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Buenos Aires',
+        addressCountry: 'AR'
+      },
+      knowsAbout: [
+        'Web Design',
+        'Web Development',
+        'Website Redesign',
+        'Responsive Web Design',
+        'WordPress Development',
+        'SvelteKit Development',
+        'E-commerce Website Design',
+        'On-page SEO'
+      ]
+    },
+    {
+      '@type': 'Person',
+      '@id': 'https://kamburcito.com/#patricia-diaz',
+      name: 'Patricia Diaz',
+      url: 'https://kamburcito.com/',
+      jobTitle: 'Web Designer and Developer',
+      worksFor: {
+        '@id': 'https://kamburcito.com/#business'
+      },
+      knowsAbout: [
+        'Web Design',
+        'Front-end Development',
+        'WordPress',
+        'SvelteKit',
+        'Tailwind CSS',
+        'Responsive Web Design',
+        'Website Performance',
+        'On-page SEO'
+      ]
+    },
+    {
+      '@type': 'WebSite',
+      '@id': 'https://kamburcito.com/#website',
+      url: 'https://kamburcito.com/',
+      name: 'Kamburcito Studio',
+      description:
+        'Creative web design and development for small businesses and growing brands.',
+      publisher: {
+        '@id': 'https://kamburcito.com/#business'
+      },
+      inLanguage: ['en', 'es']
+    },
+    {
+      '@type': 'WebPage',
+      '@id': 'https://kamburcito.com/#webpage',
+      url: 'https://kamburcito.com/',
+      name: 'Creative Web Design & Development Studio | Kamburcito Studio',
+      isPartOf: {
+        '@id': 'https://kamburcito.com/#website'
+      },
+      about: {
+        '@id': 'https://kamburcito.com/#business'
+      },
+      inLanguage: 'en'
+    }
+  ]
+};
 
 let canvas;
 let manifestoSection;
@@ -76,49 +162,49 @@ function handleStudioKeydown(event) {
     title: 'NC Builders',
     subtitle: 'Construction Company',
     status: 'In progress',
-    image: '/images/working-on-construction-company-kamburcito.webp'
+    image: '/images/working_on/nc-builders-working-on-homepage.webp'
   },
    {
     title: 'Petra Valdez',
     subtitle: 'Jewelry & Accesories Store',
     status: 'In Development',
-    image: '/images/petra-valdez-web-store-kamburcito-studio.webp'
+    image: '/images/working_on/petra-valdez-working-on-homepage.webp'
   },
   {
     title: 'Casa Nido',
     subtitle: 'Real State Agency',
     status: 'In progress',
-    image: '/images/casa-nido-workingon-kamburcito-studio.webp'
+    image: '/images/working_on/casa-nido-working-on-homepage.webp'
   },
   {
     title: 'Luma Studio',
     subtitle: 'Home Decor Store',
     status: 'In progress',
-    image: '/images/luma-studio-working-on-kamburcito.webp'
+    image: '/images/working_on/luma-studio-working-on-homepage.webp'
   },
   {
     title: 'Financial Consultant Website',
     subtitle: 'Financial Advisor ',
     status: 'In progress',
-    image: '/images/financial-advisor-working-on-kamburcito.webp'
+    image: '/images/working_on/financial-advisor-working-on-homepage.webp'
   },
   {
     title: 'Brunch & Bloom',
     subtitle: 'Cafe & Brunch Spot',
     status: 'In progress',
-    image: '/images/coffe-working-on-kamburcito.webp'
+    image: '/images/working_on/brunch-and-bloom-working-on-homepage.webp'
   },
   {
     title: 'Golden District Partners',
     subtitle: 'B2B Consulting Firm',
     status: 'In progress',
-    image: '/images/golden-district-working-on-kamburcito.webp'
+    image: '/images/working_on/golden-district-partners-working-on-homepage.webp'
   },
   {
     title: 'Beach Bites Club',
     subtitle: 'Beach Bar & Restaurant',
     status: 'In progress',
-    image: '/images/beach-bites-club-working-on-kamburcito.webp'
+    image: '/images/working_on/beach-bites-club-working-on-homepage.webp'
   }
 ];
 
@@ -148,50 +234,49 @@ function handleStudioKeydown(event) {
     accent: 'gold'
   }
 ];
-  
 
   const projects = [
     {
       title: 'Conduct Science',
       type: 'Scientific E-Commerce',
       stack: 'WordPress / WooCommerce',
-      image: '/images/conductscience-homepage-project.webp',
+      image: '/images/projects/conductscience-homepage-projects.webp',
       url: 'https://conductscience.com'
     },
     {
       title: 'Shady Grove Fertility',
       type: 'Healthcare Website',
       stack: 'WordPress / Custom Design',
-      image: '/images/Shady-grove-fertility-homepage-project.webp',
+      image: '/images/projects/sgf-homepage-project.webp',
       url: 'https://shadygrovefertility.com'
-    },
-    {
-      title: 'Free Bunni',
-      type: 'Beauty & Wellness',
-      stack: 'WordPress / E-Commerce',
-      image: '/images/free-bunni-homepage-project.webp',
-      url: 'https://freebunni.com'
     },
     {
       title: 'Cruelty-Free Kitty',
       type: 'Editorial + Shop',
       stack: 'WordPress / Content Site',
-      image: '/images/cruelty-free-homepage-project.webp',
+      image: '/images/projects/cruelty-free-homepage-projects.webp',
       url: 'https://crueltyfreekitty.com'
     },
     {
       title: 'SurfaceWorks',
       type: 'Service Business',
       stack: 'WordPress / Redesign',
-      image: '/images/surfaceworks-homepage-project-kamburcito.png',
+      image: '/images/projects/surfaceworks-homepage-project.webp',
       url: 'https://surfaceworks.com'
     },
     {
       title: 'Takahiro Ogawa',
       type: 'Creative Portfolio',
       stack: 'Squarespace / Design',
-      image: '/images/takahiro-ogawa-homepage-project.webp',
+      image: '/images/projects/takahiro-artist-homepage-project.webp',
       url: 'https://takahiroogawa.com'
+    },
+    {
+      title: 'Digital Coaching',
+      type: 'Coaching Website',
+      stack: 'Webflow/ Redesign & Dev',
+      image: '/images/projects/lark-homepage-project.webp',
+      url: 'https://www.lark.com/'
     }
   ];
 
@@ -224,105 +309,105 @@ function handleStudioKeydown(event) {
   {
     name: 'Maya Thompson',
     role: 'Founder, Bloom Wellness Studio',
-     image: '/images/Maya-testimonial-kamburcito-studio.webp',
+     image: '/images/testimonials/Maya-testimonials-homepage.webp',
     quote:
       'Patricia made the whole website process feel easy. I came in with a messy idea, and she turned it into a polished site that feels calm, professional, and totally aligned with my brand.'
   },
   {
     name: 'Daniel Rivera',
     role: 'Creative Director, Rivera Studio',
-    image: '/images/daniel-testimonial-kamburcito-studio.webp',
+    image: '/images/testimonials/daniel-testimonials-homepage.webp',
     quote:
       'My portfolio finally looks like the level of work I actually do. The design feels modern, confident, and memorable without being overcomplicated.'
   },
   {
     name: 'Aisha Bennett',
     role: 'Owner, Kind Roots Café',
-    image: '/images/aisha-testimonial-kamburcito-studio.webp',
+    image: '/images/testimonials/aisha-testimonials-homepage.webp',
     quote:
       'I needed a website that felt warm and easy to use. Kamburcito Studio gave me something beautiful, clear, and ready to share with customers.'
   },
   {
     name: 'Lucas Morgan',
     role: 'Real Estate Consultant',
-    image: '/images/lucas-testimonial-kamburcito-studio.webp',
+    image: '/images/testimonials/lucas-testimonials-homepage.webp',
     quote:
       'The site feels more premium than I expected. It helped me present my services clearly and gave my business a much stronger first impression.'
   },
   {
     name: 'Sofia Herrera',
     role: 'Founder, Casa Nido Realty',
-    image: '/images/sofia-testimonial-kamburcito-studio.webp',
+    image: '/images/testimonials/sofia-testimonials-homepage.webp',
     quote:
       'Patricia understood the feeling I wanted right away. The website feels editorial, trustworthy, and elegant — exactly what I needed for my brand.'
   },
   {
     name: 'Ethan Brooks',
     role: 'Business Coach',
-    image: '/images/ethan-testimonial-kamburcito-studio.webp',
+    image: '/images/testimonials/ethan-testimonials-homepage.webp',
     quote:
       'I finally have a website that explains what I do without overwhelming people. The structure, copy flow, and design all feel intentional.'
   },
   {
     name: 'Nadia Rahman',
     role: 'Jewelry Designer, Noura Atelier',
-    image: '/images/nadia-testimonial-kamburcito-studio.webp',
+    image: '/images/testimonials/nadia-testimonials-homepage.webp',
     quote:
       'The visual direction was stunning. My products feel more elevated online now, and the whole site feels like a real brand experience.'
   },
   {
     name: 'Mateo Collins',
     role: 'Founder, Northline Builders',
-    image: '/images/mateo-testimonial-kamburcito-studio.webp',
+    image: '/images/testimonials/mateo-testimonials-homepage.webp',
     quote:
       'Our old website felt outdated and forgettable. The new direction feels sharp, trustworthy, and much more aligned with the kind of clients we want.'
   },
   {
     name: 'Isabella Chen',
     role: 'Marketing Consultant',
-    image: '/images/isabella-testimonial-kamburcito-studio.webp',
+    image: '/images/testimonials/isabella-testimonials-homepage.webp',
     quote:
       'Kamburcito Studio brought clarity to everything. The final site feels strategic, polished, and easy for potential clients to understand.'
   },
   {
     name: 'Julian Carter',
     role: 'Photographer',
-    image: '/images/julian-testimonial-kamburcito-studio.webp',
+    image: '/images/testimonials/julian-testimonials-homepage.webp',
     quote:
       'I wanted a portfolio that didn’t feel generic. Patricia created something clean, bold, and visual without distracting from my work.'
   },
   {
     name: 'Amara Lewis',
     role: 'Founder, The Soft Space',
-    image: '/images/amara-testimonial-kamburcito-studio.webp',
+    image: '/images/testimonials/amara-testimonials-homepage.webp',
     quote:
       'The website feels exactly like my brand: soft, modern, and professional. I felt supported through the whole process.'
   },
   {
     name: 'Noah Bennett',
     role: 'SaaS Founder',
-    image: '/images/noah-testimonial-kamburcito-studio.webp',
+    image: '/images/testimonials/noah-testimonials-homepage.webp',
     quote:
       'The landing page helped us explain our product much more clearly. It looks polished, loads fast, and feels more credible.'
   },
   {
     name: 'Camila Torres',
     role: 'Beauty Brand Founder',
-    image: '/images/camila-testimonial-kamburcito-studio.webp',
+    image: '/images/testimonials/camila-testimonials-homepage.webp',
     quote:
       'I loved how thoughtful the design process was. The final website feels elevated, feminine, and easy to shop.'
   },
   {
     name: 'Owen Mitchell',
     role: 'Founder, Golden District Partners',
-    image: '/images/owen-testimonial-kamburcito-studio.webp',
+    image: '/images/testimonials/owen-testimonials-homepage.webp',
     quote:
       'The site gave our consulting brand the credibility it was missing. It feels professional without feeling cold or corporate.'
   },
   {
     name: 'Leila Martins',
     role: 'Interior Designer',
-    image: '/images/leila-testimonial-kamburcito-studio.webp',
+    image: '/images/testimonials/leila-testimonials-homepage.webp',
     quote:
       'My website finally feels like my design style. It is elegant, spacious, and easy for clients to browse.'
   },
@@ -557,13 +642,48 @@ function handleStudioKeydown(event) {
 </script>
 
 <svelte:head>
-  <title>Kamburcito Studio | Web Design & Digital Experiences</title>
+  <title>
+    Creative Web Design & Development Studio | Kamburcito Studio
+  </title>
+
   <meta
     name="description"
-    content="Kamburcito Studio designs and builds modern websites, digital experiences, and creative online identities for brands and small businesses."
+    content="Kamburcito Studio designs and develops distinctive, responsive websites for small businesses and growing brands worldwide."
   />
-</svelte:head>
 
+  <link rel="canonical" href="https://kamburcito.com/" />
+
+  <meta property="og:type" content="website" />
+  <meta
+    property="og:title"
+    content="Creative Web Design & Development Studio | Kamburcito Studio"
+  />
+  <meta
+    property="og:description"
+    content="Distinctive websites, thoughtful design, and modern development for small businesses and growing brands."
+  />
+  <meta property="og:url" content="https://kamburcito.com/" />
+  <meta
+    property="og:image"
+    content="https://kamburcito.com/images/kamburcito-social-preview.webp"
+  />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta
+    name="twitter:title"
+    content="Creative Web Design & Development Studio | Kamburcito Studio"
+  />
+  <meta
+    name="twitter:description"
+    content="Distinctive websites, thoughtful design, and modern development for small businesses and growing brands."
+  />
+  <meta
+    name="twitter:image"
+    content="https://kamburcito.com/images/kamburcito-social-preview.webp"
+  />
+
+  {@html `<script type="application/ld+json">${JSON.stringify(structuredData)}</script>`}
+</svelte:head>
 <div class="liquid-cursor"></div>
 
 <main>
@@ -576,8 +696,8 @@ function handleStudioKeydown(event) {
       </div>
 
       <h1>
-        We design and develop 
-        <span>really good websites.</span>
+        We design and build really
+        <span>good websites.</span>
       </h1>
 
       <p class="hero-text">
@@ -598,7 +718,10 @@ function handleStudioKeydown(event) {
   </div>
 
  <div class="hero-right">
-  <TextureHoverImage src="/images/kamburcito-hero-2-js.webp" fit="cover" />
+  <TextureHoverImage
+    src="/images/hero/kamburcito-hero-desktop.webp"
+    fit="cover"
+  />
 </div>
 </section>
 <section id="studio" class="section studio-section studio-work-section">
@@ -781,17 +904,89 @@ function handleStudioKeydown(event) {
 </div>
 </section>
 
+<section
+  id="about"
+  class="about-studio"
+  aria-labelledby="about-studio-title"
+>
+  <div class="about-studio__container">
+    <div class="about-studio__content">
+      <p class="about-studio__eyebrow">About</p>
+
+      <h2 id="about-studio-title" class="about-studio__title">
+        Kamburcito Studio is a boutique website studio founded by Patricia Diaz.
+      </h2>
+
+      <div class="about-studio__description">
+        <p>
+          Kamburcito Studio is founder-led end to end, so strategy,
+          branding, design, and development stay closely aligned from
+          kickoff to launch. You work directly with Patty throughout the
+          project, with clear communication, creative collaboration, and
+          direct input every step of the way.
+        </p>
+
+        <p>
+          Patty’s focus is simple: create websites that build trust quickly
+          and help businesses grow with confidence. Every engagement is
+          custom-scoped, performance-focused, and designed to deliver a
+          digital presence that is both beautiful and effective.
+        </p>
+      </div>
+
+      <dl class="about-studio__stats" aria-label="Kamburcito Studio experience">
+        <div class="about-studio__stat">
+          <dt>6+ years</dt>
+          <dd>Founder-led experience</dd>
+        </div>
+
+        <div class="about-studio__stat">
+          <dt>50+ launches</dt>
+          <dd>Websites delivered</dd>
+        </div>
+
+        <div class="about-studio__stat">
+          <dt>100%</dt>
+          <dd>Direct collaboration</dd>
+        </div>
+      </dl>
+    </div>
+
+    <figure class="about-studio__visual">
+  <picture>
+    <source
+      srcset="
+        /images/about/about-homepage-patricia.avif 600w,
+        /images/about/about-homepage-patricia-1200.avif 1200w
+      "
+      sizes="(max-width: 900px) 92vw, 42vw"
+    />
+
+    <img
+      class="about-studio__image"
+      src="/images/about/about-homepage-patricia-1200.avif"
+      width="1200"
+      height="1200"
+      alt="Patricia Diaz, founder of Kamburcito Studio"
+      loading="lazy"
+      decoding="async"
+    />
+  </picture>
+</figure>
+  </div>
+</section>
+
  <section bind:this={manifestoSection} class="manifesto-section">
   <canvas bind:this={canvas} id="hero-webgl"></canvas>
 
   <div class="manifesto-content">
     <h2>
-      Your website should do more than look good. It should help people choose you.
+      Build trust. Win clients.
     </h2>
 
     <a
       href="/pricing"
-      class="btn btn-secondary manifesto-pricing-button"
+      class="btn btn-primary manifesto-pricing-button"
     >
       View Pricing
     </a>
@@ -814,7 +1009,7 @@ function handleStudioKeydown(event) {
       </p>
 
       <div class="cta-actions">
-        <a href="/get-started" class="btn btn-secondary">Get a Quote</a>
+        <a href="/get-started" class="btn btn-primary">Get a Quote</a>
         <a href="/work" class="btn btn-secondary">View Selected Work</a>
       </div>
     </div>

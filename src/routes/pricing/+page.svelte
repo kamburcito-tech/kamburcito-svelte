@@ -1,9 +1,33 @@
+<script>
+  import '../../styles/30-pricing.css';
+</script>
+
 <svelte:head>
-  <title>Pricing | Kamburcito Studio</title>
+  <title>Website Packages & Pricing | Kamburcito Studio</title>
+
   <meta
     name="description"
-    content="Flexible website pricing for brands, creatives, and small businesses. We shape the smartest scope around your budget and goals."
+    content="Explore flexible website packages for small businesses, including custom web design, website redesigns, and development."
   />
+
+  <link rel="canonical" href="https://kamburcito.com/pricing/" />
+
+  <meta property="og:type" content="website" />
+  <meta
+    property="og:title"
+    content="Website Packages & Pricing | Kamburcito Studio"
+  />
+  <meta
+    property="og:description"
+    content="Flexible website packages designed around your business, goals, and project scope."
+  />
+  <meta property="og:url" content="https://kamburcito.com/pricing/" />
+  <meta
+    property="og:image"
+    content="https://kamburcito.com/images/kamburcito-pricing-social-preview.jpg"
+  />
+
+  <meta name="twitter:card" content="summary_large_image" />
 </svelte:head>
 
 <section class="pricing-hero">
