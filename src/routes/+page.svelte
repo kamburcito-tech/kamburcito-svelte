@@ -3,8 +3,31 @@
   import * as THREE from 'three';
   import LiquidMetal from '$lib/components/LiquidMetal.svelte';
   import TextureHoverImage from '$lib/components/TextureHoverImage.svelte';
-   import '../styles/10-homepage.css';
+  import '../styles/10-homepage.css';
   import '../styles/90-homepage-responsive.css';
+  import conductScienceImage from '$lib/assets/projects/conductscience-homepage-projects.webp?enhanced&w=960;640;400';
+  import sgfImage from '$lib/assets/projects/sgf-homepage-project.webp?enhanced&w=623;400';
+  import crueltyFreeImage from '$lib/assets/projects/cruelty-free-homepage-projects.webp?enhanced&w=960;640;400';
+  import surfaceWorksImage from '$lib/assets/projects/surfaceworks-homepage-project.webp?enhanced&w=623;400';
+  import takahiroImage from '$lib/assets/projects/takahiro-artist-homepage-project.webp?enhanced&w=960;640;400';
+  import larkImage from '$lib/assets/projects/lark-homepage-project.webp?enhanced&w=960;640;400';
+  import ncBuildersImage from '$lib/assets/working_on/nc-builders-working-on-homepage.webp?enhanced&w=500;360';
+  import financialAdvisorImage from '$lib/assets/working_on/financial-advisor-working-on-homepage.webp?enhanced&w=500;360';
+  import casaNidoImage from '$lib/assets/working_on/casa-nido-working-on-homepage.webp?enhanced&w=736;500;360';
+  import lumaStudioImage from '$lib/assets/working_on/luma-studio-working-on-homepage.webp?enhanced&w=500;360';
+  import brunchBloomImage from '$lib/assets/working_on/brunch-and-bloom-working-on-homepage.webp?enhanced&w=500;360';
+  import goldenDistrictImage from '$lib/assets/working_on/golden-district-partners-working-on-homepage.webp?enhanced&w=500;360';
+  import beachBitesImage from '$lib/assets/working_on/beach-bites-club-working-on-homepage.webp?enhanced&w=500;360';
+  import petraValdezImage from '$lib/assets/working_on/petra-valdez-working-on-homepage.webp?enhanced&w=500;360';
+  import aboutImage from '$lib/assets/about/patricia-diaz-kamburcito-web-developer-about.webp?enhanced&w=500;360';
+  let canvas;
+  let manifestoSection;
+  let heroSection;
+  let heroIntro;
+  let heroWindow;
+  let heroContent;
+  let heroBackground;
+  let heroDarkness;
 
   const structuredData = {
   '@context': 'https://schema.org',
@@ -91,9 +114,6 @@
     }
   ]
 };
-
-let canvas;
-let manifestoSection;
 let audioContext;
   
 let dragCursorVisible = $state(false);
@@ -161,51 +181,51 @@ function handleStudioKeydown(event) {
   {
     title: 'NC Builders',
     subtitle: 'Construction Company',
-    status: 'In progress',
-    image: '/images/working_on/nc-builders-working-on-homepage.webp'
-  },
-   {
-    title: 'Petra Valdez',
-    subtitle: 'Jewelry & Accesories Store',
-    status: 'In Development',
-    image: '/images/working_on/petra-valdez-working-on-homepage.webp'
-  },
-  {
-    title: 'Casa Nido',
-    subtitle: 'Real State Agency',
-    status: 'In progress',
-    image: '/images/working_on/casa-nido-working-on-homepage.webp'
-  },
-  {
-    title: 'Luma Studio',
-    subtitle: 'Home Decor Store',
-    status: 'In progress',
-    image: '/images/working_on/luma-studio-working-on-homepage.webp'
+    status: 'In production',
+    image: ncBuildersImage
   },
   {
     title: 'Financial Consultant Website',
     subtitle: 'Financial Advisor ',
     status: 'In progress',
-    image: '/images/working_on/financial-advisor-working-on-homepage.webp'
+    image: financialAdvisorImage,
+  },
+  {
+    title: 'Casa Nido',
+    subtitle: 'Real State Agency',
+    status: 'In progress',
+    image: casaNidoImage,
+  },
+  {
+    title: 'Luma Studio',
+    subtitle: 'Home Decor Store',
+    status: 'In progress',
+    image: lumaStudioImage,
   },
   {
     title: 'Brunch & Bloom',
     subtitle: 'Cafe & Brunch Spot',
     status: 'In progress',
-    image: '/images/working_on/brunch-and-bloom-working-on-homepage.webp'
+    image: brunchBloomImage,
   },
   {
     title: 'Golden District Partners',
     subtitle: 'B2B Consulting Firm',
     status: 'In progress',
-    image: '/images/working_on/golden-district-partners-working-on-homepage.webp'
+    image: goldenDistrictImage,
   },
   {
     title: 'Beach Bites Club',
     subtitle: 'Beach Bar & Restaurant',
     status: 'In progress',
-    image: '/images/working_on/beach-bites-club-working-on-homepage.webp'
-  }
+    image: beachBitesImage,
+  },
+  {
+    title: 'Petra Valdez',
+    subtitle: 'Jewelry & Accesories Store',
+    status: 'In Development',
+    image: petraValdezImage,
+  },
 ];
 
  const services = [
@@ -240,42 +260,42 @@ function handleStudioKeydown(event) {
       title: 'Conduct Science',
       type: 'Scientific E-Commerce',
       stack: 'WordPress / WooCommerce',
-      image: '/images/projects/conductscience-homepage-projects.webp',
+      image: conductScienceImage,
       url: 'https://conductscience.com'
     },
     {
       title: 'Shady Grove Fertility',
       type: 'Healthcare Website',
       stack: 'WordPress / Custom Design',
-      image: '/images/projects/sgf-homepage-project.webp',
+      image: sgfImage,
       url: 'https://shadygrovefertility.com'
     },
     {
       title: 'Cruelty-Free Kitty',
       type: 'Editorial + Shop',
       stack: 'WordPress / Content Site',
-      image: '/images/projects/cruelty-free-homepage-projects.webp',
+      image: crueltyFreeImage,
       url: 'https://crueltyfreekitty.com'
     },
     {
       title: 'SurfaceWorks',
       type: 'Service Business',
       stack: 'WordPress / Redesign',
-      image: '/images/projects/surfaceworks-homepage-project.webp',
+      image: surfaceWorksImage,
       url: 'https://surfaceworks.com'
     },
     {
       title: 'Takahiro Ogawa',
       type: 'Creative Portfolio',
       stack: 'Squarespace / Design',
-      image: '/images/projects/takahiro-artist-homepage-project.webp',
+      image: takahiroImage,
       url: 'https://takahiroogawa.com'
     },
     {
       title: 'Digital Coaching',
       type: 'Coaching Website',
       stack: 'Webflow/ Redesign & Dev',
-      image: '/images/projects/lark-homepage-project.webp',
+      image: larkImage,
       url: 'https://www.lark.com/'
     }
   ];
@@ -487,158 +507,483 @@ function handleStudioKeydown(event) {
     oscillator.stop(now + index * 0.045 + 0.34);
   });
 }
+onMount(() => {
+  if (
+    !heroSection ||
+    !heroIntro ||
+    !heroWindow ||
+    !heroContent ||
+    !heroBackground ||
+    !heroDarkness
+  ) {
+    return;
+  }
+
+  const prefersReducedMotion = window.matchMedia(
+    '(prefers-reduced-motion: reduce)'
+  ).matches;
+
+  const introWords = heroIntro.querySelectorAll('.hero-intro-word');
+  const contentItems = heroContent.querySelectorAll('[data-hero-reveal]');
+
+  /* =====================================================
+     REDUCED MOTION
+  ===================================================== */
+
+  if (prefersReducedMotion) {
+    heroIntro.style.display = 'none';
+    heroDarkness.style.display = 'none';
+
+    heroBackground.style.opacity = '1';
+    heroBackground.style.visibility = 'visible';
+
+    heroContent.style.opacity = '1';
+    heroContent.style.visibility = 'visible';
+
+    contentItems.forEach((item) => {
+      item.style.opacity = '1';
+      item.style.transform = 'none';
+    });
+
+    return;
+  }
+
+  /* =====================================================
+     INITIAL STATES
+  ===================================================== */
+
+  introWords.forEach((word) => {
+    word.style.opacity = '1';
+    word.style.transform = 'none';
+  });
+
+  contentItems.forEach((item) => {
+    item.style.opacity = '0';
+    item.style.transform = 'translateY(28px)';
+  });
+
+  heroContent.style.visibility = 'visible';
+
+  heroBackground.style.opacity = '0';
+  heroBackground.style.visibility = 'visible';
+
+  const animations = [];
+
+  /* =====================================================
+     1. OPEN NARROW APERTURE
+  ===================================================== */
+
+  animations.push(
+    heroWindow.animate(
+      [
+        {
+          width: '0vw',
+          height: '42svh',
+          borderRadius: '999px'
+        },
+        {
+          width: '10vw',
+          height: '42svh',
+          borderRadius: '999px'
+        }
+      ],
+      {
+        duration: 300,
+        delay: 40,
+        easing: 'cubic-bezier(0.76, 0, 0.24, 1)',
+        fill: 'forwards'
+      }
+    )
+  );
+
+  /* =====================================================
+     2. EXPAND APERTURE TO FULL SCREEN
+  ===================================================== */
+
+  animations.push(
+    heroWindow.animate(
+      [
+        {
+          width: '10vw',
+          height: '42svh',
+          borderRadius: '999px'
+        },
+        {
+          width: '25vw',
+          height: '64svh',
+          borderRadius: '160px'
+        },
+        {
+          width: '150vw',
+          height: '130svh',
+          borderRadius: '0px'
+        }
+      ],
+      {
+        duration: 600,
+        delay: 320,
+        easing: 'cubic-bezier(0.76, 0, 0.24, 1)',
+        fill: 'forwards'
+      }
+    )
+  );
+
+  /* =====================================================
+     3. REVEAL FINAL BACKGROUND
+  ===================================================== */
+
+  animations.push(
+    heroBackground.animate(
+      [
+        {
+          opacity: 0
+        },
+        {
+          opacity: 0,
+          offset: 0.2
+        },
+        {
+          opacity: 1
+        }
+      ],
+      {
+        duration: 480,
+        delay: 520,
+        easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
+        fill: 'forwards'
+      }
+    )
+  );
+
+  /* =====================================================
+     4. REMOVE INTRO DARKNESS
+  ===================================================== */
+
+  animations.push(
+    heroDarkness.animate(
+      [
+        {
+          opacity: 1
+        },
+        {
+          opacity: 1,
+          offset: 0.15
+        },
+        {
+          opacity: 0
+        }
+      ],
+      {
+        duration: 460,
+        delay: 560,
+        easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
+        fill: 'forwards'
+      }
+    )
+  );
+
+  /* =====================================================
+     5. MOVE KAMBURCITO / STUDIO WORDS
+  ===================================================== */
+
+  introWords.forEach((word, index) => {
+    const direction = index === 0 ? '-34vw' : '34vw';
+
+    animations.push(
+      word.animate(
+        [
+          {
+            opacity: 1,
+            transform: 'translateX(0)'
+          },
+          {
+            opacity: 1,
+            transform: `translateX(${direction})`,
+            offset: 0.62
+          },
+          {
+            opacity: 0,
+            transform: `translateX(${direction})`
+          }
+        ],
+        {
+          duration: 650,
+          delay: 340,
+          easing: 'cubic-bezier(0.76, 0, 0.24, 1)',
+          fill: 'forwards'
+        }
+      )
+    );
+  });
+
+  /* =====================================================
+     6. REMOVE COMPLETE INTRO OVERLAY
+  ===================================================== */
+
+  animations.push(
+    heroIntro.animate(
+      [
+        {
+          opacity: 1
+        },
+        {
+          opacity: 1,
+          offset: 0.65
+        },
+        {
+          opacity: 0
+        }
+      ],
+      {
+        duration: 680,
+        delay: 580,
+        easing: 'linear',
+        fill: 'forwards'
+      }
+    )
+  );
+
+  /* =====================================================
+     7. REVEAL FINAL HERO CONTENT
+  ===================================================== */
+
+  contentItems.forEach((item, index) => {
+    animations.push(
+      item.animate(
+        [
+          {
+            opacity: 0,
+            transform: 'translateY(24px)'
+          },
+          {
+            opacity: 1,
+            transform: 'translateY(0)'
+          }
+        ],
+        {
+          duration: 420,
+          delay: 780 + index * 50,
+          easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
+          fill: 'forwards'
+        }
+      )
+    );
+  });
+
+  /* =====================================================
+     CLEANUP
+  ===================================================== */
+
+  return () => {
+    animations.forEach((animation) => animation.cancel());
+  };
+});
 
   onMount(() => {
-    if (!canvas || !manifestoSection) return;
+  if (!canvas || !manifestoSection) return;
 
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const prefersReducedMotion = window.matchMedia(
+    '(prefers-reduced-motion: reduce)'
+  ).matches;
 
-    const scene = new THREE.Scene();
+  const scene = new THREE.Scene();
 
-    const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 10);
-    camera.position.z = 1;
+  const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 10);
+  camera.position.z = 1;
 
-    const renderer = new THREE.WebGLRenderer({
-      canvas,
-      alpha: true,
-      antialias: true
-    });
+  const renderer = new THREE.WebGLRenderer({
+    canvas,
+    alpha: true,
+    antialias: true
+  });
 
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
 
-    const geometry = new THREE.PlaneGeometry(2, 2, 64, 64);
+  const geometry = new THREE.PlaneGeometry(2, 2, 64, 64);
 
-    const material = new THREE.ShaderMaterial({
-      uniforms: {
-        uTexture: { value: null },
-        uTime: { value: 0 },
-        uMouse: { value: new THREE.Vector2(0.5, 0.5) }
-      },
-      transparent: true,
-      vertexShader: `
-        varying vec2 vUv;
-        uniform float uTime;
+  const material = new THREE.ShaderMaterial({
+    uniforms: {
+      uTexture: { value: null },
+      uTime: { value: 0 },
+      uMouse: { value: new THREE.Vector2(0.5, 0.5) },
+      uResolution: { value: new THREE.Vector2(1, 1) },
+      uImageResolution: { value: new THREE.Vector2(1, 1) }
+    },
+    transparent: true,
+    vertexShader: `
+      varying vec2 vUv;
+      uniform float uTime;
 
-        void main() {
-          vUv = uv;
+      void main() {
+        vUv = uv;
 
-          vec3 pos = position;
-          pos.z += sin(pos.x * 8.0 + uTime * 0.6) * 0.015;
-          pos.z += sin(pos.y * 6.0 + uTime * 0.4) * 0.015;
+        vec3 pos = position;
+        pos.z += sin(pos.x * 8.0 + uTime * 0.6) * 0.015;
+        pos.z += sin(pos.y * 6.0 + uTime * 0.4) * 0.015;
 
-          gl_Position = vec4(pos, 1.0);
+        gl_Position = vec4(pos, 1.0);
+      }
+    `,
+    fragmentShader: `
+      uniform sampler2D uTexture;
+      uniform float uTime;
+      uniform vec2 uMouse;
+      uniform vec2 uResolution;
+      uniform vec2 uImageResolution;
+
+      varying vec2 vUv;
+
+      float noise(vec2 p) {
+        return sin(p.x * 18.0 + uTime) * sin(p.y * 14.0 + uTime * 0.8);
+      }
+
+      void main() {
+        vec2 baseUv = vUv;
+        vec2 uv = vUv;
+
+        /* -----------------------------------------
+           Preserve image ratio like object-fit: cover
+        ------------------------------------------ */
+        float imageAspect = uImageResolution.x / uImageResolution.y;
+        float canvasAspect = uResolution.x / uResolution.y;
+
+        if (canvasAspect > imageAspect) {
+          float scale = imageAspect / canvasAspect;
+          uv.y = (uv.y - 0.5) * scale + 0.5;
+        } else {
+          float scale = canvasAspect / imageAspect;
+          uv.x = (uv.x - 0.5) * scale + 0.5;
         }
-      `,
-      fragmentShader: `
-        uniform sampler2D uTexture;
-  uniform float uTime;
-  uniform vec2 uMouse;
-  varying vec2 vUv;
 
-  float noise(vec2 p) {
-    return sin(p.x * 18.0 + uTime) * sin(p.y * 14.0 + uTime * 0.8);
-  }
+        /* -----------------------------------------
+           Slow cinematic drift — softer than before
+        ------------------------------------------ */
+        uv.x += sin(uv.y * 8.0 + uTime * 0.45) * 0.010;
+        uv.y += cos(uv.x * 6.0 + uTime * 0.35) * 0.008;
 
-  void main() {
-    vec2 uv = vUv;
+        /* -----------------------------------------
+           Liquid distortion — reduced
+        ------------------------------------------ */
+        float n = noise(uv * 2.0);
+        uv += n * 0.010;
 
-    // slow cinematic drift
-    uv.x += sin(uv.y * 8.0 + uTime * 0.45) * 0.018;
-    uv.y += cos(uv.x * 6.0 + uTime * 0.35) * 0.014;
+        /* -----------------------------------------
+           Mouse ripple — reduced
+        ------------------------------------------ */
+        float mouseDist = distance(baseUv, uMouse);
+        float ripple = smoothstep(0.42, 0.0, mouseDist);
 
-    // liquid distortion
-    float n = noise(uv * 2.0);
-    uv += n * 0.022;
+        if (mouseDist > 0.001) {
+          uv += normalize(baseUv - uMouse) * 0.018 * ripple;
+        }
 
-    // mouse ripple
-    float mouseDist = distance(uv, uMouse);
-    float ripple = smoothstep(0.45, 0.0, mouseDist);
+        /* -----------------------------------------
+           Subtle RGB split
+        ------------------------------------------ */
+        vec2 rgbOffset = vec2(0.003 * ripple, 0.0015 * ripple);
 
-    if (mouseDist > 0.001) {
-      uv += normalize(uv - uMouse) * 0.035 * ripple;
-    }
+        float r = texture2D(uTexture, uv + rgbOffset).r;
+        float g = texture2D(uTexture, uv).g;
+        float b = texture2D(uTexture, uv - rgbOffset).b;
 
-    // subtle RGB split so movement is visible
-    vec2 rgbOffset = vec2(0.006 * ripple, 0.003 * ripple);
+        vec4 color = vec4(r, g, b, 1.0);
 
-    float r = texture2D(uTexture, uv + rgbOffset).r;
-    float g = texture2D(uTexture, uv).g;
-    float b = texture2D(uTexture, uv - rgbOffset).b;
+        /* -----------------------------------------
+           Very subtle breathing glow
+        ------------------------------------------ */
+        color.rgb *= 1.0 + sin(uTime * 0.8) * 0.03;
 
-    vec4 color = vec4(r, g, b, 1.0);
+        /* -----------------------------------------
+           Softer vignette so the desk shows more
+        ------------------------------------------ */
+        float dist = distance(baseUv, vec2(0.5));
+        float vignette = 1.0 - smoothstep(0.38, 0.90, dist);
+        color.rgb *= mix(0.92, 1.0, vignette);
 
-    // breathing glow
-    color.rgb *= 1.0 + sin(uTime * 0.8) * 0.06;
+        gl_FragColor = color;
+      }
+    `
+  });
 
-    // vignette
-    float vignette = smoothstep(0.95, 0.22, distance(vUv, vec2(0.5)));
-    color.rgb *= vignette;
+  const mesh = new THREE.Mesh(geometry, material);
+  scene.add(mesh);
 
-    gl_FragColor = color;
-  }
-`
-    });
+  const textureLoader = new THREE.TextureLoader();
 
-    const mesh = new THREE.Mesh(geometry, material);
-    scene.add(mesh);
+  const texture = textureLoader.load(
+    '/images/kamburcito-manifesto-background.webp',
+    (loadedTexture) => {
+      const image = loadedTexture.image;
 
-    const textureLoader = new THREE.TextureLoader();
+      material.uniforms.uTexture.value = loadedTexture;
 
-    const texture = textureLoader.load('/images/manifesto-background-dark-space.jpg', () => {
-      renderer.render(scene, camera);
-    });
-
-    texture.colorSpace = THREE.SRGBColorSpace;
-    texture.minFilter = THREE.LinearFilter;
-    texture.magFilter = THREE.LinearFilter;
-
-    material.uniforms.uTexture.value = texture;
-
-    const resize = () => {
-      const width = manifestoSection.clientWidth;
-      const height = manifestoSection.clientHeight;
-
-      renderer.setSize(width, height, false);
-      renderer.render(scene, camera);
-    };
-
-    const handleManifestoMouseMove = (event) => {
-      const rect = manifestoSection.getBoundingClientRect();
-
-      material.uniforms.uMouse.value.x = (event.clientX - rect.left) / rect.width;
-      material.uniforms.uMouse.value.y = 1 - (event.clientY - rect.top) / rect.height;
-    };
-
-    let animationFrame;
-
-    const animate = () => {
-      if (!prefersReducedMotion) {
-        material.uniforms.uTime.value += 0.018;
+      if (image) {
+        material.uniforms.uImageResolution.value.set(
+          image.naturalWidth || image.width,
+          image.naturalHeight || image.height
+        );
       }
 
       renderer.render(scene, camera);
-      animationFrame = requestAnimationFrame(animate);
-    };
+    }
+  );
 
-    resize();
-    animate();
+  texture.colorSpace = THREE.SRGBColorSpace;
+  texture.minFilter = THREE.LinearFilter;
+  texture.magFilter = THREE.LinearFilter;
 
-    window.addEventListener('resize', resize);
-    manifestoSection.addEventListener('mousemove', handleManifestoMouseMove);
+  material.uniforms.uTexture.value = texture;
 
-    return () => {
-      window.removeEventListener('resize', resize);
-      manifestoSection.removeEventListener('mousemove', handleManifestoMouseMove);
+  const resize = () => {
+    const width = manifestoSection.clientWidth;
+    const height = manifestoSection.clientHeight;
 
-      cancelAnimationFrame(animationFrame);
+    renderer.setSize(width, height, false);
+    material.uniforms.uResolution.value.set(width, height);
 
-      geometry.dispose();
-      material.dispose();
-      texture.dispose();
-      renderer.dispose();
-    };
-  });
+    renderer.render(scene, camera);
+  };
+
+  const handleManifestoMouseMove = (event) => {
+    const rect = manifestoSection.getBoundingClientRect();
+
+    material.uniforms.uMouse.value.x =
+      (event.clientX - rect.left) / rect.width;
+
+    material.uniforms.uMouse.value.y =
+      1 - (event.clientY - rect.top) / rect.height;
+  };
+
+  let animationFrame;
+
+  const animate = () => {
+    if (!prefersReducedMotion) {
+      material.uniforms.uTime.value += 0.018;
+    }
+
+    renderer.render(scene, camera);
+    animationFrame = requestAnimationFrame(animate);
+  };
+
+  resize();
+  animate();
+
+  window.addEventListener('resize', resize);
+  manifestoSection.addEventListener('mousemove', handleManifestoMouseMove);
+
+  return () => {
+    window.removeEventListener('resize', resize);
+    manifestoSection.removeEventListener('mousemove', handleManifestoMouseMove);
+
+    cancelAnimationFrame(animationFrame);
+
+    geometry.dispose();
+    material.dispose();
+    texture.dispose();
+    renderer.dispose();
+  };
+});
 </script>
 
 <svelte:head>
@@ -687,47 +1032,117 @@ function handleStudioKeydown(event) {
 <div class="liquid-cursor"></div>
 
 <main>
-  <section class="hero hero-split">
-  <div class="hero-left">
-    <div class="hero-content">
-      <div class="hero-label">
-        <span></span>
-        <p>Web Design / Digital Experiences / Creative Development</p>
+  <section
+    class="hero-cinematic"
+    bind:this={heroSection}
+    aria-labelledby="home-hero-title"
+  >
+    <!-- Intro darkness -->
+    <div
+      class="hero-intro-darkness"
+      bind:this={heroDarkness}
+      aria-hidden="true"
+    ></div>
+
+    <!-- Final hero background -->
+    <div
+      class="hero-cinematic__background"
+      bind:this={heroBackground}
+      aria-hidden="true"
+    >
+      <div class="hero-cinematic__image">
+        <TextureHoverImage
+          src="/images/hero/kamburcito-hero-desktop.webp"
+          fit="contain"
+        />
       </div>
 
-      <h1>
-        We design and build really
-        <span>good websites.</span>
-      </h1>
+      <div class="hero-cinematic__overlay"></div>
+    </div>
 
-      <p class="hero-text">
-        Designed from scratch. Built with intention.
-      </p>
-
-      <div class="hero-actions">
-        <a href="/work" class="btn btn-primary">Explore Work</a>
-        <a href="/get-started" class="btn btn-secondary">Start a Project</a>
+    <!-- Intro animation -->
+    <div
+      class="hero-intro"
+      bind:this={heroIntro}
+      aria-hidden="true"
+    >
+      <div class="hero-intro-mask">
+        <span class="hero-intro-word hero-intro-word--left">
+          kamburcito
+        </span>
       </div>
 
-      <div class="hero-meta">
-        <p>Based in Argentina</p>
-        <p>Serving clients worldwide</p>
-        <p>English & Spanish</p>
+      <div
+        class="hero-intro-window"
+        bind:this={heroWindow}
+      >
+        <div class="hero-intro-window__image">
+          <TextureHoverImage
+            src="/images/hero/kamburcito-hero-desktop.webp"
+            fit="contain"
+          />
+        </div>
+      </div>
+
+      <div class="hero-intro-mask">
+        <span class="hero-intro-word hero-intro-word--right">
+          studio
+        </span>
       </div>
     </div>
-  </div>
 
- <div class="hero-right">
-  <TextureHoverImage
-    src="/images/hero/kamburcito-hero-desktop.webp"
-    fit="cover"
-  />
-</div>
+    <!-- Final hero content -->
+    <div
+      class="hero-cinematic__content"
+      bind:this={heroContent}
+    >
+      <div class="hero-cinematic__inner wide-container">
+        <p
+          class="hero-cinematic__eyebrow"
+          data-hero-reveal
+        >
+          Boutique Web Design Studio
+        </p>
+
+        <h1
+          id="home-hero-title"
+          data-hero-reveal
+        >
+          Websites designed with clarity, character and intention
+        </h1>
+
+        <h2
+          class="hero-cinematic__subtitle"
+          data-hero-reveal
+        >
+          Founder-led design and development for brands ready for a stronger
+          digital presence
+        </h2>
+
+        <div
+          class="hero-actions"
+          data-hero-reveal
+        >
+          <a href="/work" class="btn btn-primary">
+            View My Work
+          </a>
+        </div>
+      </div>
+    </div>
+  <a
+    href="#studio"
+    class="hero-cinematic__scroll"
+    aria-label="Scroll to current studio work"
+    data-hero-reveal
+  >
+    <span>Scroll</span>
+    <span aria-hidden="true">↓</span>
+  </a>
 </section>
 <section id="studio" class="section studio-section studio-work-section">
   <div class="wide-container studio-work-header">
     <div>
-      <h2>Working on</h2>
+      <h2>Currently working on</h2>
     </div>
   </div>
 
@@ -746,7 +1161,13 @@ function handleStudioKeydown(event) {
   <div class="studio-work-track">
     {#each studioCards as item}
       <article class="studio-work-card">
-        <img src={item.image} alt={item.title} />
+        <enhanced:img
+         src={item.image}
+         alt={`${item.title} website project`}
+         sizes="(max-width: 720px) 82vw, 520px"
+         loading="lazy"
+         decoding="async"
+/>
 
         <div class="studio-work-overlay"></div>
 
@@ -769,15 +1190,10 @@ function handleStudioKeydown(event) {
     <div>
       <p class="eyebrow">Selected Work</p>
       <h2>
-                Selected websites.
-           <span>Built to feel memorable.</span>
+                Selected websites
+           <span>Redesigns, online stores, and creative builds</span>
       </h2>
     </div>
-
-    <p>
-      A small collection of websites, redesigns, online stores, and creative builds
-      crafted for real businesses.
-    </p>
   </div>
 
   <div class="work-rail">
@@ -785,7 +1201,14 @@ function handleStudioKeydown(event) {
       {#each [...projects, ...projects] as project}
         <article class="project-card" onmouseenter={playProjectSound}>
           <div class="project-image-wrap">
-            <img src={project.image} alt={project.title} class="project-image" />
+            <enhanced:img
+              src={project.image}
+              alt={`${project.title} website project`}
+              class="project-image"
+              sizes="(max-width: 700px) 82vw, 520px"
+               loading="lazy"
+                decoding="async"
+             />
           </div>
 
           <div class="project-content">
@@ -811,12 +1234,7 @@ function handleStudioKeydown(event) {
     <div class="wide-container">
       <div class="section-heading center process-heading">
         <p class="eyebrow">Process</p>
-        <h2>How we work.</h2>
-
-        <p class="process-intro">
-          Every project is custom. I don’t hand over generic templates - I shape each step
-          around your goals, your users, and your brand.
-        </p>
+        <h2>Simple steps</h2>
       </div>
 
       <div class="process-flow">
@@ -865,13 +1283,8 @@ function handleStudioKeydown(event) {
 
     <h2>
       Kind words from
-      <span>past clients.</span>
+      <span>past clients</span>
     </h2>
-
-    <p>
-      Notes from brands and businesses I’ve helped through design, development,
-      redesigns, and ongoing website support.
-    </p>
   </div>
 
  <div class="testimonials-wall">
@@ -914,23 +1327,18 @@ function handleStudioKeydown(event) {
       <p class="about-studio__eyebrow">About</p>
 
       <h2 id="about-studio-title" class="about-studio__title">
-        Kamburcito Studio is a boutique website studio founded by Patricia Diaz.
+        Kamburcito Studio is a boutique website studio founded by Patricia Diaz
       </h2>
 
       <div class="about-studio__description">
         <p>
-          Kamburcito Studio is founder-led end to end, so strategy,
-          branding, design, and development stay closely aligned from
-          kickoff to launch. You work directly with Patty throughout the
-          project, with clear communication, creative collaboration, and
-          direct input every step of the way.
+           I work directly with clients from strategy through launch, keeping
+           branding, design, and development closely aligned throughout the project.
         </p>
 
         <p>
-          Patty’s focus is simple: create websites that build trust quickly
-          and help businesses grow with confidence. Every engagement is
-          custom-scoped, performance-focused, and designed to deliver a
-          digital presence that is both beautiful and effective.
+          The focus is simple: create distinctive, high-performing websites that
+          build trust, communicate clearly, and help businesses grow with confidence.
         </p>
       </div>
 
@@ -954,25 +1362,169 @@ function handleStudioKeydown(event) {
 
     <figure class="about-studio__visual">
   <picture>
-    <source
-      srcset="
-        /images/about/about-homepage-patricia.avif 600w,
-        /images/about/about-homepage-patricia-1200.avif 1200w
-      "
-      sizes="(max-width: 900px) 92vw, 42vw"
-    />
-
-    <img
-      class="about-studio__image"
-      src="/images/about/about-homepage-patricia-1200.avif"
-      width="1200"
-      height="1200"
-      alt="Patricia Diaz, founder of Kamburcito Studio"
-      loading="lazy"
-      decoding="async"
-    />
+    <enhanced:img
+  src={aboutImage}
+  alt="Patricia Diaz, founder of Kamburcito Studio"
+  class="about-studio__image"
+  sizes="(max-width: 900px) 92vw, 630px"
+  loading="lazy"
+  decoding="async"
+/>
   </picture>
 </figure>
+  </div>
+</section>
+<!-- ========================================
+     Homepage — FAQ Section
+========================================= -->
+
+<section class="home-faq" id="faq" aria-labelledby="home-faq-title">
+  <div class="home-faq__container">
+    <header class="home-faq__intro">
+      <p class="home-faq__eyebrow">Questions & answers</p>
+
+      <h2 id="home-faq-title" class="home-faq__title">
+        FAQ
+      </h2>
+
+      <p class="home-faq__subtitle">
+        Have a question?
+      </p>
+    </header>
+
+    <div class="home-faq__list">
+      <details class="home-faq__item">
+        <summary class="home-faq__question">
+          <span>What’s your process, and how do revisions work?</span>
+
+          <span class="home-faq__icon" aria-hidden="true">
+            <svg viewBox="0 0 20 20">
+              <path d="M4.5 7.5 10 13l5.5-5.5" />
+            </svg>
+          </span>
+        </summary>
+
+        <div class="home-faq__answer">
+          <p>
+            Every project moves through strategy, design, development, quality
+            assurance, and launch. You receive clear milestones and focused
+            feedback stages throughout the process. Revisions are included
+            within the agreed scope, while larger changes can be handled as a
+            separate scope update.
+          </p>
+        </div>
+      </details>
+
+      <details class="home-faq__item">
+        <summary class="home-faq__question">
+          <span>What should I budget for a custom website?</span>
+
+          <span class="home-faq__icon" aria-hidden="true">
+            <svg viewBox="0 0 20 20">
+              <path d="M4.5 7.5 10 13l5.5-5.5" />
+            </svg>
+          </span>
+        </summary>
+
+        <div class="home-faq__answer">
+          <p>
+            Every website is quoted according to its size, design requirements,
+            integrations, and functionality. You receive a clear fixed-price
+            proposal before work begins, so you know exactly what is included.
+            You can also review the
+            <a href="/pricing">pricing page</a>
+            for starting points and package examples.
+          </p>
+        </div>
+      </details>
+
+      <details class="home-faq__item">
+        <summary class="home-faq__question">
+          <span>What timeline should I expect?</span>
+
+          <span class="home-faq__icon" aria-hidden="true">
+            <svg viewBox="0 0 20 20">
+              <path d="M4.5 7.5 10 13l5.5-5.5" />
+            </svg>
+          </span>
+        </summary>
+
+        <div class="home-faq__answer">
+          <p>
+            Most small-business websites take approximately two to six weeks,
+            depending on the number of pages, content readiness, functionality,
+            and feedback timeline. Your project schedule and milestones are
+            confirmed before kickoff.
+          </p>
+        </div>
+      </details>
+
+      <details class="home-faq__item">
+        <summary class="home-faq__question">
+          <span>What makes Kamburcito Studio different?</span>
+
+          <span class="home-faq__icon" aria-hidden="true">
+            <svg viewBox="0 0 20 20">
+              <path d="M4.5 7.5 10 13l5.5-5.5" />
+            </svg>
+          </span>
+        </summary>
+
+        <div class="home-faq__answer">
+          <p>
+            Kamburcito Studio is founder-led from beginning to end. You work
+            directly with Patty throughout strategy, design, development, and
+            launch—without being passed between departments. The result is a
+            more personal process, clearer communication, and a website shaped
+            around your actual business goals.
+          </p>
+        </div>
+      </details>
+
+      <details class="home-faq__item">
+        <summary class="home-faq__question">
+          <span>What platforms and technology do you use?</span>
+
+          <span class="home-faq__icon" aria-hidden="true">
+            <svg viewBox="0 0 20 20">
+              <path d="M4.5 7.5 10 13l5.5-5.5" />
+            </svg>
+          </span>
+        </summary>
+
+        <div class="home-faq__answer">
+          <p>
+            The platform is selected around the needs of each project rather
+            than following a single template. Kamburcito Studio works with
+            WordPress, Elementor, SvelteKit, Shopify, Squarespace, and other
+            modern tools depending on your content, editing, e-commerce, and
+            performance requirements.
+          </p>
+        </div>
+      </details>
+
+      <details class="home-faq__item">
+        <summary class="home-faq__question">
+          <span>Can you redesign or improve an existing website?</span>
+
+          <span class="home-faq__icon" aria-hidden="true">
+            <svg viewBox="0 0 20 20">
+              <path d="M4.5 7.5 10 13l5.5-5.5" />
+            </svg>
+          </span>
+        </summary>
+
+        <div class="home-faq__answer">
+          <p>
+            Yes. Existing websites can be redesigned, reorganized, optimized
+            for mobile, improved for performance, or migrated to a more suitable
+            platform. The first step is reviewing what already works, what is
+            limiting the site, and what should be preserved.
+            <a href="/get-started">Start your project →</a>
+          </p>
+        </div>
+      </details>
+    </div>
   </div>
 </section>
 
@@ -981,7 +1533,7 @@ function handleStudioKeydown(event) {
 
   <div class="manifesto-content">
     <h2>
-      Build trust. Win clients.
+      Designed to connect
     </h2>
 
     <a

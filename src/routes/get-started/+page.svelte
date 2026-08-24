@@ -1,4 +1,5 @@
 <script>
+import { tick } from 'svelte';
 import '../../styles/40-quote.css';
 
   const purposeOptions = [
@@ -11,7 +12,7 @@ import '../../styles/40-quote.css';
   ];
 
   const budgetOptions = [
-    'Under $1,500',
+    'Under $800',
     '$1,500–$5,000',
     '$5,000–$20,000',
     '$20,000+',
@@ -79,22 +80,20 @@ import '../../styles/40-quote.css';
   }
 
   function nextStep() {
-    if (!canContinue || isSubmitting) return;
+  if (!canContinue || isSubmitting) return;
 
-    if (currentStep < totalSteps - 1) {
-      currentStep += 1;
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    } else {
-      submitForm();
-    }
+  if (currentStep < totalSteps - 1) {
+    currentStep += 1;
+  } else {
+    submitForm();
   }
+}
 
-  function previousStep() {
-    if (currentStep > 0 && !isSubmitting) {
-      currentStep -= 1;
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+function previousStep() {
+  if (currentStep > 0 && !isSubmitting) {
+    currentStep -= 1;
   }
+}
 
   async function submitForm() {
     const submission = {
@@ -126,7 +125,13 @@ import '../../styles/40-quote.css';
       }
 
       submitted = true;
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      await tick();
+
+      document.querySelector('.quote-success-card')?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'center'
+});
+
     } catch (error) {
       console.error(error);
       alert('Something went wrong. Please try again or email me directly.');

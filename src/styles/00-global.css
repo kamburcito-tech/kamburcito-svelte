@@ -155,7 +155,11 @@ h3,
 h4,
 h5,
 h6 {
-  margin-top: 0;
+    margin-top: 0;
+    font-family:
+    'Cormorant Garamond Variable',
+    Georgia,
+    serif;
 }
 
 p {
@@ -199,8 +203,8 @@ h6 span,
 }
 
 .wide-container {
-  width: min(1480px, 92vw);
-  margin: 0 auto;
+  width: min(1380px, calc(100% - 48px));
+  margin-inline: auto;
 }
 
 .section {

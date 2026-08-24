@@ -1,4 +1,9 @@
 <script>
+  import '@fontsource-variable/cormorant-garamond';
+  import '@fontsource-variable/manrope';
+
+  // Keep your other existing imports below.
+
   import { onMount } from 'svelte';
 
   import '../styles/00-global.css';
@@ -62,88 +67,40 @@
 </svelte:head>
 
 <header class="site-header">
-  <div class="wide-container nav">
-    <a
-  href="/"
-  class="brand"
-  aria-label="Kamburcito Studio home"
-  onclick={closeMobileMenu}
->
-  <span class="brand-name">kamburcito</span><span class="brand-studio">studio</span>
-</a>
-
-    <nav class="desktop-nav" aria-label="Main navigation">
-      <a href="/work">Work</a>
-      <a href="/pricing">Pricing</a>
-      <a href="/get-started">Get a Quote</a>
-    </nav>
-
-    <div class="nav-actions">
-     <button
-    type="button"
-    class="theme-toggle"
-    aria-label={theme === 'dark'
-      ? 'Switch to light mode'
-      : 'Switch to dark mode'}
-    title={theme === 'dark'
-      ? 'Switch to light mode'
-      : 'Switch to dark mode'}
-    onclick={toggleTheme}
-  >
-    {#if theme === 'dark'}
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        <circle cx="12" cy="12" r="3.5" />
-        <path d="M12 2v2" />
-        <path d="M12 20v2" />
-        <path d="m4.93 4.93 1.42 1.42" />
-        <path d="m17.65 17.65 1.42 1.42" />
-        <path d="M2 12h2" />
-        <path d="M20 12h2" />
-        <path d="m6.35 17.65-1.42 1.42" />
-        <path d="m19.07 4.93-1.42 1.42" />
-      </svg>
-    {:else}
-      <svg viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5a8.5 8.5 0 1 0 10.7 10.7Z" />
-      </svg>
-    {/if}
-  </button>
-      <button
-        type="button"
-        class:open={mobileMenuOpen}
-        class="mobile-menu-toggle"
-        aria-label={mobileMenuOpen
-          ? 'Close navigation menu'
-          : 'Open navigation menu'}
-        aria-expanded={mobileMenuOpen}
-        aria-controls="mobile-navigation"
-        onclick={() => (mobileMenuOpen = !mobileMenuOpen)}
-      >
-        <span></span>
-        <span></span>
-      </button>
-
+  <div class="nav">
+    <div class="wide-container nav-inner">
       <a
-        href="/get-started"
-        class="mini-cta"
+        href="/"
+        class="brand"
+        aria-label="Kamburcito Studio home"
         onclick={closeMobileMenu}
       >
-        Start
+        <span class="brand-name">kamburcito</span><span class="brand-studio">studio</span>
       </a>
+
+      <nav class="desktop-nav" aria-label="Main navigation">
+        <a href="/work">Work</a>
+        <a href="/pricing">Pricing</a>
+        <a href="/get-started">Get a Quote</a>
+      </nav>
+
+      <div class="nav-actions">
+        <!-- theme toggle -->
+
+        <a
+          href="/get-started"
+          class="mini-cta btn-primary"
+          aria-label="Start a website project"
+          onclick={closeMobileMenu}
+        >
+          Get Started
+        </a>
+      </div>
     </div>
   </div>
 
   {#if mobileMenuOpen}
-    <nav
-      id="mobile-navigation"
-      class="mobile-menu"
-      aria-label="Mobile navigation"
-    >
-      <a href="/" onclick={closeMobileMenu}>Home</a>
-      <a href="/work" onclick={closeMobileMenu}>Work</a>
-      <a href="/pricing" onclick={closeMobileMenu}>Pricing</a>
-      <a href="/get-started" onclick={closeMobileMenu}>Get a Quote</a>
-    </nav>
+    <!-- your existing mobile menu -->
   {/if}
 </header>
 

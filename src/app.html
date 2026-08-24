@@ -1,32 +1,99 @@
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<script>
-  (() => {
-    try {
-      const savedTheme = localStorage.getItem('kamburcito-theme');
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1"
+    />
 
-      const preferredTheme = window.matchMedia(
-        '(prefers-color-scheme: light)'
-      ).matches
-        ? 'light'
-        : 'dark';
+    <script>
+      (() => {
+        try {
+          const savedTheme = localStorage.getItem('kamburcito-theme');
 
-      const theme = savedTheme || preferredTheme;
+          const preferredTheme = window.matchMedia(
+            '(prefers-color-scheme: light)'
+          ).matches
+            ? 'light'
+            : 'dark';
 
-      document.documentElement.dataset.theme = theme;
-      document.documentElement.style.colorScheme = theme;
-    } catch {
-      document.documentElement.dataset.theme = 'dark';
-    }
-  })();
-</script>
-		<meta name="text-scale" content="scale" />
-		%sveltekit.head%
-	</head>
-	<body data-sveltekit-preload-data="hover">
-		<div style="display: contents">%sveltekit.body%</div>
-	</body>
+          const theme = savedTheme || preferredTheme;
+
+          document.documentElement.dataset.theme = theme;
+          document.documentElement.style.colorScheme = theme;
+        } catch {
+          document.documentElement.dataset.theme = 'dark';
+        }
+      })();
+    </script>
+
+    <link
+      rel="icon"
+      href="/favicon.ico"
+      sizes="any"
+    />
+
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/favicon-32x32.png"
+    />
+
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/favicon-16x16.png"
+    />
+
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/apple-touch-icon.png"
+    />
+
+    <link
+      rel="manifest"
+      href="/site.webmanifest"
+    />
+
+    <meta
+      name="theme-color"
+      content="#030407"
+    />
+
+    <!-- Google Analytics -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-HX67EWRX1G"
+    ></script>
+
+    <script>
+      window.dataLayer = window.dataLayer || [];
+
+      function gtag() {
+        window.dataLayer.push(arguments);
+      }
+
+      gtag('js', new Date());
+      gtag('config', 'G-HX67EWRX1G');
+    </script>
+
+    %sveltekit.head%
+  </head>
+
+  <body data-sveltekit-preload-data="hover">
+    <div style="display: contents">
+      %sveltekit.body%
+    </div>
+
+    <!-- Cloudflare Web Analytics -->
+    <script
+      type="module"
+      src="https://static.cloudflareinsights.com/beacon.min.js"
+      data-cf-beacon='{"token":"c0cdafc4565044249d8bd1c477ce5063"}'
+    ></script>
+  </body>
 </html>

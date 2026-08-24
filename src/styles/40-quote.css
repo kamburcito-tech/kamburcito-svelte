@@ -688,3 +688,82 @@
   color: #ffffff !important;
   -webkit-text-fill-color: #ffffff !important;
 }
+/* ========================================
+   Quote form — success layout fix
+======================================== */
+
+.quote-success-card {
+  box-sizing: border-box;
+
+  width: 100%;
+  min-height: clamp(560px, 70vh, 720px);
+  margin-inline: auto;
+  padding:
+    clamp(64px, 8vw, 120px)
+    clamp(28px, 7vw, 110px);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+}
+
+.quote-success-card .eyebrow {
+  width: 100%;
+  margin: 0 0 28px;
+
+  text-align: center;
+}
+
+.quote-success-card h1 {
+  width: min(100%, 900px);
+  max-width: 900px;
+  margin: 0 auto;
+
+  text-align: center;
+  text-wrap: balance;
+}
+
+.quote-success-card h1 span {
+  display: block;
+}
+
+.quote-success-card > p:not(.eyebrow) {
+  width: min(100%, 900px);
+  max-width: 900px;
+  margin: 30px auto 0;
+
+  text-align: center;
+  text-wrap: pretty;
+}
+
+.quote-success-card .quote-primary-button {
+  align-self: center;
+  margin-top: 52px;
+}
+
+
+/* Mobile */
+
+@media (max-width: 620px) {
+  .quote-success-card {
+    min-height: 560px;
+    padding: 56px 22px;
+  }
+
+  .quote-success-card .eyebrow {
+    margin-bottom: 22px;
+  }
+
+  .quote-success-card > p:not(.eyebrow) {
+    margin-top: 24px;
+  }
+
+  .quote-success-card .quote-primary-button {
+    width: 100%;
+    max-width: 280px;
+    margin-top: 38px;
+  }
+}

@@ -66,7 +66,7 @@ let workHeroCanvasWrap;
       role: 'Design · Development',
       platform: 'WordPress',
       image: '/images/work/din-law-firm-work-project.webp',
-      link: 'https://lawfirm.com/',
+      link: 'https://immigrationlawdfw.com/',
       cta: 'Visit Website →'
 },
     {
@@ -99,7 +99,7 @@ let workHeroCanvasWrap;
       role: 'Design · Development',
       platform: 'Webflow',
       image: '/images/work/lark-work-project.webp',
-      link: 'https://www.claritytherapynyc.com/',
+      link: 'https://www.lark.com/',
       cta: 'View Live Site →'
     }
   ];

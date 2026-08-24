@@ -1,11 +1,16 @@
 /* =====================================================
    HOMEPAGE RESPONSIVE RULES
-   Shared header/global responsive rules live in their own files.
+   Load this file after the main homepage stylesheet.
+   Shared header/global responsive rules live separately.
+===================================================== */
+
+/* =====================================================
+   SMALL DESKTOP / LANDSCAPE TABLET
 ===================================================== */
 
 @media (max-width: 1180px) {
   .services-grid {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .process-flow {
@@ -18,13 +23,13 @@
   }
 }
 
-@media (max-width: 1050px) {
-  .services-grid {
-    grid-template-columns: 1fr 1fr;
-  }
+/* =====================================================
+   TABLET
+===================================================== */
 
+@media (max-width: 1050px) {
   .testimonial-columns {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .column-three {
@@ -32,23 +37,37 @@
   }
 }
 
+/* =====================================================
+   TABLET / LARGE MOBILE
+===================================================== */
+
 @media (max-width: 900px) {
+  /* Hero */
+
   .hero-split {
     height: auto;
     min-height: auto;
     grid-template-columns: 1fr;
   }
 
-  .hero-left {
-    height: auto;
-    min-height: auto;
-    padding: 130px 24px 60px;
+  .hero-right {
+    display: none;
   }
 
-  .hero-right {
-    height: 520px;
-    min-height: 520px;
+  .hero-left {
+    width: 100%;
+    height: auto;
+    min-height: auto;
+    padding: 140px 24px 90px;
   }
+
+  .hero-content {
+    width: 100%;
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  /* Work */
 
   .work-header {
     grid-template-columns: 1fr;
@@ -64,17 +83,19 @@
     height: 54%;
   }
 
+  /* Final CTA */
+
   .cta-inner {
     min-height: auto;
     border-radius: 32px;
   }
 
   .available-strip {
+    padding: 24px;
     align-items: flex-start;
     flex-direction: column;
-    text-align: left;
     gap: 18px;
-    padding: 24px;
+    text-align: left;
   }
 
   .available-list {
@@ -82,14 +103,300 @@
   }
 }
 
+/* =====================================================
+   CINEMATIC HERO — TABLET
+===================================================== */
+
+.hero-cinematic {
+  min-height: 100svh;
+}
+
+
+/*
+ * NO 760PX MAX WIDTH.
+ * This was the rule that kept shrinking your hero.
+ */
+
+.hero-cinematic__content {
+  width: calc(100% - 48px);
+
+  margin-inline: auto;
+
+  padding-top: 132px;
+  padding-bottom: 76px;
+}
+
+
+.hero-cinematic h1 {
+  width: min(100%, 900px);
+
+  font-size: clamp(3.8rem, 8.5vw, 6rem);
+}
+
+
+.hero-cinematic h2.hero-cinematic__subtitle {
+  width: min(100%, 680px);
+}
+
+
+.hero-cinematic__overlay {
+  background:
+    linear-gradient(
+      90deg,
+      rgba(3, 4, 7, 0.7) 0%,
+      rgba(3, 4, 7, 0.48) 48%,
+      rgba(3, 4, 7, 0.12) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(3, 4, 7, 0.06),
+      transparent 50%,
+      rgba(3, 4, 7, 0.3)
+    );
+}
+
+
+/* Intro */
+
+.hero-intro-word {
+  font-size: clamp(4rem, 11vw, 7rem);
+}
+
+
+.hero-intro-window {
+  height: 40svh;
+}
+
+
+.hero-cinematic__scroll {
+  right: 24px;
+}
+
+/* =====================================================
+   STANDARD MOBILE
+===================================================== */
+
 @media (max-width: 720px) {
-  .hero-actions,
+  /* =====================================================
+   CINEMATIC HERO — MOBILE
+===================================================== */
+
+.hero-cinematic {
+  min-height: 100svh;
+  align-items: center;
+}
+
+.hero-cinematic__content {
+  width: calc(100% - 40px);
+  margin-inline: auto;
+
+  padding-top: 90px;
+  padding-bottom: 48px;
+}
+
+
+/*
+ * Better crop for the final workspace image.
+ * Adjust 56% later once we replace the background.
+ */
+
+.hero-cinematic__image img,
+.hero-cinematic__image canvas,
+.hero-intro-window__image img,
+.hero-intro-window__image canvas {
+  object-position: 56% center;
+}
+
+
+.hero-cinematic__overlay {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(3, 4, 7, 0.16) 0%,
+      rgba(3, 4, 7, 0.3) 28%,
+      rgba(3, 4, 7, 0.68) 67%,
+      rgba(3, 4, 7, 0.9) 100%
+    );
+}
+
+
+/* Eyebrow */
+
+.hero-cinematic__eyebrow {
+  margin-bottom: 17px;
+
+  font-size: 0.66rem;
+  letter-spacing: 0.18em;
+}
+
+
+/* H1 */
+
+.hero-cinematic h1 {
+  width: 100%;
+
+  font-size: clamp(3.35rem, 14vw, 5.2rem);
+
+  line-height: 0.89;
+  letter-spacing: -0.055em;
+
+  text-wrap: balance;
+}
+
+
+/* Subtitle */
+
+.hero-cinematic h2.hero-cinematic__subtitle {
+  width: min(100%, 34rem);
+
+  margin-top: 22px;
+
+  font-size: 0.98rem;
+  line-height: 1.55;
+}
+
+
+/* Button */
+
+.hero-cinematic .hero-actions {
+  margin-top: 27px;
+}
+
+.hero-cinematic .hero-actions .btn {
+  min-height: 50px;
+
+  padding: 14px 22px;
+
+  font-size: 0.74rem;
+  letter-spacing: 0.13em;
+}
+
+
+/* Intro typography */
+
+.hero-intro-word {
+  font-size: clamp(2.2rem, 9.2vw, 4rem);
+
+  line-height: 0.8;
+  letter-spacing: -0.07em;
+}
+
+.hero-intro-word--left {
+  padding-right: 10px;
+}
+
+.hero-intro-word--right {
+  padding-left: 10px;
+}
+
+
+.hero-intro-window {
+  height: 34svh;
+}
+
+
+/* Hide scroll cue on phone */
+
+.hero-cinematic__scroll {
+  display: none;
+}
+
+/*
+  On mobile, both words need enough room.
+  We reduce their size rather than wrapping them.
+*/
+.hero-intro-word {
+  font-size: clamp(1.75rem, 8.3vw, 3.4rem);
+  letter-spacing: -0.065em;
+}
+
+.hero-intro-word--left {
+  padding-right: 18px;
+}
+
+.hero-intro-word--right {
+  padding-left: 18px;
+}
+
+.hero-intro-window {
+  height: 34svh;
+}
+
+.hero-cinematic__scroll {
+  display: none;
+}
+  /* Hero */
+
+  .hero-split,
+  .hero-left {
+    min-height: auto;
+  }
+
+  .hero-left {
+    padding: 118px 20px 44px;
+  }
+
+  .hero-actions {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 28px;
+}
+.hero-actions .btn,
+.hero-actions a {
+  width: auto;
+  min-width: 0;
+  flex: 0 0 auto;
+  padding: 15px 22px;
+
+  font-size: 0.76rem;
+  letter-spacing: 0.14em;
+}
+
+  /* Premium hero information rail */
+
   .hero-meta {
-    justify-content: flex-start;
+    width: 100%;
+    margin-top: 28px;
+    padding-top: 0;
+    grid-template-columns: 1fr;
+  }
+
+  .hero-meta p {
+    padding: 16px 0;
+    font-size: 0.92rem;
+    border-right: 0;
+  }
+
+  .hero-meta p:not(:last-child) {
+    border-right: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .hero-meta p:last-child {
+    padding-bottom: 4px;
+  }
+
+  .hero-meta p::before {
+    margin-bottom: 6px;
+    font-size: 0.59rem;
+  }
+
+  :root[data-theme='light'] .hero-meta p:not(:last-child) {
+    border-bottom-color: rgba(16, 34, 77, 0.12);
+  }
+
+  /* Working on */
+
+  .studio-work-section {
+    padding: 36px 0 40px;
   }
 
   .studio-work-header {
     display: block;
+    margin-bottom: 28px;
   }
 
   .studio-work-links {
@@ -106,8 +413,14 @@
     padding: 26px;
   }
 
+  /* Services */
+
   .services-section {
-    padding: 90px 0;
+    padding: 40px 0;
+  }
+
+  .services-heading {
+    margin-bottom: 28px;
   }
 
   .services-grid {
@@ -119,17 +432,44 @@
     padding: 28px;
   }
 
-  .project-card {
-    height: 420px;
-  }
+  /* Selected work */
+
+  .work-section {
+  padding: 40px 0 12px;
+}
+
+  .work-header {
+  margin-bottom: 28px;
+}
+.work-rail {
+  min-height: 0;
+  height: auto;
+  padding: 0 0 24px;
+  align-items: flex-start;
+}
+
+ .project-card {
+  height: 420px;
+}
+
+  /* Process */
+
+ .process-section {
+  padding: 28px 0 40px;
+}
+ .process-flow {
+  margin-top: 28px;
+}
+
+  /* Testimonials */
 
   .testimonials-section {
-    padding: 90px 0;
+    padding: 40px 0;
   }
 
   .testimonials-header {
+    margin-bottom: 28px;
     text-align: left;
-    margin-bottom: 44px;
   }
 
   .testimonials-header > p {
@@ -156,9 +496,35 @@
     padding: 26px;
   }
 
+  /* About */
+
+  .about-studio__container {
+    padding-top: 42px;
+    padding-bottom: 42px;
+    gap: 28px;
+  }
+
+  .about-studio__description {
+    margin-top: 20px;
+  }
+
+  .about-studio__stats {
+    margin-top: 26px;
+  }
+
+  /* FAQ */
+
+  .home-faq__container {
+    padding-top: 42px;
+    padding-bottom: 42px;
+    gap: 28px;
+  }
+
+  /* Manifesto */
+
   .manifesto-section {
     min-height: auto;
-    padding: 100px 20px;
+    padding: 52px 20px;
     align-items: center;
     justify-content: center;
   }
@@ -171,10 +537,12 @@
     width: 100%;
     max-width: 430px;
     margin: 0 auto;
+
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 30px;
+    gap: 20px;
+
     text-align: center;
   }
 
@@ -188,6 +556,7 @@
     width: 100%;
     max-width: 390px;
     margin: 0 auto;
+
     font-size: clamp(2.7rem, 11vw, 3.85rem);
     line-height: 0.98;
     letter-spacing: -0.045em;
@@ -201,48 +570,159 @@
     margin: 0;
     padding-inline: 24px;
   }
-}
-@media (max-width: 520px) {
-  .hero-left {
-    padding: 120px 20px 72px;
+
+  /* Final CTA */
+
+  .final-cta {
+    padding: 40px 0;
+  }
+
+  .cta-inner {
+    min-height: auto;
+    padding: 30px 22px;
+  }
+
+  .available-strip {
+    margin-top: 14px;
   }
 }
 
+/* =====================================================
+   SMALL MOBILE
+===================================================== */
+
 @media (max-width: 480px) {
-  .hero-actions,
+  /* Cinematic Hero */
+
+/* =====================================================
+   CINEMATIC HERO — SMALL MOBILE
+===================================================== */
+
+.hero-cinematic__content {
+  width: calc(100% - 36px);
+
+  padding-top: 86px;
+  padding-bottom: 44px;
+}
+
+
+.hero-cinematic h1 {
+  font-size: clamp(3rem, 14vw, 4.4rem);
+}
+
+
+.hero-cinematic h2.hero-cinematic__subtitle {
+  font-size: 0.95rem;
+}
+
+
+.hero-intro-word {
+  font-size: clamp(1.8rem, 8.5vw, 3rem);
+}
+
+
+.hero-intro-word--left {
+  padding-right: 8px;
+}
+
+.hero-intro-word--right {
+  padding-left: 8px;
+}
+
+
+.hero-intro-window {
+  height: 30svh;
+}
+  /* Hero */
+
+  .hero-left {
+    padding: 110px 20px 38px;
+  }
+  .hero-actions {
+  gap: 10px;
+}
+
+  .hero-actions .btn,
+  .hero-actions a {
+  padding: 14px 18px;
+  font-size: 0.72rem;
+}
+
   .cta-actions {
     width: 100%;
   }
+
+  .hero-meta {
+    margin-top: 24px;
+  }
+
+  .hero-meta p {
+    padding: 14px 0;
+    font-size: 0.88rem;
+  }
+
+  .hero-meta p::before {
+    margin-bottom: 5px;
+    font-size: 0.56rem;
+  }
+
+  /* Section spacing */
+
+  .studio-work-section {
+    padding: 30px 0 34px;
+  }
+
+  .services-section,
+  .testimonials-section,
+  .final-cta {
+    padding: 34px 0;
+  }
+
+.work-section {
+  padding: 34px 0 8px;
+}
+
+.work-rail {
+  min-height: 0;
+  padding-bottom: 20px;
+}
+
+.process-section {
+  padding: 24px 0 34px;
+}
+
+  .studio-work-header,
+  .work-header,
+  .section-heading,
+  .services-heading,
+  .testimonials-header {
+    margin-bottom: 24px;
+  }
+
+  /* Cards */
 
   .project-card {
     height: 390px;
   }
 
+  /* About and FAQ */
+
+  .about-studio__container,
+  .home-faq__container {
+    padding-top: 36px;
+    padding-bottom: 36px;
+    gap: 24px;
+  }
+
+  /* Manifesto */
+
   .manifesto-section {
-    min-height: 70vh;
-    padding: 80px 18px;
-  }
-}
-/* Hide homepage hero image on mobile */
-@media (max-width: 900px) {
-  .hero-split {
-    grid-template-columns: 1fr;
-    min-height: auto;
+    padding: 46px 18px;
   }
 
-  .hero-right {
-    display: none;
-  }
+  /* Final CTA */
 
-  .hero-left {
-    width: 100%;
-    min-height: auto;
-    padding: 140px 24px 90px;
-  }
-
-  .hero-content {
-    width: 100%;
-    max-width: 760px;
-    margin: 0 auto;
+  .cta-inner {
+    padding: 28px 20px;
   }
 }

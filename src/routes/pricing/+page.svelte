@@ -142,7 +142,7 @@
   <div class="wide-container pricing-split reverse">
     <div class="pricing-mockup-card large">
       <img
-        src="/images/pricing-kamburcito-studio-3.webp"
+        src="/images/pricing-kamburcito-studio-4.webp"
         alt="Website design mockup"
       />
     </div>

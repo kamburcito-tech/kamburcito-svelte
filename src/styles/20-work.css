@@ -26,6 +26,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+ 
 }
 
 .work-page-hero h1 {
@@ -233,7 +234,7 @@
 
   .work-hero-inner {
     width: 100%;
-    padding-inline: 0;
+    padding-inline: 28px;
   }
 
   .work-page-hero h1 {
@@ -332,7 +333,22 @@
   }
 }
 
+@media (max-width: 720px) {
+  .work-hero-content {
+    width: 100%;
+    max-width: 520px;
+    margin: 0 auto;
+    padding-inline: 28px;
+  }
+}
+
+
 @media (max-width: 480px) {
+
+  .work-hero-content {
+    padding-inline: 28px;
+  }
+
   .work-featured-card,
   .work-featured-card:nth-child(even) {
     gap: 26px;
