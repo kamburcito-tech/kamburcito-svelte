@@ -1,7 +1,6 @@
 <script>
   import { onMount } from 'svelte';
   import * as THREE from 'three';
-  import LiquidMetal from '$lib/components/LiquidMetal.svelte';
   import TextureHoverImage from '$lib/components/TextureHoverImage.svelte';
   import '../styles/10-homepage.css';
   import '../styles/90-homepage-responsive.css';
@@ -97,7 +96,7 @@
       publisher: {
         '@id': 'https://kamburcito.com/#business'
       },
-      inLanguage: ['en', 'es']
+      inLanguage: ['en']
     },
     {
       '@type': 'WebPage',
@@ -169,11 +168,19 @@ function handleStudioKeydown(event) {
   if (!studioScroll) return;
 
   if (event.key === 'ArrowRight') {
-    studioScroll.scrollBy({ left: 320, behavior: 'smooth' });
+    event.preventDefault();
+    studioScroll.scrollBy({
+      left: 320,
+      behavior: 'smooth'
+    });
   }
 
   if (event.key === 'ArrowLeft') {
-    studioScroll.scrollBy({ left: -320, behavior: 'smooth' });
+    event.preventDefault();
+    studioScroll.scrollBy({
+      left: -320,
+      behavior: 'smooth'
+    });
   }
 }
 
@@ -438,41 +445,6 @@ function handleStudioKeydown(event) {
     testimonialColumns[index % 3].push(testimonial);
   });
   
-  function playMagicSound() {
-    if (typeof window === 'undefined') return;
-
-    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-
-    if (!AudioContextClass) return;
-
-    audioContext = audioContext || new AudioContextClass();
-
-    if (audioContext.state === 'suspended') {
-      audioContext.resume();
-    }
-
-    const now = audioContext.currentTime;
-    const notes = [660, 990, 1320];
-
-    notes.forEach((frequency, index) => {
-      const oscillator = audioContext.createOscillator();
-      const gain = audioContext.createGain();
-      const startTime = now + index * 0.035;
-
-      oscillator.type = 'sine';
-      oscillator.frequency.setValueAtTime(frequency, startTime);
-
-      gain.gain.setValueAtTime(0.0001, startTime);
-      gain.gain.linearRampToValueAtTime(0.035, startTime + 0.01);
-      gain.gain.exponentialRampToValueAtTime(0.001, startTime + 0.22);
-
-      oscillator.connect(gain);
-      gain.connect(audioContext.destination);
-
-      oscillator.start(startTime);
-      oscillator.stop(startTime + 0.24);
-    });
-  }
 
   function playProjectSound() {
   if (typeof window === 'undefined') return;
@@ -519,7 +491,7 @@ onMount(() => {
     return;
   }
 
-  const prefersReducedMotion = window.matchMedia(
+  const heroPrefersReducedMotion = window.matchMedia(
     '(prefers-reduced-motion: reduce)'
   ).matches;
 
@@ -530,7 +502,7 @@ onMount(() => {
      REDUCED MOTION
   ===================================================== */
 
-  if (prefersReducedMotion) {
+  if (heroPrefersReducedMotion) {
     heroIntro.style.display = 'none';
     heroDarkness.style.display = 'none';
 
@@ -782,11 +754,15 @@ onMount(() => {
   onMount(() => {
   if (!canvas || !manifestoSection) return;
 
-  const prefersReducedMotion = window.matchMedia(
-    '(prefers-reduced-motion: reduce)'
-  ).matches;
+  let cancelled = false;
+  let cleanupManifesto;
 
-  const scene = new THREE.Scene();
+  async function initManifesto() {
+    const THREE = await import('three');
+
+    if (cancelled) return;
+
+    const scene = new THREE.Scene();
 
   const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 10);
   camera.position.z = 1;
@@ -911,77 +887,258 @@ onMount(() => {
 
   const textureLoader = new THREE.TextureLoader();
 
-  const texture = textureLoader.load(
-    '/images/kamburcito-manifesto-background.webp',
-    (loadedTexture) => {
-      const image = loadedTexture.image;
+let animationFrame = null;
+let destroyed = false;
+let textureReady = false;
+let sectionVisible = false;
 
-      material.uniforms.uTexture.value = loadedTexture;
+const manifestoMotionQuery = window.matchMedia(
+  '(prefers-reduced-motion: reduce)'
+);
 
-      if (image) {
-        material.uniforms.uImageResolution.value.set(
-          image.naturalWidth || image.width,
-          image.naturalHeight || image.height
-        );
+let manifestoPrefersReducedMotion = manifestoMotionQuery.matches;
+
+const renderOnce = () => {
+  if (destroyed || !textureReady) return;
+
+  renderer.render(scene, camera);
+};
+
+const shouldAnimate = () => {
+  return (
+    !destroyed &&
+    textureReady &&
+    !manifestoPrefersReducedMotion &&
+    sectionVisible &&
+    !document.hidden
+  );
+};
+
+const stopAnimation = () => {
+  if (animationFrame !== null) {
+    cancelAnimationFrame(animationFrame);
+    animationFrame = null;
+  }
+};
+
+const animate = () => {
+  if (!shouldAnimate()) {
+    animationFrame = null;
+    return;
+  }
+
+  material.uniforms.uTime.value += 0.018;
+
+  renderer.render(scene, camera);
+
+  animationFrame = requestAnimationFrame(animate);
+};
+
+const startAnimation = () => {
+  if (
+    animationFrame !== null ||
+    !shouldAnimate()
+  ) {
+    return;
+  }
+
+  animationFrame = requestAnimationFrame(animate);
+};
+
+const texture = textureLoader.load(
+  '/images/kamburcito-manifesto-background.webp',
+
+  (loadedTexture) => {
+    if (destroyed) {
+      loadedTexture.dispose();
+      return;
+    }
+
+    const image = loadedTexture.image;
+
+    material.uniforms.uTexture.value =
+      loadedTexture;
+
+    if (image) {
+      material.uniforms.uImageResolution.value.set(
+        image.naturalWidth || image.width,
+        image.naturalHeight || image.height
+      );
+    }
+
+    textureReady = true;
+
+    renderOnce();
+    startAnimation();
+  }
+);
+
+texture.colorSpace = THREE.SRGBColorSpace;
+texture.minFilter = THREE.LinearFilter;
+texture.magFilter = THREE.LinearFilter;
+
+material.uniforms.uTexture.value = texture;
+
+const resize = () => {
+  if (
+    destroyed ||
+    !manifestoSection
+  ) {
+    return;
+  }
+
+  const width =
+    manifestoSection.clientWidth;
+
+  const height =
+    manifestoSection.clientHeight;
+
+  if (!width || !height) return;
+
+  renderer.setSize(
+    width,
+    height,
+    false
+  );
+
+  material.uniforms.uResolution.value.set(
+    width,
+    height
+  );
+
+  renderOnce();
+};
+
+const handleManifestoMouseMove = (event) => {
+  if (prefersReducedMotion) return;
+
+  const rect =
+    manifestoSection.getBoundingClientRect();
+
+  material.uniforms.uMouse.value.x =
+    (event.clientX - rect.left) /
+    rect.width;
+
+  material.uniforms.uMouse.value.y =
+    1 -
+    (event.clientY - rect.top) /
+      rect.height;
+};
+
+const handleManifestoMotionChange = (event) => {
+  manifestoPrefersReducedMotion = event.matches;
+
+  if (manifestoPrefersReducedMotion) {
+    stopAnimation();
+
+    material.uniforms.uMouse.value.set(
+      0.5,
+      0.5
+    );
+
+    renderOnce();
+  } else {
+    startAnimation();
+  }
+};
+
+const handleVisibilityChange = () => {
+  if (document.hidden) {
+    stopAnimation();
+  } else {
+    startAnimation();
+  }
+};
+
+const manifestoObserver =
+  new IntersectionObserver(
+    ([entry]) => {
+      sectionVisible =
+        entry.isIntersecting;
+
+      if (sectionVisible) {
+        renderOnce();
+        startAnimation();
+      } else {
+        stopAnimation();
       }
-
-      renderer.render(scene, camera);
+    },
+    {
+      threshold: 0.01
     }
   );
 
-  texture.colorSpace = THREE.SRGBColorSpace;
-  texture.minFilter = THREE.LinearFilter;
-  texture.magFilter = THREE.LinearFilter;
+resize();
 
-  material.uniforms.uTexture.value = texture;
+window.addEventListener(
+  'resize',
+  resize
+);
 
-  const resize = () => {
-    const width = manifestoSection.clientWidth;
-    const height = manifestoSection.clientHeight;
+document.addEventListener(
+  'visibilitychange',
+  handleVisibilityChange
+);
 
-    renderer.setSize(width, height, false);
-    material.uniforms.uResolution.value.set(width, height);
+manifestoSection.addEventListener(
+  'mousemove',
+  handleManifestoMouseMove
+);
 
-    renderer.render(scene, camera);
-  };
+manifestoMotionQuery.addEventListener(
+  'change',
+  handleManifestoMotionChange
+);
 
-  const handleManifestoMouseMove = (event) => {
-    const rect = manifestoSection.getBoundingClientRect();
+manifestoObserver.observe(
+  manifestoSection
+);
 
-    material.uniforms.uMouse.value.x =
-      (event.clientX - rect.left) / rect.width;
+    return () => {
+      destroyed = true;
 
-    material.uniforms.uMouse.value.y =
-      1 - (event.clientY - rect.top) / rect.height;
-  };
+      stopAnimation();
 
-  let animationFrame;
+      window.removeEventListener(
+        'resize',
+        resize
+      );
 
-  const animate = () => {
-    if (!prefersReducedMotion) {
-      material.uniforms.uTime.value += 0.018;
+      document.removeEventListener(
+        'visibilitychange',
+        handleVisibilityChange
+      );
+
+      manifestoSection.removeEventListener(
+        'mousemove',
+        handleManifestoMouseMove
+      );
+
+      manifestoMotionQuery.removeEventListener(
+        'change',
+        handleManifestoMotionChange
+      );
+
+      manifestoObserver.disconnect();
+
+      geometry.dispose();
+      material.dispose();
+      texture.dispose();
+      renderer.dispose();
+    };
+  }
+
+  initManifesto().then((cleanup) => {
+    if (cancelled) {
+      cleanup?.();
+    } else {
+      cleanupManifesto = cleanup;
     }
-
-    renderer.render(scene, camera);
-    animationFrame = requestAnimationFrame(animate);
-  };
-
-  resize();
-  animate();
-
-  window.addEventListener('resize', resize);
-  manifestoSection.addEventListener('mousemove', handleManifestoMouseMove);
+  });
 
   return () => {
-    window.removeEventListener('resize', resize);
-    manifestoSection.removeEventListener('mousemove', handleManifestoMouseMove);
-
-    cancelAnimationFrame(animationFrame);
-
-    geometry.dispose();
-    material.dispose();
-    texture.dispose();
-    renderer.dispose();
+    cancelled = true;
+    cleanupManifesto?.();
   };
 });
 </script>
@@ -1044,7 +1201,7 @@ onMount(() => {
       aria-hidden="true"
     ></div>
 
-    <!-- Final hero background -->
+    <!-- Final interactive hero background -->
     <div
       class="hero-cinematic__background"
       bind:this={heroBackground}
@@ -1057,7 +1214,10 @@ onMount(() => {
         />
       </div>
 
-      <div class="hero-cinematic__overlay"></div>
+      <div
+        class="hero-cinematic__overlay"
+        aria-hidden="true"
+      ></div>
     </div>
 
     <!-- Intro animation -->
@@ -1077,11 +1237,19 @@ onMount(() => {
         bind:this={heroWindow}
       >
         <div class="hero-intro-window__image">
-          <TextureHoverImage
+          <img
             src="/images/hero/kamburcito-hero-desktop.webp"
-            fit="contain"
+            alt=""
+            class="hero-intro-static-image"
+            fetchpriority="high"
+            decoding="async"
           />
         </div>
+
+        <div
+          class="hero-intro-window__overlay"
+          aria-hidden="true"
+        ></div>
       </div>
 
       <div class="hero-intro-mask">
@@ -1123,7 +1291,10 @@ onMount(() => {
           class="hero-actions"
           data-hero-reveal
         >
-          <a href="/work" class="btn btn-primary">
+          <a
+            href="/work"
+            class="btn btn-primary"
+          >
             View My Work
           </a>
         </div>
@@ -1146,83 +1317,99 @@ onMount(() => {
     </div>
   </div>
 
+<!-- svelte-ignore a11y_no_noninteractive_tabindex, a11y_no_noninteractive_element_interactions -->
 <div
   class="studio-work-scroll"
   bind:this={studioScroll}
-  role="button"
-  aria-label="Drag to scroll studio work carousel"
+  role="region"
+  aria-roledescription="carousel"
+  aria-label="Currently working on projects"
   tabindex="0"
+  onkeydown={handleStudioKeydown}
   onmouseenter={showDragCursor}
   onmouseleave={hideDragCursor}
   onmousemove={dragScroll}
   onmousedown={startDrag}
   onmouseup={stopDrag}
 >
-  <div class="studio-work-track">
-    {#each studioCards as item}
-      <article class="studio-work-card">
-        <enhanced:img
-         src={item.image}
-         alt={`${item.title} website project`}
-         sizes="(max-width: 720px) 82vw, 520px"
-         loading="lazy"
-         decoding="async"
-/>
+    <div class="studio-work-track">
+      {#each studioCards as item}
+        <article class="studio-work-card">
+          <enhanced:img
+            src={item.image}
+            alt={`${item.title} website project`}
+            sizes="(max-width: 720px) 82vw, 520px"
+            loading="lazy"
+            decoding="async"
+          />
 
-        <div class="studio-work-overlay"></div>
+          <div class="studio-work-overlay"></div>
 
-        <div class="studio-work-content">
-          <div>
-            <h3>{item.title}</h3>
-            <p>{item.subtitle}</p>
+          <div class="studio-work-content">
+            <div>
+              <h3>{item.title}</h3>
+              <p>{item.subtitle}</p>
+            </div>
+
+            <span>{item.status}</span>
           </div>
-
-          <span>{item.status}</span>
-        </div>
-      </article>
-    {/each}
+        </article>
+      {/each}
+    </div>
   </div>
-</div>
 </section>
   
 <section id="work" class="section work-section">
   <div class="wide-container work-header">
     <div>
       <p class="eyebrow">Selected Work</p>
+
       <h2>
-                Selected websites
-           <span>Redesigns, online stores, and creative builds</span>
+        Selected websites
+        <span>Redesigns, online stores, and creative builds</span>
       </h2>
     </div>
   </div>
 
   <div class="work-rail">
     <div class="work-track">
-      {#each [...projects, ...projects] as project}
-        <article class="project-card" onmouseenter={playProjectSound}>
+      {#each [...projects, ...projects] as project, index}
+        {@const isDuplicate = index >= projects.length}
+
+        <article
+          class="project-card"
+          aria-hidden={isDuplicate ? 'true' : undefined}
+          onmouseenter={playProjectSound}
+        >
           <div class="project-image-wrap">
             <enhanced:img
               src={project.image}
-              alt={`${project.title} website project`}
+              alt={isDuplicate ? '' : `${project.title} website project`}
               class="project-image"
               sizes="(max-width: 700px) 82vw, 520px"
-               loading="lazy"
-                decoding="async"
-             />
+              loading="lazy"
+              decoding="async"
+            />
           </div>
 
           <div class="project-content">
-           <span>{project.stack}</span>
-           <h3>{project.title}</h3>
-           <p>{project.type}</p>
+            <span>{project.stack}</span>
+            <h3>{project.title}</h3>
+            <p>{project.type}</p>
 
-           <a
+            <a
               href={project.url}
-             target="_blank"
-             rel="noopener noreferrer"
+              target="_blank"
+              rel="noopener noreferrer"
+              tabindex={isDuplicate ? -1 : undefined}
+              aria-label={
+                isDuplicate
+                  ? undefined
+                  : `Visit ${project.title} website — opens in a new tab`
+              }
             >
               Visit Website →
-           </a>
+            </a>
           </div>
         </article>
       {/each}
@@ -1287,34 +1474,50 @@ onMount(() => {
     </h2>
   </div>
 
- <div class="testimonials-wall">
-  <div class="fade-top"></div>
-  <div class="fade-bottom"></div>
-  <div class="testimonial-columns">
-    {#each testimonialColumns as column, columnIndex}
-      <div class={`testimonial-column column-${columnIndex + 1}`}>
-        {#each [...column, ...column] as item}
-          <article class="testimonial-card">
-            <p class="testimonial-quote">“{item.quote}”</p>
+  <div class="testimonials-wall">
+    <div class="fade-top" aria-hidden="true"></div>
+    <div class="fade-bottom" aria-hidden="true"></div>
 
-            <div class="testimonial-separator"></div>
+    <div class="testimonial-columns">
+      {#each testimonialColumns as column, columnIndex}
+        <div class={`testimonial-column column-${columnIndex + 1}`}>
+          {#each [...column, ...column] as item, index}
+            {@const isDuplicate = index >= column.length}
 
-            <div class="testimonial-person">
-              <div class="testimonial-avatar">
-                <img src={item.image} alt={item.name} />
+            <article
+              class="testimonial-card"
+              aria-hidden={isDuplicate ? 'true' : undefined}
+            >
+              <p class="testimonial-quote">
+                “{item.quote}”
+              </p>
+
+              <div
+                class="testimonial-separator"
+                aria-hidden="true"
+              ></div>
+
+              <div class="testimonial-person">
+                <div class="testimonial-avatar">
+                  <img
+                    src={item.image}
+                    alt={isDuplicate ? '' : item.name}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+
+                <div class="testimonial-meta">
+                  <strong>{item.name}</strong>
+                  <span>{item.role}</span>
+                </div>
               </div>
-
-              <div class="testimonial-meta">
-                <strong>{item.name}</strong>
-                <span>{item.role}</span>
-              </div>
-            </div>
-          </article>
-        {/each}
-      </div>
-    {/each}
+            </article>
+          {/each}
+        </div>
+      {/each}
+    </div>
   </div>
-</div>
 </section>
 
 <section

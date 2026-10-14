@@ -35,22 +35,17 @@
   opacity: 0;
   visibility: hidden;
 
-  /*
-   * Important:
-   * Allow the TextureHoverImage canvas to receive
-   * pointer movement after the intro completes.
-   */
   pointer-events: auto;
 
   will-change: opacity;
 }
 
+
 /* =====================================================
-SHARED HERO TEXTURE SIZE
+   FINAL HERO IMAGE
 ===================================================== */
 
-.hero-cinematic__image,
-.hero-intro-window__image {
+.hero-cinematic__image {
   position: absolute;
 
   left: 50%;
@@ -66,23 +61,15 @@ SHARED HERO TEXTURE SIZE
   justify-content: center;
 
   filter:
-    brightness(1.36)
-    contrast(0.98)
+    brightness(1.52)
+    contrast(0.96)
     saturate(1.04);
 }
-
-/* Make BOTH TextureHoverImage instances identical */
 
 .hero-cinematic__image,
 .hero-cinematic__image .texture-hover-image,
 .hero-cinematic__image canvas,
-.hero-cinematic__image img,
-.hero-intro-window__image,
-.hero-intro-window__image .texture-hover-image,
-.hero-intro-window__image canvas,
-.hero-intro-window__image img {
-  display: block;
-
+.hero-cinematic__image img {
   width: 100vw;
   height: 100svh;
 
@@ -93,42 +80,42 @@ SHARED HERO TEXTURE SIZE
   max-height: none;
 }
 
-/* Same fit + same focal point */
-
-.hero-cinematic__image img,
 .hero-cinematic__image canvas,
-.hero-intro-window__image img,
-.hero-intro-window__image canvas {
+.hero-cinematic__image img {
+  display: block;
+
   object-fit: contain;
   object-position: center center;
 }
 
+
 /* =====================================================
-   BACKGROUND OVERLAY
+   FINAL HERO OVERLAY
 ===================================================== */
 
 .hero-cinematic__overlay {
   position: absolute;
   inset: 0;
   z-index: 1;
-  pointer-events: none;
 
-  background:
+  pointer-events: none;
+background:
     linear-gradient(
       90deg,
-      rgba(3, 4, 7, 0.22) 0%,
-      rgba(3, 4, 7, 0.12) 20%,
-      rgba(3, 4, 7, 0.05) 38%,
+      rgba(3, 4, 7, 0.14) 0%,
+      rgba(3, 4, 7, 0.08) 20%,
+      rgba(3, 4, 7, 0.03) 38%,
       rgba(3, 4, 7, 0.01) 58%,
       rgba(3, 4, 7, 0) 75%
     ),
     linear-gradient(
       180deg,
-      rgba(3, 4, 7, 0.00) 0%,
-      transparent 72%,
-      rgba(3, 4, 7, 0.02) 100%
+      rgba(3, 4, 7, 0) 0%,
+      transparent 78%,
+      rgba(3, 4, 7, 0.01) 100%
     );
 }
+
 
 /* =====================================================
    INTRO DARKNESS
@@ -172,19 +159,13 @@ SHARED HERO TEXTURE SIZE
 }
 
 
-/*
- * Only vertical allowance.
- * No horizontal negative margins.
- */
 .hero-intro-mask {
   flex: 0 0 auto;
 
   overflow: hidden;
 
-  /* extra room for letters like O */
   padding: 0.12em 0.08em;
 
-  /* keeps the visual spacing unchanged */
   margin: -0.12em -0.08em;
 }
 
@@ -207,10 +188,12 @@ SHARED HERO TEXTURE SIZE
   will-change: transform, opacity;
 }
 
+
 .hero-intro-word--left {
   font-weight: 800;
   padding-right: 5px;
 }
+
 
 .hero-intro-word--right {
   font-weight: 400;
@@ -219,7 +202,7 @@ SHARED HERO TEXTURE SIZE
 
 
 /* =====================================================
-   APERTURE
+   INTRO APERTURE
 ===================================================== */
 
 .hero-intro-window {
@@ -231,6 +214,7 @@ SHARED HERO TEXTURE SIZE
   height: 42svh;
 
   overflow: hidden;
+  isolation: isolate;
 
   border: 0;
   border-radius: 999px;
@@ -246,8 +230,8 @@ SHARED HERO TEXTURE SIZE
 
 
 /*
- * The image itself stays viewport-sized.
- * The aperture changes around it.
+ * The image remains viewport-sized.
+ * JavaScript animates the aperture around it.
  */
 .hero-intro-window__image {
   position: absolute;
@@ -255,33 +239,72 @@ SHARED HERO TEXTURE SIZE
   left: 50%;
   top: 50%;
 
+  z-index: 0;
+
   width: 100vw;
   height: 100svh;
 
   transform: translate(-50%, -50%);
 
   filter:
-    brightness(1.38)
+    brightness(1.36)
     contrast(0.98)
     saturate(1.04);
 }
 
-.hero-intro-window__image,
-.hero-intro-window__image .texture-hover-image,
-.hero-intro-window__image canvas,
-.hero-intro-window__image img {
+
+.hero-intro-window__image img,
+.hero-intro-static-image {
   display: block;
 
   width: 100vw;
   height: 100svh;
 
-  max-width: none;
-}
+  min-width: 100vw;
+  min-height: 100svh;
 
-.hero-intro-window__image img,
-.hero-intro-window__image canvas {
+  max-width: none;
+  max-height: none;
+
   object-fit: contain;
   object-position: center center;
+}
+
+
+/*
+ * Same visual treatment as the final hero.
+ * It stays viewport-sized and is clipped by the aperture.
+ */
+.hero-intro-window__overlay {
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+
+  z-index: 1;
+
+  width: 100vw;
+  height: 100svh;
+
+  transform: translate(-50%, -50%);
+
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(3, 4, 7, 0.22) 0%,
+      rgba(3, 4, 7, 0.12) 20%,
+      rgba(3, 4, 7, 0.05) 38%,
+      rgba(3, 4, 7, 0.01) 58%,
+      rgba(3, 4, 7, 0) 75%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(3, 4, 7, 0) 0%,
+      transparent 72%,
+      rgba(3, 4, 7, 0.02) 100%
+    );
 }
 
 
@@ -293,10 +316,6 @@ SHARED HERO TEXTURE SIZE
   position: relative;
   z-index: 3;
 
-  /*
-   * Same visual gutter concept as Working On:
-   * roughly 4vw on normal desktop screens.
-   */
   width: min(92vw, 1480px);
 
   margin-inline: auto;
@@ -308,16 +327,9 @@ SHARED HERO TEXTURE SIZE
 
   visibility: hidden;
 
-  /*
-   * Critical for TextureHoverImage:
-   * empty areas of this wrapper will no longer
-   * block pointer interaction with the canvas.
-   */
   pointer-events: none;
 }
 
-
-/* Re-enable interaction where needed */
 
 .hero-cinematic__content a,
 .hero-cinematic__content button {
@@ -365,9 +377,6 @@ SHARED HERO TEXTURE SIZE
     Georgia,
     serif;
 
-  /*
-   * Large but gives us more horizontal room.
-   */
   font-size: clamp(4.4rem, 6.4vw, 7.5rem);
   font-weight: 700;
 
@@ -381,10 +390,6 @@ SHARED HERO TEXTURE SIZE
 /* =====================================================
    HERO SUBTITLE
 ===================================================== */
-
-/*
- * This selector intentionally beats your global h2 rules.
- */
 
 .hero-cinematic h2.hero-cinematic__subtitle {
   display: block;
@@ -431,6 +436,7 @@ SHARED HERO TEXTURE SIZE
 
   pointer-events: auto;
 }
+
 
 .hero-cinematic .hero-actions .btn {
   width: auto;
@@ -480,6 +486,7 @@ SHARED HERO TEXTURE SIZE
   pointer-events: auto;
 }
 
+
 .hero-cinematic__scroll span:last-child {
   font-size: 1rem;
 
@@ -513,11 +520,11 @@ SHARED HERO TEXTURE SIZE
   background: #0a1020;
 }
 
+
 :root[data-theme='light']
-.hero-cinematic__overlay {
-  /*
-   * Still photographic even in light mode.
-   */
+.hero-cinematic__overlay,
+:root[data-theme='light']
+.hero-intro-window__overlay {
   background:
     linear-gradient(
       90deg,
@@ -3434,4 +3441,27 @@ SHARED HERO TEXTURE SIZE
       26px
       14px;
   }
+}
+/* =====================================================
+   TEMPORARILY DISABLE HERO INTRO
+===================================================== */
+
+.hero-intro,
+.hero-intro-darkness {
+  display: none !important;
+}
+
+.hero-cinematic__background {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.hero-cinematic__content {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.hero-cinematic__content [data-hero-reveal] {
+  opacity: 1 !important;
+  transform: none !important;
 }

@@ -209,7 +209,7 @@ h6 span,
 
 .section {
   position: relative;
-  padding: 110px 0;
+  padding: 74px 0;
 }
 
 @media (max-width: 720px) {
@@ -218,7 +218,7 @@ h6 span,
   }
 
   .section {
-    padding: 86px 0;
+    padding: 72px 0;
   }
 }
 

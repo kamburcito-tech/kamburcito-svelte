@@ -44,7 +44,7 @@ let workHeroCanvasWrap;
       role: 'Design · Development',
       platform: 'WordPress / Elementor',
       image: '/images/work/surfaceworks-work-project.webp',
-      link: 'https://surfaceworks.com/',
+      link: 'https://surfaceworks.com.au/',
       cta: 'View Live Site →'
     },
     {
