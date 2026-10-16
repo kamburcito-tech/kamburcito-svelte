@@ -44,7 +44,7 @@ let workHeroCanvasWrap;
       role: 'Design · Development',
       platform: 'WordPress / Elementor',
       image: '/images/work/surfaceworks-work-project.webp',
-      link: 'https://surfaceworks.com/',
+      link: 'https://surfaceworks.com.au/',
       cta: 'View Live Site →'
     },
     {
@@ -127,7 +127,7 @@ let workHeroCanvasWrap;
   <meta property="og:url" content="https://kamburcito.com/work/" />
   <meta
     property="og:image"
-    content="https://kamburcito.com/images/kamburcito-work-social-preview.jpg"
+    content="https://kamburcito.com/images/kamburcito-social-preview.webp"
   />
 
   <meta name="twitter:card" content="summary_large_image" />
@@ -135,20 +135,15 @@ let workHeroCanvasWrap;
 
 <section class="work-page-hero">
   <div class="wide-container work-hero-inner">
-    <p class="eyebrow">Kamburcito</p>
-
-    <h1>
-      Our work speaks
-      <span>for itself.</span>
-    </h1>
+    <h1>A closer look at my work.</h1>
 
     <p>
-      We build kick-ass websites that deliver real results for our clients.
-      Unique, memorable designs coupled with custom code for blazing-fast performance.
+      I design and build distinctive websites that feel true to your business
+      and make it easy for the right people to connect.
     </p>
 
     <a href="#featured-work" class="work-hero-button">
-      Explore Featured Work
+      EXPLORE MY PROJECTS <span aria-hidden="true">↓</span>
     </a>
   </div>
 </section>
@@ -193,37 +188,23 @@ let workHeroCanvasWrap;
   </div>
 </section>
 
-<section id="contact" class="final-cta">
-  <div class="wide-container cta-inner">
-    <div class="cta-content">
-      <p class="eyebrow">Open Studio</p>
-
-      <h2>
-        Ready for a website
-        <span>that feels like your brand?</span>
-      </h2>
-
-      <p>
-        Tell me what you’re building or improving. I’ll help you shape it into a polished website
-        with clear direction, strong visuals, and a smooth user experience.
-      </p>
-
-      <div class="cta-actions">
-        <a href="/get-started" class="btn btn-primary">Start a Project</a>        
-      </div>
-    </div>
-  </div>
-
-  <div class="wide-container available-strip">
-    <span>Available for</span>
-
-    <div class="available-list">
-      <p>Web Design</p>
-      <p>Branding</p>
-      <p>Product Design</p>
-      <p>Web Development</p>
-      <p>Website Redesigns</p>
-    </div>
+<section id="contact" class="work-closing" aria-labelledby="work-closing-title">
+  <img
+    class="work-closing__image"
+    src="/images/hero/kamkam.webp"
+    alt=""
+    width="1122"
+    height="1402"
+    loading="lazy"
+    decoding="async"
+  />
+  <div class="work-closing__content">
+    <p class="work-closing__eyebrow">OPEN STUDIO</p>
+    <h2 id="work-closing-title">Let’s create a website that feels like your brand.</h2>
+    <p class="work-closing__description">
+      Thoughtful design, smooth development, and a clear visual direction — built to help your business stand out and connect with the right people.
+    </p>
+    <a class="btn btn-primary work-closing__button" href="/get-started">START A PROJECT</a>
   </div>
 </section>
 

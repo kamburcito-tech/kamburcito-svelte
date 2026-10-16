@@ -12,15 +12,6 @@
   .services-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-
-  .process-flow {
-    grid-template-columns: 1fr;
-  }
-
-  .process-arrow {
-    text-align: center;
-    transform: rotate(90deg);
-  }
 }
 
 /* =====================================================
@@ -42,36 +33,20 @@
 ===================================================== */
 
 @media (max-width: 900px) {
-  /* Hero */
-
-  .hero-split {
-    height: auto;
-    min-height: auto;
-    grid-template-columns: 1fr;
-  }
-
-  .hero-right {
-    display: none;
-  }
-
-  .hero-left {
-    width: 100%;
-    height: auto;
-    min-height: auto;
-    padding: 140px 24px 90px;
-  }
-
-  .hero-content {
-    width: 100%;
-    max-width: 760px;
-    margin: 0 auto;
-  }
 
   /* Work */
 
   .work-header {
     grid-template-columns: 1fr;
     gap: 24px;
+  }
+
+  .work-header h2 {
+    font-size: 2.75rem;
+  }
+
+  .work-controls {
+    justify-content: flex-start;
   }
 
   .project-card {
@@ -103,238 +78,85 @@
   }
 }
 
-/* =====================================================
-   CINEMATIC HERO — TABLET
-===================================================== */
+/* Stack before the editorial column becomes too narrow. */
+@media (max-width: 900px) {
+  .hero-cinematic {
+    grid-template-columns: minmax(0, 1fr);
+  }
 
-.hero-cinematic {
-  min-height: 100svh;
+  .hero-cinematic__content {
+    min-height: 0;
+    padding: 142px 32px 72px;
+  }
+
+  .hero-cinematic__inner {
+    max-width: 720px;
+    margin-inline: auto;
+  }
+
+  .hero-cinematic h1 {
+    font-size: clamp(3.8rem, 8vw, 5.8rem);
+  }
+
+  .hero-cinematic__visual {
+    --hero-focal-x: 50%;
+    --hero-focal-y: 43%;
+    min-height: 0;
+    height: clamp(380px, 56svh, 640px);
+  }
+
+
+  .hero-cinematic__scroll {
+    display: none;
+  }
 }
 
+@media (max-width: 1050px) {
+  .studio-work-card {
+    width: min(360px, 78vw);
+    height: 440px;
+  }
 
-/*
- * NO 760PX MAX WIDTH.
- * This was the rule that kept shrinking your hero.
- */
+  .studio-work-track {
+    gap: 20px;
+  }
 
-.hero-cinematic__content {
-  width: calc(100% - 48px);
-
-  margin-inline: auto;
-
-  padding-top: 132px;
-  padding-bottom: 76px;
+  .studio-work-hint {
+    display: none;
+  }
 }
-
-
-.hero-cinematic h1 {
-  width: min(100%, 900px);
-
-  font-size: clamp(3.8rem, 8.5vw, 6rem);
-}
-
-
-.hero-cinematic h2.hero-cinematic__subtitle {
-  width: min(100%, 680px);
-}
-
-
-.hero-cinematic__overlay {
-  background:
-    linear-gradient(
-      90deg,
-      rgba(3, 4, 7, 0.7) 0%,
-      rgba(3, 4, 7, 0.48) 48%,
-      rgba(3, 4, 7, 0.12) 100%
-    ),
-    linear-gradient(
-      180deg,
-      rgba(3, 4, 7, 0.06),
-      transparent 50%,
-      rgba(3, 4, 7, 0.3)
-    );
-}
-
-
-/* Intro */
-
-.hero-intro-word {
-  font-size: clamp(4rem, 11vw, 7rem);
-}
-
-
-.hero-intro-window {
-  height: 40svh;
-}
-
-
-.hero-cinematic__scroll {
-  right: 24px;
-}
-
-/* =====================================================
-   STANDARD MOBILE
-===================================================== */
 
 @media (max-width: 720px) {
-  /* =====================================================
-   CINEMATIC HERO — MOBILE
-===================================================== */
+  .hero-cinematic__content {
+    padding: 124px 24px 64px;
+  }
 
-.hero-cinematic {
-  min-height: 100svh;
-  align-items: center;
-}
+  .hero-cinematic__eyebrow {
+    margin-bottom: 18px;
+    font-size: 0.68rem;
+  }
 
-.hero-cinematic__content {
-  width: calc(100% - 40px);
-  margin-inline: auto;
+  .hero-cinematic h1 {
+    font-size: clamp(3.1rem, 12vw, 5rem);
+    line-height: 0.96;
+  }
 
-  padding-top: 90px;
-  padding-bottom: 48px;
-}
+  .hero-cinematic h2.hero-cinematic__subtitle {
+    margin-top: 22px;
+    font-size: 1rem;
+  }
 
+  .hero-cinematic .hero-actions {
+    margin-top: 28px;
+  }
 
-/*
- * Better crop for the final workspace image.
- * Adjust 56% later once we replace the background.
- */
+  .hero-cinematic__visual {
+    --hero-focal-y: 48%;
+    height: clamp(320px, 52svh, 520px);
+  }
 
-.hero-cinematic__image img,
-.hero-cinematic__image canvas,
-.hero-intro-window__image img,
-.hero-intro-window__image canvas {
-  object-position: 56% center;
-}
-
-
-.hero-cinematic__overlay {
-  background:
-    linear-gradient(
-      180deg,
-      rgba(3, 4, 7, 0.16) 0%,
-      rgba(3, 4, 7, 0.3) 28%,
-      rgba(3, 4, 7, 0.68) 67%,
-      rgba(3, 4, 7, 0.9) 100%
-    );
-}
-
-
-/* Eyebrow */
-
-.hero-cinematic__eyebrow {
-  margin-bottom: 17px;
-
-  font-size: 0.66rem;
-  letter-spacing: 0.18em;
-}
-
-
-/* H1 */
-
-.hero-cinematic h1 {
-  width: 100%;
-
-  font-size: clamp(3.35rem, 14vw, 5.2rem);
-
-  line-height: 0.89;
-  letter-spacing: -0.055em;
-
-  text-wrap: balance;
-}
-
-
-/* Subtitle */
-
-.hero-cinematic h2.hero-cinematic__subtitle {
-  width: min(100%, 34rem);
-
-  margin-top: 22px;
-
-  font-size: 0.98rem;
-  line-height: 1.55;
-}
-
-
-/* Button */
-
-.hero-cinematic .hero-actions {
-  margin-top: 27px;
-}
-
-.hero-cinematic .hero-actions .btn {
-  min-height: 50px;
-
-  padding: 14px 22px;
-
-  font-size: 0.74rem;
-  letter-spacing: 0.13em;
-}
-
-
-/* Intro typography */
-
-.hero-intro-word {
-  font-size: clamp(2.2rem, 9.2vw, 4rem);
-
-  line-height: 0.8;
-  letter-spacing: -0.07em;
-}
-
-.hero-intro-word--left {
-  padding-right: 10px;
-}
-
-.hero-intro-word--right {
-  padding-left: 10px;
-}
-
-
-.hero-intro-window {
-  height: 34svh;
-}
-
-
-/* Hide scroll cue on phone */
-
-.hero-cinematic__scroll {
-  display: none;
-}
-
-/*
-  On mobile, both words need enough room.
-  We reduce their size rather than wrapping them.
-*/
-.hero-intro-word {
-  font-size: clamp(1.75rem, 8.3vw, 3.4rem);
-  letter-spacing: -0.065em;
-}
-
-.hero-intro-word--left {
-  padding-right: 18px;
-}
-
-.hero-intro-word--right {
-  padding-left: 18px;
-}
-
-.hero-intro-window {
-  height: 34svh;
-}
-
-.hero-cinematic__scroll {
-  display: none;
-}
   /* Hero */
 
-  .hero-split,
-  .hero-left {
-    min-height: auto;
-  }
-
-  .hero-left {
-    padding: 118px 20px 44px;
-  }
 
   .hero-actions {
   width: 100%;
@@ -355,38 +177,6 @@
   letter-spacing: 0.14em;
 }
 
-  /* Premium hero information rail */
-
-  .hero-meta {
-    width: 100%;
-    margin-top: 28px;
-    padding-top: 0;
-    grid-template-columns: 1fr;
-  }
-
-  .hero-meta p {
-    padding: 16px 0;
-    font-size: 0.92rem;
-    border-right: 0;
-  }
-
-  .hero-meta p:not(:last-child) {
-    border-right: 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  }
-
-  .hero-meta p:last-child {
-    padding-bottom: 4px;
-  }
-
-  .hero-meta p::before {
-    margin-bottom: 6px;
-    font-size: 0.59rem;
-  }
-
-  :root[data-theme='light'] .hero-meta p:not(:last-child) {
-    border-bottom-color: rgba(16, 34, 77, 0.12);
-  }
 
   /* Working on */
 
@@ -394,23 +184,35 @@
     padding: 36px 0 40px;
   }
 
+  .studio-work-scroll {
+    padding-inline: 16px;
+  }
+
   .studio-work-header {
     display: block;
     margin-bottom: 28px;
   }
 
-  .studio-work-links {
-    margin-top: 28px;
-    padding-top: 0;
+  .studio-work-header h2 {
+    font-size: clamp(2.7rem, 8vw, 4rem);
   }
 
+
   .studio-work-card {
-    width: 82vw;
-    height: 460px;
+    width: min(340px, 82vw);
+    height: clamp(380px, 105vw, 440px);
+  }
+
+  .studio-work-track {
+    gap: 16px;
   }
 
   .studio-work-content {
-    padding: 26px;
+    padding: 24px;
+  }
+
+  .studio-work-content h3 {
+    font-size: clamp(1.5rem, 5vw, 1.875rem);
   }
 
   /* Services */
@@ -441,10 +243,14 @@
   .work-header {
   margin-bottom: 28px;
 }
+  .work-header h2 {
+    font-size: 2.25rem;
+  }
+
 .work-rail {
   min-height: 0;
   height: auto;
-  padding: 0 0 24px;
+  padding: 0 16px 24px;
   align-items: flex-start;
 }
 
@@ -452,14 +258,11 @@
   height: 420px;
 }
 
-  /* Process */
+  .work-controls button {
+    width: 46px;
+    height: 46px;
+  }
 
- .process-section {
-  padding: 28px 0 40px;
-}
- .process-flow {
-  margin-top: 28px;
-}
 
   /* Testimonials */
 
@@ -496,22 +299,6 @@
     padding: 26px;
   }
 
-  /* About */
-
-  .about-studio__container {
-    padding-top: 42px;
-    padding-bottom: 42px;
-    gap: 28px;
-  }
-
-  .about-studio__description {
-    margin-top: 20px;
-  }
-
-  .about-studio__stats {
-    margin-top: 26px;
-  }
-
   /* FAQ */
 
   .home-faq__container {
@@ -521,17 +308,6 @@
   }
 
   /* Manifesto */
-
-  .manifesto-section {
-    min-height: auto;
-    padding: 52px 20px;
-    align-items: center;
-    justify-content: center;
-  }
-
-  #hero-webgl {
-    opacity: 0.42;
-  }
 
   .manifesto-content {
     width: 100%;
@@ -557,9 +333,9 @@
     max-width: 390px;
     margin: 0 auto;
 
-    font-size: clamp(2.7rem, 11vw, 3.85rem);
-    line-height: 0.98;
-    letter-spacing: -0.045em;
+    font-size: clamp(2.4rem, 6vw, 3.2rem);
+    line-height: 1.03;
+    letter-spacing: -0.035em;
     text-align: center;
     text-wrap: balance;
   }
@@ -592,52 +368,19 @@
 ===================================================== */
 
 @media (max-width: 480px) {
-  /* Cinematic Hero */
-
-/* =====================================================
-   CINEMATIC HERO — SMALL MOBILE
-===================================================== */
-
-.hero-cinematic__content {
-  width: calc(100% - 36px);
-
-  padding-top: 86px;
-  padding-bottom: 44px;
-}
-
-
-.hero-cinematic h1 {
-  font-size: clamp(3rem, 14vw, 4.4rem);
-}
-
-
-.hero-cinematic h2.hero-cinematic__subtitle {
-  font-size: 0.95rem;
-}
-
-
-.hero-intro-word {
-  font-size: clamp(1.8rem, 8.5vw, 3rem);
-}
-
-
-.hero-intro-word--left {
-  padding-right: 8px;
-}
-
-.hero-intro-word--right {
-  padding-left: 8px;
-}
-
-
-.hero-intro-window {
-  height: 30svh;
-}
-  /* Hero */
-
-  .hero-left {
-    padding: 110px 20px 38px;
+  .hero-cinematic__content {
+    padding: 110px 20px 56px;
   }
+
+  .hero-cinematic h1 {
+    font-size: clamp(3rem, 12vw, 4.4rem);
+  }
+
+  .hero-cinematic__visual {
+    height: clamp(280px, 45svh, 420px);
+  }
+
+
   .hero-actions {
   gap: 10px;
 }
@@ -652,19 +395,6 @@
     width: 100%;
   }
 
-  .hero-meta {
-    margin-top: 24px;
-  }
-
-  .hero-meta p {
-    padding: 14px 0;
-    font-size: 0.88rem;
-  }
-
-  .hero-meta p::before {
-    margin-bottom: 5px;
-    font-size: 0.56rem;
-  }
 
   /* Section spacing */
 
@@ -687,9 +417,6 @@
   padding-bottom: 20px;
 }
 
-.process-section {
-  padding: 24px 0 34px;
-}
 
   .studio-work-header,
   .work-header,
@@ -707,22 +434,127 @@
 
   /* About and FAQ */
 
-  .about-studio__container,
   .home-faq__container {
     padding-top: 36px;
     padding-bottom: 36px;
     gap: 24px;
   }
 
-  /* Manifesto */
-
-  .manifesto-section {
-    padding: 46px 18px;
-  }
 
   /* Final CTA */
 
   .cta-inner {
     padding: 28px 20px;
+  }
+}
+
+@media (max-width: 1100px) and (min-width: 761px) {
+
+  .process-step__copy h3 {
+    font-size: clamp(2.1rem, 3.7vw, 2.8rem);
+  }
+
+  .process-step__copy p {
+    font-size: 0.87rem;
+  }
+}
+
+@media (max-width: 760px) {
+  .process-section {
+    padding: 78px 0 88px;
+  }
+
+  .process-heading h2 {
+    font-size: clamp(3.15rem, 8vw, 4.3rem);
+  }
+
+  .process-heading__subtitle {
+    max-width: 34rem;
+    margin-top: 18px;
+  }
+
+  .process-list {
+    width: min(100%, 520px);
+    height: auto;
+    margin-top: 64px;
+  }
+
+  .process-route {
+    display: none;
+  }
+
+  .process-list::before,
+  .process-list::after {
+    content: '';
+    position: absolute;
+    top: 24px;
+    bottom: 146px;
+    left: 22px;
+    width: 1.5px;
+    background: rgba(148, 174, 212, 0.35);
+    pointer-events: none;
+  }
+
+  .process-list::after {
+    width: 2.5px;
+    background: #4c8cff;
+    transform: scaleY(var(--process-progress));
+    transform-origin: top;
+  }
+
+  .process-milestones {
+    display: grid;
+    gap: 8px;
+    height: auto;
+  }
+
+  .process-milestones .process-step {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: 100%;
+    min-height: 170px;
+  }
+
+  .process-marker {
+    top: 24px;
+    left: 22px;
+  }
+
+  .process-step__copy {
+    padding: 0 0 0 70px;
+  }
+
+  .process-step__copy h3 {
+    font-size: clamp(2.45rem, 7vw, 3rem);
+  }
+
+  .process-step__copy p {
+    max-width: 33ch;
+    font-size: 0.92rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .process-heading h2 {
+    font-size: clamp(2.75rem, 11vw, 3.45rem);
+  }
+
+  .process-heading__subtitle {
+    font-size: 0.94rem;
+  }
+
+  .process-list {
+    margin-top: 54px;
+  }
+
+  .process-step__copy {
+    padding-left: 64px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) and (max-width: 760px) {
+  .process-list::after {
+    transform: none;
   }
 }

@@ -1,10 +1,9 @@
 <script>
+  import { afterNavigate } from '$app/navigation';
+  import { resolve } from '$app/paths';
+
   import '@fontsource-variable/cormorant-garamond';
   import '@fontsource-variable/manrope';
-
-  // Keep your other existing imports below.
-
-  import { onMount } from 'svelte';
 
   import '../styles/00-global.css';
   import '../styles/01-header-footer.css';
@@ -14,29 +13,37 @@
   let { children } = $props();
 
   let mobileMenuOpen = $state(false);
-  let theme = $state('dark');
-
-  onMount(() => {
-    theme =
-      document.documentElement.dataset.theme === 'light'
-        ? 'light'
-        : 'dark';
-  });
 
   function closeMobileMenu() {
     mobileMenuOpen = false;
   }
 
-  function toggleTheme() {
-    theme = theme === 'dark' ? 'light' : 'dark';
+  afterNavigate(closeMobileMenu);
 
-    document.documentElement.dataset.theme = theme;
-    document.documentElement.style.colorScheme = theme;
-
-    localStorage.setItem('kamburcito-theme', theme);
+  function handleMenuKeydown(event) {
+    if (mobileMenuOpen && event.key === 'Escape') {
+      closeMobileMenu();
+      document.querySelector('.mobile-menu-toggle')?.focus();
+    }
   }
 
+  function handleMenuResize() {
+    if (window.innerWidth > 820) closeMobileMenu();
+  }
+
+  function toggleTheme() {
+    const theme = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+    document.documentElement.dataset.theme = theme;
+    document.documentElement.style.colorScheme = theme;
+    try {
+      localStorage.setItem('kamburcito-theme', theme);
+    } catch {
+      // Theme still works when storage is unavailable.
+    }
+  }
 </script>
+
+<svelte:window onkeydown={handleMenuKeydown} onresize={handleMenuResize} />
 
 <svelte:head>
   <link rel="icon" href="/favicon.ico" sizes="any" />
@@ -62,15 +69,13 @@
   />
 
   <link rel="manifest" href="/site.webmanifest" />
-
-  <meta name="theme-color" content="#030408" />
 </svelte:head>
 
 <header class="site-header">
   <div class="nav">
     <div class="wide-container nav-inner">
       <a
-        href="/"
+        href={resolve('/')}
         class="brand"
         aria-label="Kamburcito Studio home"
         onclick={closeMobileMenu}
@@ -79,29 +84,58 @@
       </a>
 
       <nav class="desktop-nav" aria-label="Main navigation">
-        <a href="/work">Work</a>
-        <a href="/pricing">Pricing</a>
-        <a href="/get-started">Get a Quote</a>
+        <a href={resolve('/work')}>Work</a>
+        <a href={resolve('/pricing')}>Pricing</a>
+        <a href={resolve('/get-started')}>Get a Quote</a>
       </nav>
 
       <div class="nav-actions">
-        <!-- theme toggle -->
+        <button
+          type="button"
+          class="theme-toggle"
+          aria-label="Toggle light and dark mode"
+          title="Toggle light and dark mode"
+          onclick={toggleTheme}
+        >
+          <svg class="theme-toggle__sun" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"></path>
+          </svg>
+          <svg class="theme-toggle__moon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M20.2 15.6A8.5 8.5 0 0 1 8.4 3.8 8.5 8.5 0 1 0 20.2 15.6Z"></path>
+          </svg>
+        </button>
 
         <a
-          href="/get-started"
+          href={resolve('/get-started')}
           class="mini-cta btn-primary"
           aria-label="Start a website project"
           onclick={closeMobileMenu}
         >
           Get Started
         </a>
+        <button
+          type="button"
+          class:open={mobileMenuOpen}
+          class="mobile-menu-toggle"
+          aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+          aria-controls="mobile-navigation"
+          aria-expanded={mobileMenuOpen}
+          onclick={() => (mobileMenuOpen = !mobileMenuOpen)}
+        >
+          <span></span>
+          <span></span>
+        </button>
       </div>
     </div>
   </div>
 
-  {#if mobileMenuOpen}
-    <!-- your existing mobile menu -->
-  {/if}
+  <nav id="mobile-navigation" class="mobile-menu" aria-label="Mobile navigation" hidden={!mobileMenuOpen}>
+    <a href={resolve('/')} onclick={closeMobileMenu}>Home</a>
+    <a href={resolve('/work')} onclick={closeMobileMenu}>Work</a>
+    <a href={resolve('/pricing')} onclick={closeMobileMenu}>Pricing</a>
+    <a href={resolve('/get-started')} onclick={closeMobileMenu}>Get Started</a>
+  </nav>
 </header>
 
 {@render children()}

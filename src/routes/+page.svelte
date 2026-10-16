@@ -1,7 +1,6 @@
 <script>
   import { onMount } from 'svelte';
   import * as THREE from 'three';
-  import LiquidMetal from '$lib/components/LiquidMetal.svelte';
   import TextureHoverImage from '$lib/components/TextureHoverImage.svelte';
   import '../styles/10-homepage.css';
   import '../styles/90-homepage-responsive.css';
@@ -19,15 +18,9 @@
   import goldenDistrictImage from '$lib/assets/working_on/golden-district-partners-working-on-homepage.webp?enhanced&w=500;360';
   import beachBitesImage from '$lib/assets/working_on/beach-bites-club-working-on-homepage.webp?enhanced&w=500;360';
   import petraValdezImage from '$lib/assets/working_on/petra-valdez-working-on-homepage.webp?enhanced&w=500;360';
-  import aboutImage from '$lib/assets/about/patricia-diaz-kamburcito-web-developer-about.webp?enhanced&w=500;360';
   let canvas;
   let manifestoSection;
-  let heroSection;
-  let heroIntro;
-  let heroWindow;
-  let heroContent;
-  let heroBackground;
-  let heroDarkness;
+  let aboutSection;
 
   const structuredData = {
   '@context': 'https://schema.org',
@@ -39,7 +32,7 @@
       url: 'https://kamburcito.com/',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://kamburcito.com/images/kamburcito-logo.webp'
+        url: 'https://kamburcito.com/android-chrome-512x512.png'
       },
       image: 'https://kamburcito.com/images/kamburcito-social-preview.webp',
       description:
@@ -97,7 +90,7 @@
       publisher: {
         '@id': 'https://kamburcito.com/#business'
       },
-      inLanguage: ['en', 'es']
+      inLanguage: ['en']
     },
     {
       '@type': 'WebPage',
@@ -126,6 +119,7 @@ let scrollLeft = 0;
 let studioScroll;
 
 function showDragCursor(event) {
+  if (event.pointerType !== 'mouse') return;
   dragCursorVisible = true;
   moveDragCursor(event);
 }
@@ -141,18 +135,18 @@ function moveDragCursor(event) {
 }
 
 function startDrag(event) {
-  if (!studioScroll) return;
+  if (!studioScroll || event.pointerType !== 'mouse' || event.button !== 0) return;
 
   isDragging = true;
   startX = event.pageX - studioScroll.offsetLeft;
   scrollLeft = studioScroll.scrollLeft;
 }
-
 function stopDrag() {
   isDragging = false;
 }
 
 function dragScroll(event) {
+  if (event.pointerType !== 'mouse') return;
   moveDragCursor(event);
 
   if (!isDragging || !studioScroll) return;
@@ -169,11 +163,19 @@ function handleStudioKeydown(event) {
   if (!studioScroll) return;
 
   if (event.key === 'ArrowRight') {
-    studioScroll.scrollBy({ left: 320, behavior: 'smooth' });
+    event.preventDefault();
+    studioScroll.scrollBy({
+      left: 320,
+      behavior: 'smooth'
+    });
   }
 
   if (event.key === 'ArrowLeft') {
-    studioScroll.scrollBy({ left: -320, behavior: 'smooth' });
+    event.preventDefault();
+    studioScroll.scrollBy({
+      left: -320,
+      behavior: 'smooth'
+    });
   }
 }
 
@@ -192,7 +194,7 @@ function handleStudioKeydown(event) {
   },
   {
     title: 'Casa Nido',
-    subtitle: 'Real State Agency',
+    subtitle: 'Real Estate Agency',
     status: 'In progress',
     image: casaNidoImage,
   },
@@ -300,29 +302,300 @@ function handleStudioKeydown(event) {
     }
   ];
 
- const process = [
-  {
-    step: '01',
-    title: 'Discover',
-    text: 'We define your goals, audience, style direction, and what your website needs to communicate.',
-    meta: 'Strategy / Structure / Direction',
-    icon: 'compass'
-  },
-  {
-    step: '02',
-    title: 'Design',
-    text: 'I create a polished visual direction with clear sections, strong layout, and a memorable brand feel.',
-    meta: 'UI Design / Branding / Experience',
-    icon: 'spark'
-  },
-  {
-    step: '03',
-    title: 'Build',
-    text: 'The design becomes a responsive website with clean structure, smooth interactions, and launch-ready pages.',
-    meta: 'Development / QA / Launch',
-    icon: 'code'
+  let workRail;
+  let workCycle = 0;
+  let workStep = 0;
+  let workAutoplayFrame = 0;
+  let workNavigationFrame = 0;
+  let workInteracted = false;
+  let workHovered = false;
+  let workFocused = false;
+  let workReducedMotion;
+  let workTouchFirst;
+  let workDragStartX = null;
+  let workDragScrollLeft = 0;
+  let workDragged = false;
+
+  function measureWork() {
+    const cards = workRail?.querySelectorAll('.project-card');
+    if (!cards || cards.length < projects.length + 1) return;
+
+    const cycle = cards[projects.length].offsetLeft - cards[0].offsetLeft;
+    const step = cards[1].offsetLeft - cards[0].offsetLeft;
+    const position = workStep ? (workRail.scrollLeft - workCycle) / workStep : 0;
+    workCycle = cycle;
+    workStep = step;
+    workRail.scrollLeft = cycle + position * step;
   }
-];
+
+  function normalizeWorkScroll() {
+    if (!workRail || !workCycle || workNavigationFrame) return 0;
+    let shift = 0;
+    if (workRail.scrollLeft < workCycle) shift = workCycle;
+    if (workRail.scrollLeft >= workCycle * 2) shift = -workCycle;
+    if (shift) {
+      workRail.scrollLeft += shift;
+      workDragScrollLeft += shift;
+    }
+    return shift;
+  }
+
+  function stopWorkAutoplay() {
+    cancelAnimationFrame(workAutoplayFrame);
+    workAutoplayFrame = 0;
+  }
+
+  function startWorkAutoplay() {
+    if (
+      workAutoplayFrame || !workRail || !workCycle || workInteracted ||
+      workHovered || workFocused || document.hidden ||
+      workReducedMotion?.matches || workTouchFirst?.matches
+    ) return;
+
+    let previous = 0;
+    function frame(now) {
+      if (previous) {
+        workRail.scrollLeft += (workCycle / 42000) * Math.min(now - previous, 64);
+        normalizeWorkScroll();
+      }
+      previous = now;
+      workAutoplayFrame = requestAnimationFrame(frame);
+    }
+    workAutoplayFrame = requestAnimationFrame(frame);
+  }
+
+  function syncWorkAutoplay() {
+    stopWorkAutoplay();
+    startWorkAutoplay();
+  }
+
+  function stopWorkForUser() {
+    workInteracted = true;
+    stopWorkAutoplay();
+    cancelAnimationFrame(workNavigationFrame);
+    workNavigationFrame = 0;
+  }
+
+  function navigateWork(direction) {
+    if (!workRail || !workStep) return;
+    stopWorkForUser();
+    const from = workRail.scrollLeft;
+    const index = Math.round((from - workCycle) / workStep);
+    const to = workCycle + (index + direction) * workStep;
+    if (workReducedMotion?.matches) {
+      workRail.scrollLeft = to;
+      normalizeWorkScroll();
+      return;
+    }
+
+    let started;
+    function frame(now) {
+      started ??= now;
+      const progress = Math.min((now - started) / 550, 1);
+      workRail.scrollLeft = from + (to - from) * (1 - (1 - progress) ** 3);
+      if (progress < 1) {
+        workNavigationFrame = requestAnimationFrame(frame);
+      } else {
+        workNavigationFrame = 0;
+        normalizeWorkScroll();
+      }
+    }
+    workNavigationFrame = requestAnimationFrame(frame);
+  }
+
+  function handleWorkKeydown(event) {
+    if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+    event.preventDefault();
+    navigateWork(event.key === 'ArrowRight' ? 1 : -1);
+  }
+
+  function startWorkDrag(event) {
+    stopWorkForUser();
+    if (event.pointerType !== 'mouse' || event.button !== 0) return;
+    workDragStartX = event.clientX;
+    workDragScrollLeft = workRail.scrollLeft;
+    workDragged = false;
+  }
+
+  function moveWorkDrag(event) {
+    if (workDragStartX === null || event.buttons !== 1) return;
+    const distance = event.clientX - workDragStartX;
+    if (!workDragged && Math.abs(distance) < 6) return;
+    workDragged = true;
+    event.preventDefault();
+    workRail.scrollLeft = workDragScrollLeft - distance;
+    normalizeWorkScroll();
+  }
+
+  function endWorkDrag() {
+    workDragStartX = null;
+    if (workDragged) setTimeout(() => { workDragged = false; }, 0);
+  }
+
+  function handleWorkClick(event) {
+    if (!workDragged) return;
+    event.preventDefault();
+    event.stopPropagation();
+    workDragged = false;
+  }
+
+  onMount(() => {
+    workReducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+    workTouchFirst = matchMedia('(hover: none), (pointer: coarse), (max-width: 720px)');
+    const observer = new ResizeObserver(measureWork);
+    observer.observe(workRail);
+    observer.observe(workRail.querySelector('.project-card'));
+    measureWork();
+    workReducedMotion.addEventListener('change', syncWorkAutoplay);
+    workTouchFirst.addEventListener('change', syncWorkAutoplay);
+    document.addEventListener('visibilitychange', syncWorkAutoplay);
+    startWorkAutoplay();
+
+    return () => {
+      stopWorkAutoplay();
+      cancelAnimationFrame(workNavigationFrame);
+      observer.disconnect();
+      workReducedMotion.removeEventListener('change', syncWorkAutoplay);
+      workTouchFirst.removeEventListener('change', syncWorkAutoplay);
+      document.removeEventListener('visibilitychange', syncWorkAutoplay);
+    };
+  });
+
+  const process = [
+    {
+      step: '01',
+      title: 'Discover',
+      text: 'We talk about your business, goals, audience, and ideas.'
+    },
+    {
+      step: '02',
+      title: 'Design',
+      text: 'I develop the visual direction, layout, and overall experience.'
+    },
+    {
+      step: '03',
+      title: 'Build',
+      text: 'Your design becomes a responsive, functional website.'
+    },
+    {
+      step: '04',
+      title: 'Refine',
+      text: 'We review, test, and polish the details together.'
+    },
+    {
+      step: '05',
+      title: 'Launch',
+      text: 'Your website goes live, ready to share with the world.'
+    }
+  ];
+
+  let processList;
+
+  onMount(() => {
+    if (!processList) return;
+    const markers = [...processList.querySelectorAll('.process-marker')];
+    const steps = [...processList.querySelectorAll('.process-step')];
+    const path = processList.querySelector('.process-route__fill');
+    const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+    const mobile = matchMedia('(max-width: 760px)');
+    let positions = [];
+    let thresholds = [];
+    let routeLength = 0;
+    let visible = false;
+    let frame = 0;
+
+    function measure() {
+      positions = markers.map((marker) => {
+        const rect = marker.getBoundingClientRect();
+        return rect.top + window.scrollY + rect.height / 2;
+      });
+      const span = positions.at(-1) - positions[0] || 1;
+      if (mobile.matches) {
+        thresholds = positions.map((position) => (position - positions[0]) / span);
+      } else {
+        routeLength = path.getTotalLength();
+        path.style.strokeDasharray = `${routeLength} ${routeLength}`;
+        const bottomStart = routeLength - 765;
+        thresholds = [0, 310 / routeLength, 620 / routeLength,
+          (bottomStart + 145) / routeLength, (bottomStart + 615) / routeLength];
+      }
+      requestProgress();
+    }
+
+    function updateProgress() {
+      frame = 0;
+      const span = positions.at(-1) - positions[0] || 1;
+      const progress = reducedMotion.matches
+        ? 1
+        : Math.max(0, Math.min(1,
+          (window.innerHeight * 0.72 - (positions[0] - window.scrollY)) / span));
+      processList.style.setProperty('--process-progress', progress);
+      if (!mobile.matches) path.style.strokeDashoffset = `${routeLength * (1 - progress)}`;
+      steps.forEach((step, index) => {
+        step.classList.toggle('is-reached', progress >= thresholds[index]);
+      });
+    }
+
+    function requestProgress() {
+      if (frame) return;
+      frame = requestAnimationFrame(updateProgress);
+    }
+
+    function sync() {
+      window.removeEventListener('scroll', requestProgress);
+      cancelAnimationFrame(frame);
+      frame = 0;
+      if (visible && !document.hidden && !reducedMotion.matches) {
+        window.addEventListener('scroll', requestProgress, { passive: true });
+      }
+      requestProgress();
+    }
+
+    const observer = new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting;
+      sync();
+    }, { rootMargin: '200px 0px' });
+    const resizeObserver = new ResizeObserver(measure);
+    processList.classList.add('process-enhanced');
+    observer.observe(processList);
+    resizeObserver.observe(processList);
+    reducedMotion.addEventListener('change', sync);
+    mobile.addEventListener('change', measure);
+    document.addEventListener('visibilitychange', sync);
+    window.addEventListener('resize', measure);
+    window.addEventListener('load', measure, { once: true });
+    measure();
+
+    return () => {
+      window.removeEventListener('scroll', requestProgress);
+      window.removeEventListener('load', measure);
+      window.removeEventListener('resize', measure);
+      document.removeEventListener('visibilitychange', sync);
+      reducedMotion.removeEventListener('change', sync);
+      mobile.removeEventListener('change', measure);
+      cancelAnimationFrame(frame);
+      observer.disconnect();
+      resizeObserver.disconnect();
+    };
+  });
+
+  onMount(() => {
+    if (!aboutSection || !('IntersectionObserver' in window) ||
+        matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const section = aboutSection;
+    if (section.getBoundingClientRect().top < innerHeight * 0.8) return;
+
+    section.classList.add('is-pending');
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return;
+      section.classList.add('is-visible');
+      observer.disconnect();
+    }, { threshold: 0.18 });
+    observer.observe(section);
+
+    return () => observer.disconnect();
+  });
 
   const testimonials = [
     
@@ -438,41 +711,6 @@ function handleStudioKeydown(event) {
     testimonialColumns[index % 3].push(testimonial);
   });
   
-  function playMagicSound() {
-    if (typeof window === 'undefined') return;
-
-    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-
-    if (!AudioContextClass) return;
-
-    audioContext = audioContext || new AudioContextClass();
-
-    if (audioContext.state === 'suspended') {
-      audioContext.resume();
-    }
-
-    const now = audioContext.currentTime;
-    const notes = [660, 990, 1320];
-
-    notes.forEach((frequency, index) => {
-      const oscillator = audioContext.createOscillator();
-      const gain = audioContext.createGain();
-      const startTime = now + index * 0.035;
-
-      oscillator.type = 'sine';
-      oscillator.frequency.setValueAtTime(frequency, startTime);
-
-      gain.gain.setValueAtTime(0.0001, startTime);
-      gain.gain.linearRampToValueAtTime(0.035, startTime + 0.01);
-      gain.gain.exponentialRampToValueAtTime(0.001, startTime + 0.22);
-
-      oscillator.connect(gain);
-      gain.connect(audioContext.destination);
-
-      oscillator.start(startTime);
-      oscillator.stop(startTime + 0.24);
-    });
-  }
 
   function playProjectSound() {
   if (typeof window === 'undefined') return;
@@ -507,286 +745,19 @@ function handleStudioKeydown(event) {
     oscillator.stop(now + index * 0.045 + 0.34);
   });
 }
-onMount(() => {
-  if (
-    !heroSection ||
-    !heroIntro ||
-    !heroWindow ||
-    !heroContent ||
-    !heroBackground ||
-    !heroDarkness
-  ) {
-    return;
-  }
-
-  const prefersReducedMotion = window.matchMedia(
-    '(prefers-reduced-motion: reduce)'
-  ).matches;
-
-  const introWords = heroIntro.querySelectorAll('.hero-intro-word');
-  const contentItems = heroContent.querySelectorAll('[data-hero-reveal]');
-
-  /* =====================================================
-     REDUCED MOTION
-  ===================================================== */
-
-  if (prefersReducedMotion) {
-    heroIntro.style.display = 'none';
-    heroDarkness.style.display = 'none';
-
-    heroBackground.style.opacity = '1';
-    heroBackground.style.visibility = 'visible';
-
-    heroContent.style.opacity = '1';
-    heroContent.style.visibility = 'visible';
-
-    contentItems.forEach((item) => {
-      item.style.opacity = '1';
-      item.style.transform = 'none';
-    });
-
-    return;
-  }
-
-  /* =====================================================
-     INITIAL STATES
-  ===================================================== */
-
-  introWords.forEach((word) => {
-    word.style.opacity = '1';
-    word.style.transform = 'none';
-  });
-
-  contentItems.forEach((item) => {
-    item.style.opacity = '0';
-    item.style.transform = 'translateY(28px)';
-  });
-
-  heroContent.style.visibility = 'visible';
-
-  heroBackground.style.opacity = '0';
-  heroBackground.style.visibility = 'visible';
-
-  const animations = [];
-
-  /* =====================================================
-     1. OPEN NARROW APERTURE
-  ===================================================== */
-
-  animations.push(
-    heroWindow.animate(
-      [
-        {
-          width: '0vw',
-          height: '42svh',
-          borderRadius: '999px'
-        },
-        {
-          width: '10vw',
-          height: '42svh',
-          borderRadius: '999px'
-        }
-      ],
-      {
-        duration: 300,
-        delay: 40,
-        easing: 'cubic-bezier(0.76, 0, 0.24, 1)',
-        fill: 'forwards'
-      }
-    )
-  );
-
-  /* =====================================================
-     2. EXPAND APERTURE TO FULL SCREEN
-  ===================================================== */
-
-  animations.push(
-    heroWindow.animate(
-      [
-        {
-          width: '10vw',
-          height: '42svh',
-          borderRadius: '999px'
-        },
-        {
-          width: '25vw',
-          height: '64svh',
-          borderRadius: '160px'
-        },
-        {
-          width: '150vw',
-          height: '130svh',
-          borderRadius: '0px'
-        }
-      ],
-      {
-        duration: 600,
-        delay: 320,
-        easing: 'cubic-bezier(0.76, 0, 0.24, 1)',
-        fill: 'forwards'
-      }
-    )
-  );
-
-  /* =====================================================
-     3. REVEAL FINAL BACKGROUND
-  ===================================================== */
-
-  animations.push(
-    heroBackground.animate(
-      [
-        {
-          opacity: 0
-        },
-        {
-          opacity: 0,
-          offset: 0.2
-        },
-        {
-          opacity: 1
-        }
-      ],
-      {
-        duration: 480,
-        delay: 520,
-        easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
-        fill: 'forwards'
-      }
-    )
-  );
-
-  /* =====================================================
-     4. REMOVE INTRO DARKNESS
-  ===================================================== */
-
-  animations.push(
-    heroDarkness.animate(
-      [
-        {
-          opacity: 1
-        },
-        {
-          opacity: 1,
-          offset: 0.15
-        },
-        {
-          opacity: 0
-        }
-      ],
-      {
-        duration: 460,
-        delay: 560,
-        easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
-        fill: 'forwards'
-      }
-    )
-  );
-
-  /* =====================================================
-     5. MOVE KAMBURCITO / STUDIO WORDS
-  ===================================================== */
-
-  introWords.forEach((word, index) => {
-    const direction = index === 0 ? '-34vw' : '34vw';
-
-    animations.push(
-      word.animate(
-        [
-          {
-            opacity: 1,
-            transform: 'translateX(0)'
-          },
-          {
-            opacity: 1,
-            transform: `translateX(${direction})`,
-            offset: 0.62
-          },
-          {
-            opacity: 0,
-            transform: `translateX(${direction})`
-          }
-        ],
-        {
-          duration: 650,
-          delay: 340,
-          easing: 'cubic-bezier(0.76, 0, 0.24, 1)',
-          fill: 'forwards'
-        }
-      )
-    );
-  });
-
-  /* =====================================================
-     6. REMOVE COMPLETE INTRO OVERLAY
-  ===================================================== */
-
-  animations.push(
-    heroIntro.animate(
-      [
-        {
-          opacity: 1
-        },
-        {
-          opacity: 1,
-          offset: 0.65
-        },
-        {
-          opacity: 0
-        }
-      ],
-      {
-        duration: 680,
-        delay: 580,
-        easing: 'linear',
-        fill: 'forwards'
-      }
-    )
-  );
-
-  /* =====================================================
-     7. REVEAL FINAL HERO CONTENT
-  ===================================================== */
-
-  contentItems.forEach((item, index) => {
-    animations.push(
-      item.animate(
-        [
-          {
-            opacity: 0,
-            transform: 'translateY(24px)'
-          },
-          {
-            opacity: 1,
-            transform: 'translateY(0)'
-          }
-        ],
-        {
-          duration: 420,
-          delay: 780 + index * 50,
-          easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
-          fill: 'forwards'
-        }
-      )
-    );
-  });
-
-  /* =====================================================
-     CLEANUP
-  ===================================================== */
-
-  return () => {
-    animations.forEach((animation) => animation.cancel());
-  };
-});
 
   onMount(() => {
   if (!canvas || !manifestoSection) return;
 
-  const prefersReducedMotion = window.matchMedia(
-    '(prefers-reduced-motion: reduce)'
-  ).matches;
+  let cancelled = false;
+  let cleanupManifesto;
 
-  const scene = new THREE.Scene();
+  async function initManifesto() {
+    const THREE = await import('three');
+
+    if (cancelled) return;
+
+    const scene = new THREE.Scene();
 
   const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 10);
   camera.position.z = 1;
@@ -802,13 +773,19 @@ onMount(() => {
 
   const geometry = new THREE.PlaneGeometry(2, 2, 64, 64);
 
+  const manifestoMotionQuery = window.matchMedia(
+    '(prefers-reduced-motion: reduce)'
+  );
+  let manifestoPrefersReducedMotion = manifestoMotionQuery.matches;
+
   const material = new THREE.ShaderMaterial({
     uniforms: {
       uTexture: { value: null },
       uTime: { value: 0 },
       uMouse: { value: new THREE.Vector2(0.5, 0.5) },
       uResolution: { value: new THREE.Vector2(1, 1) },
-      uImageResolution: { value: new THREE.Vector2(1, 1) }
+      uImageResolution: { value: new THREE.Vector2(1, 1) },
+      uMotion: { value: manifestoPrefersReducedMotion ? 0 : 1 }
     },
     transparent: true,
     vertexShader: `
@@ -831,6 +808,7 @@ onMount(() => {
       uniform vec2 uMouse;
       uniform vec2 uResolution;
       uniform vec2 uImageResolution;
+      uniform float uMotion;
 
       varying vec2 vUv;
 
@@ -850,23 +828,30 @@ onMount(() => {
 
         if (canvasAspect > imageAspect) {
           float scale = imageAspect / canvasAspect;
-          uv.y = (uv.y - 0.5) * scale + 0.5;
+          uv.y = (uv.y - 0.5) * scale + 0.5 + (1.0 - scale) * 0.07;
         } else {
           float scale = canvasAspect / imageAspect;
           uv.x = (uv.x - 0.5) * scale + 0.5;
         }
 
+        /* Keep the gallery structure still; animate only the LED wall interior. */
+        float wallMask = uMotion
+          * smoothstep(0.08, 0.16, uv.x)
+          * (1.0 - smoothstep(0.84, 0.92, uv.x))
+          * smoothstep(0.48, 0.56, uv.y)
+          * (1.0 - smoothstep(0.76, 0.84, uv.y));
+
         /* -----------------------------------------
            Slow cinematic drift — softer than before
         ------------------------------------------ */
-        uv.x += sin(uv.y * 8.0 + uTime * 0.45) * 0.010;
-        uv.y += cos(uv.x * 6.0 + uTime * 0.35) * 0.008;
+        uv.x += sin(uv.y * 8.0 + uTime * 0.45) * 0.010 * wallMask;
+        uv.y += cos(uv.x * 6.0 + uTime * 0.35) * 0.008 * wallMask;
 
         /* -----------------------------------------
            Liquid distortion — reduced
         ------------------------------------------ */
         float n = noise(uv * 2.0);
-        uv += n * 0.010;
+        uv += n * 0.010 * wallMask;
 
         /* -----------------------------------------
            Mouse ripple — reduced
@@ -875,13 +860,13 @@ onMount(() => {
         float ripple = smoothstep(0.42, 0.0, mouseDist);
 
         if (mouseDist > 0.001) {
-          uv += normalize(baseUv - uMouse) * 0.018 * ripple;
+          uv += normalize(baseUv - uMouse) * 0.018 * ripple * wallMask;
         }
 
         /* -----------------------------------------
            Subtle RGB split
         ------------------------------------------ */
-        vec2 rgbOffset = vec2(0.003 * ripple, 0.0015 * ripple);
+        vec2 rgbOffset = vec2(0.003 * ripple, 0.0015 * ripple) * wallMask;
 
         float r = texture2D(uTexture, uv + rgbOffset).r;
         float g = texture2D(uTexture, uv).g;
@@ -892,10 +877,10 @@ onMount(() => {
         /* -----------------------------------------
            Very subtle breathing glow
         ------------------------------------------ */
-        color.rgb *= 1.0 + sin(uTime * 0.8) * 0.03;
+        color.rgb *= 1.0 + sin(uTime * 0.8) * 0.03 * wallMask;
 
         /* -----------------------------------------
-           Softer vignette so the desk shows more
+           Subtle edge vignette
         ------------------------------------------ */
         float dist = distance(baseUv, vec2(0.5));
         float vignette = 1.0 - smoothstep(0.38, 0.90, dist);
@@ -911,77 +896,253 @@ onMount(() => {
 
   const textureLoader = new THREE.TextureLoader();
 
-  const texture = textureLoader.load(
-    '/images/kamburcito-manifesto-background.webp',
-    (loadedTexture) => {
-      const image = loadedTexture.image;
+let animationFrame = null;
+let destroyed = false;
+let textureReady = false;
+let sectionVisible = false;
 
-      material.uniforms.uTexture.value = loadedTexture;
+const renderOnce = () => {
+  if (destroyed || !textureReady) return;
 
-      if (image) {
-        material.uniforms.uImageResolution.value.set(
-          image.naturalWidth || image.width,
-          image.naturalHeight || image.height
-        );
+  renderer.render(scene, camera);
+};
+
+const shouldAnimate = () => {
+  return (
+    !destroyed &&
+    textureReady &&
+    !manifestoPrefersReducedMotion &&
+    sectionVisible &&
+    !document.hidden
+  );
+};
+
+const stopAnimation = () => {
+  if (animationFrame !== null) {
+    cancelAnimationFrame(animationFrame);
+    animationFrame = null;
+  }
+};
+
+const animate = () => {
+  if (!shouldAnimate()) {
+    animationFrame = null;
+    return;
+  }
+
+  material.uniforms.uTime.value += 0.018;
+
+  renderer.render(scene, camera);
+
+  animationFrame = requestAnimationFrame(animate);
+};
+
+const startAnimation = () => {
+  if (
+    animationFrame !== null ||
+    !shouldAnimate()
+  ) {
+    return;
+  }
+
+  animationFrame = requestAnimationFrame(animate);
+};
+
+const texture = textureLoader.load(
+  '/images/neon_aurora_in_a_futuristic_gallery.webp',
+
+  (loadedTexture) => {
+    if (destroyed) {
+      loadedTexture.dispose();
+      return;
+    }
+
+    const image = loadedTexture.image;
+
+    material.uniforms.uTexture.value =
+      loadedTexture;
+
+    if (image) {
+      material.uniforms.uImageResolution.value.set(
+        image.naturalWidth || image.width,
+        image.naturalHeight || image.height
+      );
+    }
+
+    textureReady = true;
+
+    renderOnce();
+    startAnimation();
+  }
+);
+
+texture.colorSpace = THREE.SRGBColorSpace;
+texture.minFilter = THREE.LinearFilter;
+texture.magFilter = THREE.LinearFilter;
+
+material.uniforms.uTexture.value = texture;
+
+const resize = () => {
+  if (
+    destroyed ||
+    !manifestoSection
+  ) {
+    return;
+  }
+
+  const width =
+    manifestoSection.clientWidth;
+
+  const height =
+    manifestoSection.clientHeight;
+
+  if (!width || !height) return;
+
+  renderer.setSize(
+    width,
+    height,
+    false
+  );
+
+  material.uniforms.uResolution.value.set(
+    width,
+    height
+  );
+
+  renderOnce();
+};
+
+const handleManifestoMouseMove = (event) => {
+  if (manifestoPrefersReducedMotion) return;
+
+  const rect =
+    manifestoSection.getBoundingClientRect();
+
+  material.uniforms.uMouse.value.x =
+    (event.clientX - rect.left) /
+    rect.width;
+
+  material.uniforms.uMouse.value.y =
+    1 -
+    (event.clientY - rect.top) /
+      rect.height;
+};
+
+const handleManifestoMotionChange = (event) => {
+  manifestoPrefersReducedMotion = event.matches;
+  material.uniforms.uMotion.value = manifestoPrefersReducedMotion ? 0 : 1;
+
+  if (manifestoPrefersReducedMotion) {
+    stopAnimation();
+
+    material.uniforms.uMouse.value.set(
+      0.5,
+      0.5
+    );
+
+    renderOnce();
+  } else {
+    startAnimation();
+  }
+};
+
+const handleVisibilityChange = () => {
+  if (document.hidden) {
+    stopAnimation();
+  } else {
+    startAnimation();
+  }
+};
+
+const manifestoObserver =
+  new IntersectionObserver(
+    ([entry]) => {
+      sectionVisible =
+        entry.isIntersecting;
+
+      if (sectionVisible) {
+        renderOnce();
+        startAnimation();
+      } else {
+        stopAnimation();
       }
-
-      renderer.render(scene, camera);
+    },
+    {
+      threshold: 0.01
     }
   );
 
-  texture.colorSpace = THREE.SRGBColorSpace;
-  texture.minFilter = THREE.LinearFilter;
-  texture.magFilter = THREE.LinearFilter;
+resize();
 
-  material.uniforms.uTexture.value = texture;
+window.addEventListener(
+  'resize',
+  resize
+);
 
-  const resize = () => {
-    const width = manifestoSection.clientWidth;
-    const height = manifestoSection.clientHeight;
+document.addEventListener(
+  'visibilitychange',
+  handleVisibilityChange
+);
 
-    renderer.setSize(width, height, false);
-    material.uniforms.uResolution.value.set(width, height);
+manifestoSection.addEventListener(
+  'mousemove',
+  handleManifestoMouseMove
+);
 
-    renderer.render(scene, camera);
-  };
+manifestoMotionQuery.addEventListener(
+  'change',
+  handleManifestoMotionChange
+);
 
-  const handleManifestoMouseMove = (event) => {
-    const rect = manifestoSection.getBoundingClientRect();
+manifestoObserver.observe(
+  manifestoSection
+);
 
-    material.uniforms.uMouse.value.x =
-      (event.clientX - rect.left) / rect.width;
+    return () => {
+      destroyed = true;
 
-    material.uniforms.uMouse.value.y =
-      1 - (event.clientY - rect.top) / rect.height;
-  };
+      stopAnimation();
 
-  let animationFrame;
+      window.removeEventListener(
+        'resize',
+        resize
+      );
 
-  const animate = () => {
-    if (!prefersReducedMotion) {
-      material.uniforms.uTime.value += 0.018;
+      document.removeEventListener(
+        'visibilitychange',
+        handleVisibilityChange
+      );
+
+      manifestoSection.removeEventListener(
+        'mousemove',
+        handleManifestoMouseMove
+      );
+
+      manifestoMotionQuery.removeEventListener(
+        'change',
+        handleManifestoMotionChange
+      );
+
+      manifestoObserver.disconnect();
+
+      geometry.dispose();
+      material.dispose();
+      texture.dispose();
+      renderer.dispose();
+    };
+  }
+
+  initManifesto().then((cleanup) => {
+    if (cancelled) {
+      cleanup?.();
+    } else {
+      cleanupManifesto = cleanup;
     }
-
-    renderer.render(scene, camera);
-    animationFrame = requestAnimationFrame(animate);
-  };
-
-  resize();
-  animate();
-
-  window.addEventListener('resize', resize);
-  manifestoSection.addEventListener('mousemove', handleManifestoMouseMove);
+  });
 
   return () => {
-    window.removeEventListener('resize', resize);
-    manifestoSection.removeEventListener('mousemove', handleManifestoMouseMove);
-
-    cancelAnimationFrame(animationFrame);
-
-    geometry.dispose();
-    material.dispose();
-    texture.dispose();
-    renderer.dispose();
+    cancelled = true;
+    cleanupManifesto?.();
   };
 });
 </script>
@@ -1032,88 +1193,23 @@ onMount(() => {
 <div class="liquid-cursor"></div>
 
 <main>
-  <section
-    class="hero-cinematic"
-    bind:this={heroSection}
-    aria-labelledby="home-hero-title"
-  >
-    <!-- Intro darkness -->
-    <div
-      class="hero-intro-darkness"
-      bind:this={heroDarkness}
-      aria-hidden="true"
-    ></div>
-
-    <!-- Final hero background -->
-    <div
-      class="hero-cinematic__background"
-      bind:this={heroBackground}
-      aria-hidden="true"
-    >
-      <div class="hero-cinematic__image">
-        <TextureHoverImage
-          src="/images/hero/kamburcito-hero-desktop.webp"
-          fit="contain"
-        />
-      </div>
-
-      <div class="hero-cinematic__overlay"></div>
-    </div>
-
-    <!-- Intro animation -->
-    <div
-      class="hero-intro"
-      bind:this={heroIntro}
-      aria-hidden="true"
-    >
-      <div class="hero-intro-mask">
-        <span class="hero-intro-word hero-intro-word--left">
-          kamburcito
-        </span>
-      </div>
-
-      <div
-        class="hero-intro-window"
-        bind:this={heroWindow}
-      >
-        <div class="hero-intro-window__image">
-          <TextureHoverImage
-            src="/images/hero/kamburcito-hero-desktop.webp"
-            fit="contain"
-          />
-        </div>
-      </div>
-
-      <div class="hero-intro-mask">
-        <span class="hero-intro-word hero-intro-word--right">
-          studio
-        </span>
-      </div>
-    </div>
-
-    <!-- Final hero content -->
-    <div
-      class="hero-cinematic__content"
-      bind:this={heroContent}
-    >
-      <div class="hero-cinematic__inner wide-container">
+  <section class="hero-cinematic" aria-labelledby="home-hero-title">
+    <div class="hero-cinematic__content">
+      <div class="hero-cinematic__inner">
         <p
           class="hero-cinematic__eyebrow"
-          data-hero-reveal
         >
           Boutique Web Design Studio
         </p>
 
         <h1
           id="home-hero-title"
-          data-hero-reveal
         >
           Websites designed with clarity, character and intention
         </h1>
 
         <h2
           class="hero-cinematic__subtitle"
-          data-hero-reveal
         >
           Founder-led design and development for brands ready for a stronger
           digital presence
@@ -1121,108 +1217,221 @@ onMount(() => {
 
         <div
           class="hero-actions"
-          data-hero-reveal
         >
-          <a href="/work" class="btn btn-primary">
+          <a
+            href="/work"
+            class="btn btn-primary"
+          >
             View My Work
           </a>
         </div>
       </div>
     </div>
-  <a
-    href="#studio"
-    class="hero-cinematic__scroll"
-    aria-label="Scroll to current studio work"
-    data-hero-reveal
-  >
-    <span>Scroll</span>
-    <span aria-hidden="true">↓</span>
-  </a>
-</section>
+    <div class="hero-cinematic__visual" aria-hidden="true">
+      <TextureHoverImage src="/images/hero/kamburcito-hero-led-wall.webp" fit="cover" />
+      <div class="hero-cinematic__overlay"></div>
+    </div>
+    <a
+      href="#studio"
+      class="hero-cinematic__scroll"
+      aria-label="Scroll to current studio work"
+    >
+      <span>Scroll</span>
+      <span aria-hidden="true">↓</span>
+    </a>
+  </section>
+  <section id="process" class="section process-section" aria-labelledby="process-title">
+    <div class="wide-container process-container">
+      <header class="process-heading">
+        <p class="eyebrow">The way I work</p>
+        <h2 id="process-title">From an idea to something real.</h2>
+        <p class="process-heading__subtitle">
+          A thoughtful process, from our first conversation to launch day.
+        </p>
+      </header>
+
+      <div class="process-list" bind:this={processList}>
+        <svg class="process-route" viewBox="0 0 1000 500" preserveAspectRatio="none" aria-hidden="true">
+          <path class="process-route__base" d="M 100 105 H 865 C 907 105 930 128 930 170 V 325 C 930 367 907 390 865 390 H 100" />
+          <path class="process-route__fill" d="M 100 105 H 865 C 907 105 930 128 930 170 V 325 C 930 367 907 390 865 390 H 100" />
+        </svg>
+        <ol class="process-milestones">
+          {#each process as item}
+            <li class="process-step">
+              <span class="process-marker">{item.step}</span>
+              <div class="process-step__copy">
+                <h3>{item.title}</h3>
+                <p>{item.text}</p>
+              </div>
+            </li>
+          {/each}
+        </ol>
+      </div>
+    </div>
+  </section>
+
 <section id="studio" class="section studio-section studio-work-section">
   <div class="wide-container studio-work-header">
     <div>
-      <h2>Currently working on</h2>
+      <p class="eyebrow studio-work-eyebrow">A LOOK INSIDE MY CREATIVE PROCESS</p>
+      <h2>On my desk lately.</h2>
     </div>
+    <p class="studio-work-hint" aria-hidden="true">DRAG TO EXPLORE <span>→</span></p>
   </div>
 
+<!-- svelte-ignore a11y_no_noninteractive_tabindex, a11y_no_noninteractive_element_interactions -->
 <div
   class="studio-work-scroll"
   bind:this={studioScroll}
-  role="button"
-  aria-label="Drag to scroll studio work carousel"
+  role="region"
+  aria-roledescription="carousel"
+  aria-label="On my desk lately projects; use left and right arrow keys to explore"
   tabindex="0"
-  onmouseenter={showDragCursor}
-  onmouseleave={hideDragCursor}
-  onmousemove={dragScroll}
-  onmousedown={startDrag}
-  onmouseup={stopDrag}
+  onkeydown={handleStudioKeydown}
+  onpointerenter={showDragCursor}
+  onpointerleave={hideDragCursor}
+  onpointermove={dragScroll}
+  onpointerdown={startDrag}
+  onpointerup={stopDrag}
+  onpointercancel={stopDrag}
 >
-  <div class="studio-work-track">
-    {#each studioCards as item}
-      <article class="studio-work-card">
-        <enhanced:img
-         src={item.image}
-         alt={`${item.title} website project`}
-         sizes="(max-width: 720px) 82vw, 520px"
-         loading="lazy"
-         decoding="async"
-/>
+    <div class="studio-work-track">
+      {#each studioCards as item}
+        <article class="studio-work-card">
+          <enhanced:img
+            src={item.image}
+            alt={`${item.title} website project`}
+            sizes="(max-width: 720px) 82vw, (max-width: 1050px) 360px, 400px"
+            loading="lazy"
+            decoding="async"
+          />
 
-        <div class="studio-work-overlay"></div>
+          <div class="studio-work-overlay"></div>
 
-        <div class="studio-work-content">
-          <div>
-            <h3>{item.title}</h3>
-            <p>{item.subtitle}</p>
+          <div class="studio-work-content">
+            <div>
+              <h3>{item.title}</h3>
+              <p>{item.subtitle}</p>
+            </div>
+
+            <span>{item.status}</span>
           </div>
-
-          <span>{item.status}</span>
-        </div>
-      </article>
-    {/each}
-  </div>
-</div>
-</section>
-  
-<section id="work" class="section work-section">
-  <div class="wide-container work-header">
-    <div>
-      <p class="eyebrow">Selected Work</p>
-      <h2>
-                Selected websites
-           <span>Redesigns, online stores, and creative builds</span>
-      </h2>
+        </article>
+      {/each}
     </div>
   </div>
+</section>
+  
+<section
+  id="work"
+  class="section work-section"
+  onfocusin={() => {
+    workFocused = true;
+    stopWorkAutoplay();
+  }}
+  onfocusout={(event) => {
+    if (!event.currentTarget.contains(event.relatedTarget)) {
+      workFocused = false;
+      startWorkAutoplay();
+    }
+  }}
+>
+  <div class="wide-container work-header">
+    <div>
+      <p class="eyebrow">SELECTED WORK</p>
+      <h2>Work that speaks for itself.</h2>
+      <p class="work-header__description">
+        A collection of websites I've designed, developed, and helped bring to life.
+      </p>
+    </div>
+    <nav class="work-controls" aria-label="Selected work navigation">
+      <button type="button" aria-label="Previous project" onclick={() => navigateWork(-1)}>
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="m14 5-7 7 7 7" />
+        </svg>
+      </button>
+      <button type="button" aria-label="Next project" onclick={() => navigateWork(1)}>
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="m10 5 7 7-7 7" />
+        </svg>
+      </button>
+    </nav>
+  </div>
 
-  <div class="work-rail">
+  <!-- svelte-ignore a11y_no_noninteractive_tabindex, a11y_no_noninteractive_element_interactions -->
+  <div
+    class="work-rail"
+    bind:this={workRail}
+    role="region"
+    aria-roledescription="carousel"
+    aria-label="Selected work projects; use left and right arrow keys to explore"
+    tabindex="0"
+    onkeydown={handleWorkKeydown}
+    onwheel={(event) => {
+      if (event.deltaX || event.shiftKey) stopWorkForUser();
+    }}
+    onpointerenter={(event) => {
+      if (event.pointerType === 'mouse') {
+        workHovered = true;
+        stopWorkAutoplay();
+      }
+    }}
+    onpointerleave={(event) => {
+      endWorkDrag();
+      if (event.pointerType === 'mouse') {
+        workHovered = false;
+        startWorkAutoplay();
+      }
+    }}
+    onpointerdown={startWorkDrag}
+    onpointermove={moveWorkDrag}
+    onpointerup={endWorkDrag}
+    onpointercancel={endWorkDrag}
+    ondragstart={(event) => event.preventDefault()}
+    onscroll={normalizeWorkScroll}
+    onclickcapture={handleWorkClick}
+    onclick={(event) => {
+      if (event.target.closest('a')) stopWorkForUser();
+    }}
+  >
     <div class="work-track">
-      {#each [...projects, ...projects] as project}
-        <article class="project-card" onmouseenter={playProjectSound}>
+      {#each [...projects, ...projects, ...projects] as project, index}
+        {@const isDuplicate = index < projects.length || index >= projects.length * 2}
+
+        <article
+          class="project-card"
+          aria-hidden={isDuplicate ? 'true' : undefined}
+          onmouseenter={playProjectSound}
+        >
           <div class="project-image-wrap">
             <enhanced:img
               src={project.image}
-              alt={`${project.title} website project`}
+              alt={isDuplicate ? '' : `${project.title} website project`}
               class="project-image"
               sizes="(max-width: 700px) 82vw, 520px"
-               loading="lazy"
-                decoding="async"
-             />
+              loading="lazy"
+              decoding="async"
+            />
           </div>
 
           <div class="project-content">
-           <span>{project.stack}</span>
-           <h3>{project.title}</h3>
-           <p>{project.type}</p>
+            <span>{project.stack}</span>
+            <h3>{project.title}</h3>
+            <p>{project.type}</p>
 
-           <a
+            <a
               href={project.url}
-             target="_blank"
-             rel="noopener noreferrer"
+              target="_blank"
+              rel="noopener noreferrer"
+              tabindex={isDuplicate ? -1 : undefined}
+              aria-label={
+                isDuplicate
+                  ? undefined
+                  : `Visit ${project.title} website — opens in a new tab`
+              }
             >
               Visit Website →
-           </a>
+            </a>
           </div>
         </article>
       {/each}
@@ -1230,52 +1439,6 @@ onMount(() => {
   </div>
 </section>
 
-  <section class="section process-section">
-    <div class="wide-container">
-      <div class="section-heading center process-heading">
-        <p class="eyebrow">Process</p>
-        <h2>Simple steps</h2>
-      </div>
-
-      <div class="process-flow">
-        {#each process as item, index}
-          <article class="process-card liquid-hover">
-            <div class="process-card-top">
-              <div class="process-icon">
-  {#if item.icon === 'compass'}
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M12 3.5a8.5 8.5 0 1 0 0 17 8.5 8.5 0 0 0 0-17Z" />
-      <path d="m15.5 8.5-2.1 5-4.9 2 2.1-5 4.9-2Z" />
-    </svg>
-  {:else if item.icon === 'spark'}
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M12 3l1.7 5.2L19 10l-5.3 1.8L12 17l-1.7-5.2L5 10l5.3-1.8L12 3Z" />
-      <path d="M18.5 15.5l.7 2.1 2.1.7-2.1.7-.7 2.1-.7-2.1-2.1-.7 2.1-.7.7-2.1Z" />
-    </svg>
-  {:else if item.icon === 'code'}
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-      <path d="m8.5 8-4 4 4 4" />
-      <path d="m15.5 8 4 4-4 4" />
-      <path d="m13.5 5-3 14" />
-    </svg>
-  {/if}
-</div>
-</div>
-
-            <div class="process-card-content">
-              <h3>{item.title}</h3>
-              <p>{item.text}</p>
-              <small>{item.meta}</small>
-            </div>
-          </article>
-
-          {#if index < process.length - 1}
-            <div class="process-arrow">→</div>
-          {/if}
-        {/each}
-      </div>
-    </div>
-  </section>
 
  <section class="section testimonials-section">
   <div class="wide-container testimonials-header">
@@ -1287,93 +1450,100 @@ onMount(() => {
     </h2>
   </div>
 
- <div class="testimonials-wall">
-  <div class="fade-top"></div>
-  <div class="fade-bottom"></div>
-  <div class="testimonial-columns">
-    {#each testimonialColumns as column, columnIndex}
-      <div class={`testimonial-column column-${columnIndex + 1}`}>
-        {#each [...column, ...column] as item}
-          <article class="testimonial-card">
-            <p class="testimonial-quote">“{item.quote}”</p>
+  <div class="testimonials-wall">
+    <div class="fade-top" aria-hidden="true"></div>
+    <div class="fade-bottom" aria-hidden="true"></div>
 
-            <div class="testimonial-separator"></div>
+    <div class="testimonial-columns">
+      {#each testimonialColumns as column, columnIndex}
+        <div class={`testimonial-column column-${columnIndex + 1}`}>
+          {#each [...column, ...column] as item, index}
+            {@const isDuplicate = index >= column.length}
 
-            <div class="testimonial-person">
-              <div class="testimonial-avatar">
-                <img src={item.image} alt={item.name} />
+            <article
+              class="testimonial-card"
+              aria-hidden={isDuplicate ? 'true' : undefined}
+            >
+              <p class="testimonial-quote">
+                “{item.quote}”
+              </p>
+
+              <div
+                class="testimonial-separator"
+                aria-hidden="true"
+              ></div>
+
+              <div class="testimonial-person">
+                <div class="testimonial-avatar">
+                  <img
+                    src={item.image}
+                    alt={isDuplicate ? '' : item.name}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+
+                <div class="testimonial-meta">
+                  <strong>{item.name}</strong>
+                  <span>{item.role}</span>
+                </div>
               </div>
-
-              <div class="testimonial-meta">
-                <strong>{item.name}</strong>
-                <span>{item.role}</span>
-              </div>
-            </div>
-          </article>
-        {/each}
-      </div>
-    {/each}
+            </article>
+          {/each}
+        </div>
+      {/each}
+    </div>
   </div>
-</div>
 </section>
 
-<section
-  id="about"
-  class="about-studio"
-  aria-labelledby="about-studio-title"
->
+<section id="about" class="about-studio" aria-labelledby="about-studio-title" bind:this={aboutSection}>
   <div class="about-studio__container">
     <div class="about-studio__content">
-      <p class="about-studio__eyebrow">About</p>
-
+      <p class="about-studio__eyebrow">THE PERSON BEHIND KAMBURCITO</p>
       <h2 id="about-studio-title" class="about-studio__title">
-        Kamburcito Studio is a boutique website studio founded by Patricia Diaz
+        A little creativity. A lot of intention.
       </h2>
-
       <div class="about-studio__description">
-        <p>
-           I work directly with clients from strategy through launch, keeping
-           branding, design, and development closely aligned throughout the project.
-        </p>
-
-        <p>
-          The focus is simple: create distinctive, high-performing websites that
-          build trust, communicate clearly, and help businesses grow with confidence.
-        </p>
+        <p>Hey, I'm Patricia — an independent web designer and developer based in Buenos Aires.</p>
+        <p>I bring design, development, and thoughtful details together to create websites that look good, work beautifully, and feel true to the people behind them.</p>
       </div>
-
-      <dl class="about-studio__stats" aria-label="Kamburcito Studio experience">
-        <div class="about-studio__stat">
-          <dt>6+ years</dt>
-          <dd>Founder-led experience</dd>
-        </div>
-
-        <div class="about-studio__stat">
-          <dt>50+ launches</dt>
-          <dd>Websites delivered</dd>
-        </div>
-
-        <div class="about-studio__stat">
-          <dt>100%</dt>
-          <dd>Direct collaboration</dd>
-        </div>
-      </dl>
+      <a class="about-studio__cta" href="/get-started">Let's work together <span aria-hidden="true">↗</span></a>
+      <p class="about-studio__identity">
+        <span>DESIGNER + DEVELOPER</span>
+        <span>BASED IN BUENOS AIRES · WORKING WORLDWIDE</span>
+      </p>
     </div>
-
     <figure class="about-studio__visual">
-  <picture>
-    <enhanced:img
-  src={aboutImage}
-  alt="Patricia Diaz, founder of Kamburcito Studio"
-  class="about-studio__image"
-  sizes="(max-width: 900px) 92vw, 630px"
-  loading="lazy"
-  decoding="async"
-/>
-  </picture>
-</figure>
+      <img
+        src="/images/about/patricia-diaz-fermin-about-me-2026.webp"
+        alt="Patricia Diaz, independent web designer and developer"
+        class="about-studio__image"
+        width="1024"
+        height="1536"
+        loading="lazy"
+        decoding="async"
+      />
+    </figure>
   </div>
 </section>
+
+ <section bind:this={manifestoSection} class="manifesto-section">
+  <canvas bind:this={canvas} id="hero-webgl"></canvas>
+
+  <div class="manifesto-content">
+    <h2>
+      Designed to connect
+    </h2>
+
+    <a
+      href="/pricing"
+      class="btn btn-primary manifesto-pricing-button"
+    >
+      View Pricing
+    </a>
+  </div>
+</section>
+
 <!-- ========================================
      Homepage — FAQ Section
 ========================================= -->
@@ -1525,23 +1695,6 @@ onMount(() => {
         </div>
       </details>
     </div>
-  </div>
-</section>
-
- <section bind:this={manifestoSection} class="manifesto-section">
-  <canvas bind:this={canvas} id="hero-webgl"></canvas>
-
-  <div class="manifesto-content">
-    <h2>
-      Designed to connect
-    </h2>
-
-    <a
-      href="/pricing"
-      class="btn btn-primary manifesto-pricing-button"
-    >
-      View Pricing
-    </a>
   </div>
 </section>
 

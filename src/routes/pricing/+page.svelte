@@ -1,198 +1,133 @@
 <script>
+  import { onMount } from 'svelte';
+  import PricingLaunchOffer from '../../lib/components/PricingLaunchOffer.svelte';
   import '../../styles/30-pricing.css';
+
+  let philosophySection;
+
+  onMount(() => {
+    if (!philosophySection || !('IntersectionObserver' in window) ||
+        matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const section = philosophySection;
+
+    section.classList.add('is-pending');
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return;
+      section.classList.add('is-visible');
+      observer.disconnect();
+    }, { threshold: 0.18 });
+    observer.observe(section);
+
+    return () => observer.disconnect();
+  });
 </script>
 
 <svelte:head>
-  <title>Website Packages & Pricing | Kamburcito Studio</title>
+  <title>Custom Website Proposals | Kamburcito Studio</title>
 
   <meta
     name="description"
-    content="Explore flexible website packages for small businesses, including custom web design, website redesigns, and development."
+    content="Explore a custom web design and development proposal built around your goals, priorities, and project scope."
   />
 
   <link rel="canonical" href="https://kamburcito.com/pricing/" />
 
   <meta property="og:type" content="website" />
+
   <meta
     property="og:title"
-    content="Website Packages & Pricing | Kamburcito Studio"
-  />
-  <meta
-    property="og:description"
-    content="Flexible website packages designed around your business, goals, and project scope."
-  />
-  <meta property="og:url" content="https://kamburcito.com/pricing/" />
-  <meta
-    property="og:image"
-    content="https://kamburcito.com/images/kamburcito-pricing-social-preview.jpg"
+    content="Custom Website Proposals | Kamburcito Studio"
   />
 
-  <meta name="twitter:card" content="summary_large_image" />
+  <meta
+    property="og:description"
+    content="Custom website proposals tailored to your business goals, priorities, and scope."
+  />
+
+  <meta
+    property="og:url"
+    content="https://kamburcito.com/pricing/"
+  />
+
+  <meta
+    property="og:image"
+    content="https://kamburcito.com/images/kamburcito-social-preview.webp"
+  />
+
+  <meta
+    name="twitter:card"
+    content="summary_large_image"
+  />
+  <meta
+  name="twitter:title"
+  content="Custom Website Proposals | Kamburcito Studio"
+/>
+
+<meta
+  name="twitter:description"
+  content="Custom website proposals tailored to your business goals, priorities, and scope."
+/>
+
+<meta
+  name="twitter:image"
+  content="https://kamburcito.com/images/kamburcito-social-preview.webp"
+/>
 </svelte:head>
+
 
 <section class="pricing-hero">
   <div class="wide-container pricing-hero-inner">
-    <p class="eyebrow">Pricing</p>
 
-    <h1>
-      How much does
-      <span>a website cost?</span>
-    </h1>
+    <h1>Custom websites. Clear proposals.</h1>
 
-    <p>
-      You choose how much to invest. We provide the maximum value possible within your
-      budget, goals, and current stage.
-    </p>
+    <p>Every project is different. Tell me what you need, and I'll put together a proposal that fits.</p>
 
-    <a href="/get-started" class="pricing-button">
-      Get Your Proposal
+    <a
+      href="/get-started"
+      class="pricing-button"
+    >
+      REQUEST A QUOTE
     </a>
   </div>
 </section>
 
 
-
-<section class="pricing-philosophy">
+<section class="pricing-philosophy" aria-labelledby="pricing-approach-title" bind:this={philosophySection}>
   <div class="wide-container">
-    <div class="pricing-philosophy-panel">
-      <div class="pricing-philosophy-heading">
-        <p class="eyebrow">Pricing Philosophy</p>
-
-        <h2>Our pricing philosophy.</h2>
-
-        <p>
-          No matter your budget, we provide the maximum value possible.
-        </p>
-      </div>
-
-      <div class="pricing-card-grid">
-        <article class="pricing-info-card">
-          <div class="pricing-icon">✦</div>
-          <h3>Doing quality work is cheaper than advertising.</h3>
-          <p>
-            We would rather earn referrals through work people talk about than spend
-            money buying attention.
-          </p>
-        </article>
-
-        <article class="pricing-info-card">
-          <div class="pricing-icon">▣</div>
-          <h3>You choose your budget.</h3>
-          <p>
-            We shape the smartest scope possible around your number and tell you directly
-            what is realistic inside it.
-          </p>
-        </article>
-
-        <article class="pricing-info-card">
-          <div class="pricing-icon">?</div>
-          <h3>Need help deciding your budget?</h3>
-          <p>
-            We can outline multiple paths with clear tradeoffs so you can choose based on
-            outcomes instead of pressure.
-          </p>
-        </article>
-
-        <article class="pricing-info-card">
-          <div class="pricing-icon">⚖</div>
-          <h3>We do not make more money if you spend more.</h3>
-          <p>
-            A larger budget buys more depth and flexibility, not inflated margins. If
-            simpler is smarter, that is what we recommend.
-          </p>
-        </article>
-      </div>
-    </div>
-  </div>
-</section>
-<section class="pricing-investment">
-  <div class="wide-container pricing-split">
-    <div class="pricing-split-copy">
-      <h2>
-        A website is an
-        <span>investment.</span>
-      </h2>
-
-      <p>
-        The most expensive build is usually not the best build. The best build is the one
-        that solves the right problem, at the right depth, at the right time.
-      </p>
-
-      <p>
-        We design proposals around business outcomes first, then map the smartest execution
-        path for your current stage.
-      </p>
-
-      <div class="pricing-tags">
-        <span>No hidden fees</span>
-        <span>Outcome-based pricing</span>
-      </div>
+    <div class="pricing-philosophy-heading">
+      <h2 id="pricing-approach-title">Built around your project.</h2>
+      <p>Clear scope, thoughtful design, and no unnecessary extras.</p>
     </div>
 
-    <div class="pricing-mockup-card">
-      <img
-        src="/images/pricing-kamburcito-studio-2.webp"
-        alt="Website mockup preview"
-      />
+    <div class="pricing-principles">
+      <article class="pricing-principle">
+        <span class="pricing-principle__number" aria-hidden="true">01</span>
+        <h3>Tailored to you.</h3>
+        <p>A website based on your goals and requirements.</p>
+      </article>
+      <article class="pricing-principle">
+        <span class="pricing-principle__number" aria-hidden="true">02</span>
+        <h3>Clear expectations.</h3>
+        <p>Know what's included before we begin.</p>
+      </article>
+      <article class="pricing-principle">
+        <span class="pricing-principle__number" aria-hidden="true">03</span>
+        <h3>What matters most.</h3>
+        <p>Focus on the features your business actually needs.</p>
+      </article>
     </div>
   </div>
 </section>
 
-<section class="pricing-proposal-split">
-  <div class="wide-container pricing-split reverse">
-    <div class="pricing-mockup-card large">
-      <img
-        src="/images/pricing-kamburcito-studio-4.webp"
-        alt="Website design mockup"
-      />
-    </div>
 
-    <div class="pricing-split-copy">
-      <h2>
-        Get <em>your</em>
-        proposal now.
-      </h2>
+<PricingLaunchOffer />
 
-      <p>
-        Fill out our quick form and we’ll send you a welcome package that includes more
-        information about pricing.
-      </p>
+<section id="proposal" class="pricing-final" aria-labelledby="pricing-final-title">
+  <div class="wide-container pricing-final-inner">
+    <h2 id="pricing-final-title">Have a project in mind?</h2>
+    <p class="pricing-final-description">Tell me what you're planning. I'll help you figure out the next step.</p>
 
-      <p>
-        If we’re a good fit, we’ll send you a customized proposal for your project.
-      </p>
-
-      <a href="/get-started" class="pricing-button">
-       Get Your Proposal
-      </a>
-    </div>
-  </div>
-</section>
-
-<section id="proposal" class="pricing-final">
-  <div class="wide-container">
-    <div class="pricing-final-card">
-      <div class="pricing-final-image">
-        <img
-          src="/images/pricing-kamburcito-studio.webp"
-          alt="Website mockup on laptop"
-        />
-      </div>
-
-      <p class="eyebrow">Next Step</p>
-
-      <h2>
-        Get your custom proposal now.
-      </h2>
-
-      <p>
-        Tell us your goals, timeline, and budget range. We’ll make you a focused proposal
-        with the smartest path forward and some pricing options.
-      </p>
-
-      <a href="/get-started" class="pricing-button">
-        Get Your Proposal
-      </a>
-    </div>
+    <a href="/get-started" class="pricing-button">LET'S GET STARTED</a>
   </div>
 </section>
