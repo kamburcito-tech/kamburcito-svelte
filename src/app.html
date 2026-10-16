@@ -9,22 +9,20 @@
 
     <script>
       (() => {
+        const preferredTheme = window.matchMedia('(prefers-color-scheme: light)').matches
+          ? 'light'
+          : 'dark';
+        let savedTheme;
         try {
-          const savedTheme = localStorage.getItem('kamburcito-theme');
-
-          const preferredTheme = window.matchMedia(
-            '(prefers-color-scheme: light)'
-          ).matches
-            ? 'light'
-            : 'dark';
-
-          const theme = savedTheme || preferredTheme;
-
-          document.documentElement.dataset.theme = theme;
-          document.documentElement.style.colorScheme = theme;
+          savedTheme = localStorage.getItem('kamburcito-theme');
         } catch {
-          document.documentElement.dataset.theme = 'dark';
+          // Private browsing can disallow storage.
         }
+        const theme = savedTheme === 'light' || savedTheme === 'dark'
+          ? savedTheme
+          : preferredTheme;
+        document.documentElement.dataset.theme = theme;
+        document.documentElement.style.colorScheme = theme;
       })();
     </script>
 

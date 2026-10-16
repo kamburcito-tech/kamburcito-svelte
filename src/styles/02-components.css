@@ -62,7 +62,6 @@ h3 {
 .service-card,
 .project-card,
 .cta-inner,
-.process-card,
 .testimonial-card {
   position: relative;
   border: 1px solid var(--line);

@@ -2,10 +2,6 @@
   import '@fontsource-variable/cormorant-garamond';
   import '@fontsource-variable/manrope';
 
-  // Keep your other existing imports below.
-
-  import { onMount } from 'svelte';
-
   import '../styles/00-global.css';
   import '../styles/01-header-footer.css';
   import '../styles/02-components.css';
@@ -14,26 +10,20 @@
   let { children } = $props();
 
   let mobileMenuOpen = $state(false);
-  let theme = $state('dark');
-
-  onMount(() => {
-    theme =
-      document.documentElement.dataset.theme === 'light'
-        ? 'light'
-        : 'dark';
-  });
 
   function closeMobileMenu() {
     mobileMenuOpen = false;
   }
 
   function toggleTheme() {
-    theme = theme === 'dark' ? 'light' : 'dark';
-
+    const theme = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
     document.documentElement.dataset.theme = theme;
     document.documentElement.style.colorScheme = theme;
-
-    localStorage.setItem('kamburcito-theme', theme);
+    try {
+      localStorage.setItem('kamburcito-theme', theme);
+    } catch {
+      // Theme still works when storage is unavailable.
+    }
   }
 
 </script>
@@ -62,8 +52,6 @@
   />
 
   <link rel="manifest" href="/site.webmanifest" />
-
-  <meta name="theme-color" content="#030408" />
 </svelte:head>
 
 <header class="site-header">
@@ -85,7 +73,21 @@
       </nav>
 
       <div class="nav-actions">
-        <!-- theme toggle -->
+        <button
+          type="button"
+          class="theme-toggle"
+          aria-label="Toggle light and dark mode"
+          title="Toggle light and dark mode"
+          onclick={toggleTheme}
+        >
+          <svg class="theme-toggle__sun" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"></path>
+          </svg>
+          <svg class="theme-toggle__moon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M20.2 15.6A8.5 8.5 0 0 1 8.4 3.8 8.5 8.5 0 1 0 20.2 15.6Z"></path>
+          </svg>
+        </button>
 
         <a
           href="/get-started"

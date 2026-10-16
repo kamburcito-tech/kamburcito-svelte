@@ -1,5 +1,7 @@
 <script>
-  import { tick } from 'svelte';
+  import { onMount, tick } from 'svelte';
+  import { resolve } from '$app/paths';
+  import { offerExpiresAt, scheduleOfferExpiry } from '$lib/onePageOffer.js';
   import '../../styles/40-quote.css';
 
   const purposeOptions = [
@@ -36,6 +38,16 @@
   let currentStep = $state(0);
   let submitted = $state(false);
   let isSubmitting = $state(false);
+  let onePageOffer = $state(false);
+  let promoCode = $derived(onePageOffer ? 'KAMBUR250' : '');
+
+  onMount(() => {
+    const params = new URLSearchParams(location.search);
+    onePageOffer = Date.now() < offerExpiresAt &&
+      (params.get('offer') === 'one-page-launch' ||
+        params.get('promo') === 'KAMBUR250');
+    return scheduleOfferExpiry(() => (onePageOffer = false));
+  });
 
   let touched = $state({
     companyName: false,
@@ -89,11 +101,28 @@
     }
   }
 
+  async function focusCurrentStep() {
+    await tick();
+    const progress = document.querySelector('.quote-progress-card');
+    const bounds = progress?.getBoundingClientRect();
+    const headerBottom = document.querySelector('.site-header')?.getBoundingClientRect().bottom ?? 0;
+    if (bounds && (bounds.top < headerBottom + 16 || bounds.bottom > innerHeight)) {
+      progress.scrollIntoView({
+        behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+        block: 'start'
+      });
+    }
+    const heading = document.querySelector('.quote-step h2');
+    heading?.setAttribute('tabindex', '-1');
+    heading?.focus({ preventScroll: true });
+  }
+
   function nextStep() {
     if (!canContinue || isSubmitting) return;
 
     if (currentStep < totalSteps - 1) {
       currentStep += 1;
+      focusCurrentStep();
     } else {
       submitForm();
     }
@@ -102,10 +131,12 @@
   function previousStep() {
     if (currentStep > 0 && !isSubmitting) {
       currentStep -= 1;
+      focusCurrentStep();
     }
   }
 
   async function submitForm() {
+    const activeOffer = onePageOffer && Date.now() < offerExpiresAt;
     const submission = {
       companyName: form.companyName,
       websiteUrl: form.websiteUrl,
@@ -115,7 +146,12 @@
       designPhase: form.designPhase,
       details: form.details,
       name: form.name,
-      email: form.email
+      email: form.email,
+      ...(activeOffer ? {
+        promotion: 'One-Page Launch',
+        promoCode,
+        promotionReview: 'Pending manual review'
+      } : {})
     };
 
     isSubmitting = true;
@@ -138,7 +174,7 @@
       await tick();
 
       document.querySelector('.quote-success-card')?.scrollIntoView({
-        behavior: 'smooth',
+        behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
         block: 'center'
       });
     } catch (error) {
@@ -184,7 +220,7 @@
 
   <meta
     property="og:image"
-    content="https://kamburcito.com/images/kamburcito-social-preview.jpg"
+    content="https://kamburcito.com/images/kamburcito-social-preview.webp"
   />
 
   <meta
@@ -204,16 +240,16 @@
 
   <meta
     name="twitter:image"
-    content="https://kamburcito.com/images/kamburcito-social-preview.jpg"
+    content="https://kamburcito.com/images/kamburcito-social-preview.webp"
   />
 </svelte:head>
 
 <section class="quote-page">
-  <div class="quote-shell">
     {#if submitted}
+      <div class="quote-shell">
 
       <div class="quote-success-card">
-        <p class="eyebrow">Submitted</p>
+        <p class="quote-status">Submitted</p>
 
         <h1>
           Your project details
@@ -227,50 +263,41 @@
         </p>
 
         <a
-          href="/"
+          href={resolve('/')}
           class="quote-primary-button"
         >
           Back to Home
         </a>
       </div>
+      </div>
 
     {:else}
 
-      <div class="quote-intro-card">
-        <p class="eyebrow">Get Started</p>
+      <div class="quote-form-inner">
+        <header class="quote-form-intro">
+          <h1>Tell me about your project.</h1>
+        </header>
 
-        <h1>
-          Get a welcome package
-          <span>+ custom quote.</span>
-        </h1>
+        <div class="quote-form-card">
+          {#if onePageOffer}
+            <p class="quote-promo-note">
+              One-Page Launch · $250 USD
+              <span>Promo code: <strong>{promoCode}</strong></span>
+            </p>
+          {/if}
 
-        <p>
-          Answer a few questions and I’ll immediately receive your
-          project details. If we’re a good fit, I’ll follow up with
-          a focused proposal.
-        </p>
+          <div class="quote-progress-card">
+            <div class="quote-progress-top">
+              <span>Progress ({currentStep + 1}/{totalSteps})</span>
+              <span>{progress}%</span>
+            </div>
+            <div class="quote-progress-track" role="progressbar" aria-label="Inquiry progress" aria-valuenow={progress} aria-valuemin="0" aria-valuemax="100">
+              <div class="quote-progress-fill" style={`width: ${progress}%`}></div>
+            </div>
+          </div>
 
-        <small>Estimated time: 1–2 minutes</small>
-      </div>
-
-      <div class="quote-progress-card">
-        <div class="quote-progress-top">
-          <span>
-            Progress ({currentStep + 1}/{totalSteps})
-          </span>
-
-          <span>{progress}%</span>
-        </div>
-
-        <div class="quote-progress-track">
-          <div
-            class="quote-progress-fill"
-            style={`width: ${progress}%`}
-          ></div>
-        </div>
-      </div>
-
-      <div class="quote-form-card">
+          {#key currentStep}
+            <div class="quote-step">
 
         {#if currentStep === 0}
 
@@ -348,7 +375,7 @@
             </p>
 
             <div class="quote-options">
-              {#each purposeOptions as option}
+              {#each purposeOptions as option (option)}
 
                 <button
                   type="button"
@@ -383,7 +410,7 @@
             </p>
 
             <div class="quote-options">
-              {#each budgetOptions as option}
+              {#each budgetOptions as option (option)}
 
                 <button
                   type="button"
@@ -416,7 +443,7 @@
             </p>
 
             <div class="quote-options">
-              {#each sizeOptions as option}
+              {#each sizeOptions as option (option)}
 
                 <button
                   type="button"
@@ -452,7 +479,7 @@
             </p>
 
             <div class="quote-options">
-              {#each designOptions as option}
+              {#each designOptions as option (option)}
 
                 <button
                   type="button"
@@ -601,19 +628,22 @@
 
         {/if}
 
-      </div>
+            </div>
+          {/key}
 
 
       <div class="quote-actions">
 
-        <button
-          type="button"
-          class="quote-secondary-button"
-          onclick={previousStep}
-          disabled={currentStep === 0 || isSubmitting}
-        >
-          Back
-        </button>
+        {#if currentStep > 0}
+          <button
+            type="button"
+            class="quote-secondary-button"
+            onclick={previousStep}
+            disabled={isSubmitting}
+          >
+            Back
+          </button>
+        {/if}
 
         <button
           type="button"
@@ -631,7 +661,8 @@
         </button>
 
       </div>
+        </div>
+      </div>
 
     {/if}
-  </div>
 </section>
