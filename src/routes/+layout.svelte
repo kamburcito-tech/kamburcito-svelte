@@ -95,25 +95,27 @@
       </nav>
 
       <div class="nav-actions">
-        <a class="nav-contact" href={contactEmailHref} aria-label="Email Kamburcito Studio" title="Email">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <rect x="3" y="5" width="18" height="14" rx="2"></rect>
-            <path d="m3.5 6.5 8.5 6.5 8.5-6.5"></path>
-          </svg>
-        </a>
-        <a
-          class="nav-contact"
-          href={whatsappHref}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Message Kamburcito Studio on WhatsApp (opens in a new tab)"
-          title="WhatsApp"
-        >
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M3.5 20.5 5 16.2A8.5 8.5 0 1 1 8 19.1Z"></path>
-            <path d="M9.2 8.6c.2-.5.5-.6.8-.6h.5l.9 2-.6.8a5.6 5.6 0 0 0 2.5 2.5l.8-.6 2 .9v.5c0 .3-.1.6-.6.8-.8.4-2 .3-3.6-.7a8.4 8.4 0 0 1-2.4-2.4c-1-1.6-1.1-2.8-.7-3.6Z"></path>
-          </svg>
-        </a>
+        <div class="nav-contact-group">
+          <a class="nav-contact" href={contactEmailHref} aria-label="Email me" title="Email me">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+              <path d="m3.5 6.5 8.5 6.5 8.5-6.5"></path>
+            </svg>
+          </a>
+          <a
+            class="nav-contact nav-contact--whatsapp"
+            href={whatsappHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Chat on WhatsApp"
+            title="Chat on WhatsApp"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M3.5 20.5 5 16.2A8.5 8.5 0 1 1 8 19.1Z"></path>
+              <path d="M9.2 8.6c.2-.5.5-.6.8-.6h.5l.9 2-.6.8a5.6 5.6 0 0 0 2.5 2.5l.8-.6 2 .9v.5c0 .3-.1.6-.6.8-.8.4-2 .3-3.6-.7a8.4 8.4 0 0 1-2.4-2.4c-1-1.6-1.1-2.8-.7-3.6Z"></path>
+            </svg>
+          </a>
+        </div>
 
         <button
           type="button"
@@ -163,7 +165,8 @@
     <a
       class="mobile-menu-contact"
       href={contactEmailHref}
-      aria-label="Email Kamburcito Studio"
+      aria-label="Email me"
+      title="Email me"
       onclick={closeMobileMenu}
     >Email</a>
     <a
@@ -171,7 +174,8 @@
       href={whatsappHref}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label="Message Kamburcito Studio on WhatsApp (opens in a new tab)"
+      aria-label="Chat on WhatsApp"
+      title="Chat on WhatsApp"
       onclick={closeMobileMenu}
     >WhatsApp</a>
   </nav>
