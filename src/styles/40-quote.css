@@ -154,7 +154,8 @@
 }
 .quote-help.large { margin-top: 10px; }
 .quote-field input,
-.quote-field textarea {
+.quote-field textarea,
+.quote-field select {
   display: block;
   width: 100%;
   margin-top: 9px;
@@ -167,12 +168,14 @@
   font: 0.95rem/1.5 'Manrope Variable', Arial, sans-serif;
   transition: border-color 180ms ease, box-shadow 180ms ease;
 }
-.quote-field input { height: 46px; }
+.quote-field input,
+.quote-field select { height: 46px; }
 .quote-field textarea { min-height: 140px; resize: vertical; }
 .quote-field input::placeholder,
 .quote-field textarea::placeholder { color: var(--quote-placeholder); opacity: 1; }
 .quote-field input:focus-visible,
-.quote-field textarea:focus-visible {
+.quote-field textarea:focus-visible,
+.quote-field select:focus-visible {
   border-color: var(--quote-focus);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--quote-focus) 25%, transparent);
 }
