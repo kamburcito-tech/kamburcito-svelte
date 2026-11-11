@@ -158,6 +158,62 @@
   gap: 10px;
 }
 
+/* =====================================================
+   QUIET CONTACT LINKS (email / WhatsApp)
+===================================================== */
+
+.nav-contact {
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+
+  display: grid;
+  place-items: center;
+
+  color: rgba(255, 255, 255, 0.62);
+
+  border-radius: 10px;
+
+  transition:
+    color 180ms ease,
+    background-color 180ms ease;
+}
+
+.nav-contact svg {
+  width: 18px;
+  height: 18px;
+
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.nav-contact:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.nav-contact:focus-visible {
+  outline: 2px solid rgba(59, 130, 246, 0.5);
+  outline-offset: 2px;
+}
+
+:root[data-theme='light'] .nav-contact {
+  color: rgba(30, 58, 138, 0.7);
+}
+
+:root[data-theme='light'] .nav-contact:hover {
+  color: #1e3a8a;
+  background: rgba(30, 58, 138, 0.055);
+}
+
+/* Contact entries in the mobile menu exist only for phones */
+.mobile-menu-contact {
+  display: none;
+}
+
 
 /* =====================================================
    THEME TOGGLE
@@ -474,6 +530,10 @@
     display: block;
   }
 
+  .nav-contact {
+    display: none;
+  }
+
   .theme-toggle {
     width: 40px;
     height: 40px;
@@ -542,6 +602,18 @@
   .mobile-menu a:active {
     color: #ffffff;
     background: rgba(59, 130, 246, 0.16);
+  }
+
+  .mobile-menu .mobile-menu-contact {
+    display: flex;
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .mobile-menu a:not(.mobile-menu-contact) + .mobile-menu-contact {
+    margin-top: 6px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
   }
 
   @keyframes mobile-menu-enter {
