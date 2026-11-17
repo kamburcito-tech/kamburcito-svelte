@@ -99,10 +99,7 @@
   }
 
   .hero-cinematic__visual {
-    --hero-focal-x: 50%;
-    --hero-focal-y: 43%;
-    min-height: 0;
-    height: clamp(380px, 56svh, 640px);
+    padding: 0 32px 72px;
   }
 
 
@@ -128,7 +125,7 @@
 
 @media (max-width: 720px) {
   .hero-cinematic__content {
-    padding: 124px 24px 64px;
+    padding: 124px 24px 40px;
   }
 
   .hero-cinematic__eyebrow {
@@ -151,8 +148,7 @@
   }
 
   .hero-cinematic__visual {
-    --hero-focal-y: 48%;
-    height: clamp(320px, 52svh, 520px);
+    padding: 0 12px 56px;
   }
 
   /* Hero */
@@ -374,10 +370,6 @@
 
   .hero-cinematic h1 {
     font-size: clamp(3rem, 12vw, 4.4rem);
-  }
-
-  .hero-cinematic__visual {
-    height: clamp(280px, 45svh, 420px);
   }
 
 

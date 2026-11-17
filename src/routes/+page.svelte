@@ -16,10 +16,10 @@
   import goldenDistrictImage from '$lib/assets/working_on/golden-district-partners-working-on-homepage.webp?enhanced&w=500;360';
   import beachBitesImage from '$lib/assets/working_on/beach-bites-club-working-on-homepage.webp?enhanced&w=500;360';
   import petraValdezImage from '$lib/assets/working_on/petra-valdez-working-on-homepage.webp?enhanced&w=500;360';
+  import HeroCardColumns from '$lib/components/HeroCardColumns.svelte';
 
   // WebGL effects (and three.js) load only on larger screens without reduced motion.
   const WEBGL_MEDIA_QUERY = '(min-width: 721px) and (prefers-reduced-motion: no-preference)';
-  let HeroTextureImage = $state(null);
 
   let canvas;
   let manifestoSection;
@@ -752,10 +752,6 @@ function handleStudioKeydown(event) {
   onMount(() => {
   if (!window.matchMedia(WEBGL_MEDIA_QUERY).matches) return;
 
-  import('$lib/components/TextureHoverImage.svelte').then((module) => {
-    HeroTextureImage = module.default;
-  });
-
   if (!canvas || !manifestoSection) return;
 
   let cancelled = false;
@@ -1236,30 +1232,8 @@ manifestoObserver.observe(
         </div>
       </div>
     </div>
-    <div class="hero-cinematic__visual" aria-hidden="true">
-      {#if HeroTextureImage}
-        <HeroTextureImage src="/images/hero/kamburcito-hero-led-wall.webp" fit="cover" />
-      {:else}
-        <div class="texture-hover-image hero-static-image">
-          <picture>
-            <source
-              media="(max-width: 720px), (prefers-reduced-motion: reduce)"
-              srcset="/images/hero/kamburcito-hero-desktop.webp"
-              width="1920"
-              height="1081"
-            />
-            <img
-              src="/images/hero/kamburcito-hero-led-wall.webp"
-              alt=""
-              width="1374"
-              height="1145"
-              fetchpriority="high"
-              decoding="async"
-            />
-          </picture>
-        </div>
-      {/if}
-      <div class="hero-cinematic__overlay"></div>
+    <div class="hero-cinematic__visual">
+      <HeroCardColumns />
     </div>
     <a
       href="#studio"
