@@ -74,11 +74,8 @@
   font-family: 'Manrope Variable', Arial, sans-serif;
 }
 
-/* Card carousel column; top padding clears the fixed header. */
+/* Card carousel panel fills the column; top padding clears the fixed header. */
 .hero-cinematic__visual {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   min-width: 0;
   padding: 96px clamp(16px, 3vw, 56px) 32px;
 }

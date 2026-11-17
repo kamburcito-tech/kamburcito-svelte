@@ -99,7 +99,9 @@
   }
 
   .hero-cinematic__visual {
-    padding: 0 32px 72px;
+    height: min(80vh, 720px);
+    margin-bottom: 72px;
+    padding: 0 32px;
   }
 
 
@@ -148,7 +150,9 @@
   }
 
   .hero-cinematic__visual {
-    padding: 0 12px 56px;
+    height: 420px;
+    margin-bottom: 56px;
+    padding: 0 12px;
   }
 
   /* Hero */

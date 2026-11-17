@@ -171,44 +171,53 @@
 </section>
 
 <style>
+  /* Fills its parent: the parent sets the height (e.g. the hero's right column). */
   .hc {
     /* Tweak card geometry here. */
     --hc-card-w: 260px;
     --hc-card-h: 300px;
     --hc-gap: 24px;
-    --hc-height: min(80vh, 720px);
-    /* Side room so card shadows and focus rings are not clipped. */
-    --hc-pad-x: 20px;
+    /* Panel side padding; also keeps card shadows and focus rings unclipped. */
+    --hc-pad-x: 24px;
 
     --hc-teal: #0e7c86;
     --hc-navy: #0b2540;
     --hc-border: #d9e4ec;
 
-    container-type: inline-size;
+    /* Size containment: the tall tracks never inflate the parent's height. */
+    container-type: size;
     width: 100%;
+    height: 100%;
     min-width: 0;
   }
 
+  /* The panel: cards are cut cleanly at its top and bottom edges. */
   .hc__viewport {
     display: flex;
     align-items: flex-start;
     gap: var(--hc-gap);
     width: fit-content;
     max-width: 100%;
-    height: var(--hc-height);
+    height: 100%;
     margin-inline: auto;
     padding-inline: var(--hc-pad-x);
     overflow: hidden;
-    scroll-padding-block: 18%;
-    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent);
-    mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 88%, transparent);
+    scroll-padding-block: var(--hc-gap);
+    border: 1px solid var(--hc-border);
+    border-radius: 32px;
+    background: linear-gradient(180deg, #e6f4f5 0%, #dceef0 100%);
   }
 
-  /* Cards shrink proportionally once the container is narrower than
-     two full cards (2 × 260 + 24 + 2 × 20 = 584px). */
-  @container (max-width: 583px) {
+  :global(:root[data-theme='dark']) .hc__viewport {
+    border-color: rgba(255, 255, 255, 0.08);
+    background: #0b3a40;
+  }
+
+  /* Cards shrink proportionally once the container is narrower than two full
+     cards plus panel padding and border (2 × 260 + 24 + 2 × 24 + 2 = 594px). */
+  @container (max-width: 593px) {
     .hc__viewport {
-      --hc-card-w: calc((100cqi - 2 * var(--hc-pad-x) - var(--hc-gap)) / 2);
+      --hc-card-w: calc((100cqi - 2 * var(--hc-pad-x) - 2px - var(--hc-gap)) / 2);
       --hc-card-h: calc(var(--hc-card-w) * 300 / 260);
     }
   }
@@ -242,6 +251,7 @@
   /* Keyboard users get a still layout so the browser can scroll the
      focused card into view inside the viewport. */
   .hc:has(.hc__card:focus-visible) .hc__track {
+    padding-top: 6px;
     animation: none;
   }
 
@@ -383,8 +393,9 @@
   }
 
   @media (max-width: 720px) {
-    .hc {
-      --hc-height: 420px;
+    .hc__viewport {
+      justify-content: center;
+      width: 100%;
     }
   }
 
