@@ -8,7 +8,6 @@
   import surfaceWorksImage from '$lib/assets/projects/surfaceworks-homepage-project.webp?enhanced&w=623;400';
   import takahiroImage from '$lib/assets/projects/takahiro-artist-homepage-project.webp?enhanced&w=960;640;400';
   import larkImage from '$lib/assets/projects/lark-homepage-project.webp?enhanced&w=960;640;400';
-  import ncBuildersImage from '$lib/assets/working_on/nc-builders-working-on-homepage.webp?enhanced&w=500;360';
   import financialAdvisorImage from '$lib/assets/working_on/financial-advisor-working-on-homepage.webp?enhanced&w=500;360';
   import casaNidoImage from '$lib/assets/working_on/casa-nido-working-on-homepage.webp?enhanced&w=736;500;360';
   import lumaStudioImage from '$lib/assets/working_on/luma-studio-working-on-homepage.webp?enhanced&w=500;360';
@@ -183,12 +182,6 @@ function handleStudioKeydown(event) {
 }
 
   const studioCards = [
-  {
-    title: 'NC Builders',
-    subtitle: 'Construction Company',
-    status: 'In production',
-    image: ncBuildersImage
-  },
   {
     title: 'Financial Consultant Website',
     subtitle: 'Financial Advisor ',

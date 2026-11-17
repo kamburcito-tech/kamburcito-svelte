@@ -71,6 +71,17 @@ let workHeroCanvasWrap;
 },
     {
       eyebrow: 'Featured Project',
+      title: 'NC Builders',
+      description:
+        'A website redesign for a Nevada City builder, developed from the client\'s mockup and style guide into a premium WordPress site, and optimized for speed and Core Web Vitals.',
+      role: 'Development · Performance Optimization',
+      platform: 'WordPress / Elementor',
+      image: '/images/work/nc-builders-work-project.webp',
+      link: 'https://ncbuilders.biz/',
+      cta: 'Visit Website →'
+    },
+    {
+      eyebrow: 'Featured Project',
       title: 'Takahiro Ogawa',
       description:
         'A personal brand website with a strong editorial feel, designed to showcase creative work with a clean and memorable visual direction.',
