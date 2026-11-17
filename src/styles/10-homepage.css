@@ -74,10 +74,16 @@
   font-family: 'Manrope Variable', Arial, sans-serif;
 }
 
-/* Card carousel panel fills the column; top padding clears the fixed header. */
+/* Full-bleed card panel: the hero's right column, from the bottom of the fixed
+   header (90px) to the hero's bottom edge. Out of flow, so the text column
+   keeps its position and width. */
 .hero-cinematic__visual {
-  min-width: 0;
-  padding: 96px clamp(16px, 3vw, 56px) 32px;
+  position: absolute;
+  top: 90px;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+  width: clamp(420px, 42vw, 820px);
 }
 
 .hero-cinematic__scroll {

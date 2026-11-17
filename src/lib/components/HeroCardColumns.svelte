@@ -171,14 +171,15 @@
 </section>
 
 <style>
-  /* Fills its parent: the parent sets the height (e.g. the hero's right column). */
+  /* A square, full-bleed panel that fills its parent; the parent sets the size
+     (e.g. the hero's right column). */
   .hc {
     /* Tweak card geometry here. */
     --hc-card-w: 260px;
     --hc-card-h: 300px;
     --hc-gap: 24px;
-    /* Panel side padding; also keeps card shadows and focus rings unclipped. */
-    --hc-pad-x: 24px;
+    /* Minimum side space; also keeps focus rings unclipped. */
+    --hc-pad-x: 12px;
 
     --hc-teal: #0e7c86;
     --hc-navy: #0b2540;
@@ -189,35 +190,31 @@
     width: 100%;
     height: 100%;
     min-width: 0;
-  }
-
-  /* The panel: cards are cut cleanly at its top and bottom edges. */
-  .hc__viewport {
-    display: flex;
-    align-items: flex-start;
-    gap: var(--hc-gap);
-    width: fit-content;
-    max-width: 100%;
-    height: 100%;
-    margin-inline: auto;
-    padding-inline: var(--hc-pad-x);
     overflow: hidden;
-    scroll-padding-block: var(--hc-gap);
-    border: 1px solid var(--hc-border);
-    border-radius: 32px;
-    background: linear-gradient(180deg, #e6f4f5 0%, #dceef0 100%);
+    background: #e6f4f5;
   }
 
-  :global(:root[data-theme='dark']) .hc__viewport {
-    border-color: rgba(255, 255, 255, 0.08);
+  :global(:root[data-theme='dark']) .hc {
     background: #0b3a40;
   }
 
-  /* Cards shrink proportionally once the container is narrower than two full
-     cards plus panel padding and border (2 × 260 + 24 + 2 × 24 + 2 = 594px). */
-  @container (max-width: 593px) {
+  /* Both columns centered; cards are cut cleanly at the top and bottom edges. */
+  .hc__viewport {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: var(--hc-gap);
+    height: 100%;
+    padding-inline: var(--hc-pad-x);
+    overflow: hidden;
+    scroll-padding-block: var(--hc-gap);
+  }
+
+  /* Cards shrink proportionally once the panel is narrower than two full
+     cards plus the minimum side space (2 × 260 + 24 + 2 × 12 = 568px). */
+  @container (max-width: 567px) {
     .hc__viewport {
-      --hc-card-w: calc((100cqi - 2 * var(--hc-pad-x) - 2px - var(--hc-gap)) / 2);
+      --hc-card-w: calc((100cqi - 2 * var(--hc-pad-x) - var(--hc-gap)) / 2);
       --hc-card-h: calc(var(--hc-card-w) * 300 / 260);
     }
   }
@@ -225,7 +222,6 @@
   @container (max-width: 420px) {
     .hc__viewport {
       --hc-gap: 16px;
-      --hc-pad-x: 12px;
     }
   }
 
@@ -389,13 +385,6 @@
     .hc__chip-label {
       font-size: 0.56rem;
       letter-spacing: 0.1em;
-    }
-  }
-
-  @media (max-width: 720px) {
-    .hc__viewport {
-      justify-content: center;
-      width: 100%;
     }
   }
 
