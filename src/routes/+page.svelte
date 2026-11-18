@@ -39,7 +39,7 @@
       },
       image: 'https://kamburcito.com/images/kamburcito-social-preview.webp',
       description:
-        'Fast, trustworthy websites for law firms and medical practices. Fixed-price projects from $1,800. Founder-led studio, in English and Spanish.',
+        'Websites, SEO and content for cosmetic surgery, medical and wellness practices. Fixed-price projects from $1,800. Founder-led studio, in English and Spanish.',
       founder: {
         '@id': 'https://kamburcito.com/#patricia-diaz'
       },
@@ -89,7 +89,7 @@
       url: 'https://kamburcito.com/',
       name: 'Kamburcito Studio',
       description:
-        'Fast, trustworthy websites for law firms and medical practices. Fixed-price projects from $1,800. Founder-led studio, in English and Spanish.',
+        'Websites, SEO and content for cosmetic surgery, medical and wellness practices. Fixed-price projects from $1,800. Founder-led studio, in English and Spanish.',
       publisher: {
         '@id': 'https://kamburcito.com/#business'
       },
@@ -99,7 +99,7 @@
       '@type': 'WebPage',
       '@id': 'https://kamburcito.com/#webpage',
       url: 'https://kamburcito.com/',
-      name: 'Website Design for Law Firms and Medical Practices | Kamburcito Studio',
+      name: 'Website Design and Marketing for Cosmetic Surgery and Medical Practices | Kamburcito Studio',
       isPartOf: {
         '@id': 'https://kamburcito.com/#website'
       },
@@ -300,6 +300,50 @@ function handleStudioKeydown(event) {
   const serviceDecor = [
     { col: 3, row: 0 },
     { col: 1, row: 4 }
+  ];
+
+  // "Who I help" tiles. Paths with class="accent" are drawn in champagne.
+  const specialties = [
+    {
+      name: 'Plastic surgery',
+      icon: '<path d="M12 3C8.4 3 6 5.8 6 9.8c0 4.4 2.7 8.4 6 10.2 3.3-1.8 6-5.8 6-10.2C18 5.8 15.6 3 12 3z"/><path class="accent" d="M9.5 14c1.5 1.1 3.5 1.1 5 0"/><path d="M9.5 10h.01M14.5 10h.01"/>'
+    },
+    {
+      name: 'Cosmetic surgery',
+      icon: '<path d="M11 3.5 12.7 8.3 17.5 10l-4.8 1.7L11 16.5l-1.7-4.8L4.5 10l4.8-1.7z"/><path class="accent" d="M18 15v5M15.5 17.5h5"/>'
+    },
+    {
+      name: 'Bariatric surgery',
+      icon: '<path d="M9 3v3.5c0 1.6-1.2 2.4-2.2 3.4C5.7 11 5 12.4 5 14.5A6.5 6.5 0 0 0 11.5 21h1A6.5 6.5 0 0 0 19 14.5c0-2.2-1.3-3.7-3.2-3.7-1.7 0-2.4 1.4-3.8 1.4"/><path class="accent" d="M8 3h3"/>'
+    },
+    {
+      name: 'Gynecology and women’s health',
+      icon: '<path d="M9.5 7.5c0-1.4-1.1-2.5-2.5-2.5S4 6.3 4 8.3c0 1.5.9 2.7 2.2 3.2"/><path d="M14.5 7.5c0-1.4 1.1-2.5 2.5-2.5s3 1.3 3 3.3c0 1.5-.9 2.7-2.2 3.2"/><path d="M9.5 7.5v5a2.5 2.5 0 0 0 5 0v-5c0-1-1.1-1.5-2.5-1.5s-2.5.5-2.5 1.5z"/><path class="accent" d="M12 15v6"/>'
+    },
+    {
+      name: 'Psychology',
+      icon: '<path d="M14 21v-3h2.5a2 2 0 0 0 2-2v-2.5L20 13l-1.5-2.5A7.5 7.5 0 1 0 6 16v5"/><path class="accent" d="M10 8.5a2.2 2.2 0 0 1 4.2 1c0 1.4-1.7 1.8-1.7 3"/>'
+    },
+    {
+      name: 'Urology',
+      icon: '<path d="M14.5 4C10.8 2.8 6 5 6 11.2S9.9 21.5 13.4 20c2-.9 1.6-3.3.4-4.6-1-1.1-1-2.7.1-3.7 1.5-1.4 3.8-1.4 3.9-3.6.1-1.8-1.4-3.4-3.3-4.1z"/><path class="accent" d="M14 11.5c-1.3.4-2.4 1.6-2.8 3.5"/>'
+    },
+    {
+      name: 'Endocrinology',
+      icon: '<path d="M12 3s6 6.6 6 11a6 6 0 0 1-12 0c0-4.4 6-11 6-11z"/><path class="accent" d="M9.5 14.5A2.5 2.5 0 0 0 12 17"/>'
+    },
+    {
+      name: 'Cruelty-free beauty',
+      icon: '<path d="M5 19c0-8.3 5.2-13.4 14-14-.6 8.8-5.7 14-14 14z"/><path class="accent" d="m5 19 8-8"/>'
+    },
+    {
+      name: 'Life sciences and laboratory',
+      icon: '<path d="M9 3h6M10 3v6.2L4.8 18a2 2 0 0 0 1.7 3h11a2 2 0 0 0 1.7-3L14 9.2V3"/><path class="accent" d="M7.3 15h9.4"/>'
+    },
+    {
+      name: 'Law firms',
+      icon: '<path d="M12 4v16M8 20h8M5 7h14"/><path d="M5 7l-2.5 6a2.5 2.5 0 0 0 5 0z"/><path d="M19 7l-2.5 6a2.5 2.5 0 0 0 5 0z"/><path class="accent" d="M10.5 4h3"/>'
+    }
   ];
 
   const steps = [
@@ -1275,12 +1319,12 @@ manifestoObserver.observe(
 
 <svelte:head>
   <title>
-    Website Design for Law Firms and Medical Practices | Kamburcito Studio
+    Website Design and Marketing for Cosmetic Surgery and Medical Practices | Kamburcito Studio
   </title>
 
   <meta
     name="description"
-    content="Fast, trustworthy websites for law firms and medical practices. Fixed-price projects from $1,800. Founder-led studio, in English and Spanish."
+    content="Websites, SEO and content for cosmetic surgery, medical and wellness practices. Fixed-price projects from $1,800. Founder-led studio, in English and Spanish."
   />
 
   <link rel="canonical" href="https://kamburcito.com/" />
@@ -1288,11 +1332,11 @@ manifestoObserver.observe(
   <meta property="og:type" content="website" />
   <meta
     property="og:title"
-    content="Website Design for Law Firms and Medical Practices | Kamburcito Studio"
+    content="Website Design and Marketing for Cosmetic Surgery and Medical Practices | Kamburcito Studio"
   />
   <meta
     property="og:description"
-    content="Fast, trustworthy websites for law firms and medical practices. Fixed-price projects from $1,800. Founder-led studio, in English and Spanish."
+    content="Websites, SEO and content for cosmetic surgery, medical and wellness practices. Fixed-price projects from $1,800. Founder-led studio, in English and Spanish."
   />
   <meta property="og:url" content="https://kamburcito.com/" />
   <meta
@@ -1303,11 +1347,11 @@ manifestoObserver.observe(
   <meta name="twitter:card" content="summary_large_image" />
   <meta
     name="twitter:title"
-    content="Website Design for Law Firms and Medical Practices | Kamburcito Studio"
+    content="Website Design and Marketing for Cosmetic Surgery and Medical Practices | Kamburcito Studio"
   />
   <meta
     name="twitter:description"
-    content="Fast, trustworthy websites for law firms and medical practices. Fixed-price projects from $1,800. Founder-led studio, in English and Spanish."
+    content="Websites, SEO and content for cosmetic surgery, medical and wellness practices. Fixed-price projects from $1,800. Founder-led studio, in English and Spanish."
   />
   <meta
     name="twitter:image"
@@ -1323,7 +1367,7 @@ manifestoObserver.observe(
     <div class="hero-cinematic__content">
       <div class="hero-cinematic__inner">
         <p class="hero-cinematic__eyebrow">
-          Web design for law firms and medical practices
+          Web design for aesthetic, wellness and medical practices
         </p>
 
         <h1 id="home-hero-title">
@@ -1331,8 +1375,8 @@ manifestoObserver.observe(
         </h1>
 
         <p class="hero-cinematic__subtitle">
-          I design and build fast, trustworthy websites for law firms, clinics
-          and medical practices, and connect them to the follow-up that answers
+          I design and build fast, trustworthy websites for cosmetic surgeons,
+          clinics, labs and law firms, and connect them to the follow-up that answers
           every inquiry. You work with me directly, from first call to launch.
         </p>
 
@@ -1396,6 +1440,35 @@ manifestoObserver.observe(
           ></span>
         {/each}
       </div>
+    </div>
+  </section>
+
+  <section id="who-i-help" class="home-sectors" aria-labelledby="who-i-help-title">
+    <div class="wide-container">
+      <header class="home-sectors__heading">
+        <p class="home-kicker">Who I help</p>
+        <h2 id="who-i-help-title">Your specialty meets effective web design and marketing.</h2>
+        <p class="home-lead">
+          I’m a solo specialist, so you always talk to the person doing the work.
+          I’ve built sites and content for practices and brands in these areas:
+        </p>
+      </header>
+
+      <ul class="home-sectors__grid">
+        {#each specialties as specialty (specialty.name)}
+          <li class="home-sectors__tile">
+            <svg class="home-sectors__icon" viewBox="0 0 24 24" aria-hidden="true">
+              {@html specialty.icon}
+            </svg>
+            <span>{specialty.name}</span>
+          </li>
+        {/each}
+      </ul>
+
+      <p class="home-sectors__more">
+        Don’t see your specialty?
+        <a href="/get-started/">Tell me about your practice.</a>
+      </p>
     </div>
   </section>
 
