@@ -1309,21 +1309,6 @@ manifestoObserver.observe(
     </a>
   </section>
 
-  <section class="home-proof" aria-label="Track record">
-    <div class="wide-container home-proof__inner">
-      <ul class="home-proof__facts">
-        <li>50+ websites delivered</li>
-        <li>Since 2019</li>
-        <li>Upwork Top Rated Plus</li>
-        <li>100% Job Success</li>
-      </ul>
-      <p class="home-proof__clients">
-        <span>FemSculpt</span> · <span>Immigration Law DFW</span> ·
-        <span>Beccar Varela</span> · <span>NC Builders</span>
-      </p>
-    </div>
-  </section>
-
   <section id="services" class="services-section home-services" aria-labelledby="services-title">
     <div class="wide-container">
       <header class="services-heading">

@@ -82,6 +82,7 @@
 @media (max-width: 900px) {
   .hero-cinematic {
     grid-template-columns: minmax(0, 1fr);
+    padding-left: 0;
   }
 
   .hero-cinematic__content {
