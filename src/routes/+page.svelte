@@ -38,7 +38,7 @@
       },
       image: 'https://kamburcito.com/images/kamburcito-social-preview.webp',
       description:
-        'Kamburcito Studio is a creative web design and development studio creating distinctive, responsive websites for small businesses and growing brands.',
+        'Fast, trustworthy websites for law firms and medical practices. Fixed-price projects from $1,800. Founder-led studio, in English and Spanish.',
       founder: {
         '@id': 'https://kamburcito.com/#patricia-diaz'
       },
@@ -88,7 +88,7 @@
       url: 'https://kamburcito.com/',
       name: 'Kamburcito Studio',
       description:
-        'Creative web design and development for small businesses and growing brands.',
+        'Fast, trustworthy websites for law firms and medical practices. Fixed-price projects from $1,800. Founder-led studio, in English and Spanish.',
       publisher: {
         '@id': 'https://kamburcito.com/#business'
       },
@@ -98,7 +98,7 @@
       '@type': 'WebPage',
       '@id': 'https://kamburcito.com/#webpage',
       url: 'https://kamburcito.com/',
-      name: 'Creative Web Design & Development Studio | Kamburcito Studio',
+      name: 'Website Design for Law Firms and Medical Practices | Kamburcito Studio',
       isPartOf: {
         '@id': 'https://kamburcito.com/#website'
       },
@@ -1147,12 +1147,12 @@ manifestoObserver.observe(
 
 <svelte:head>
   <title>
-    Creative Web Design & Development Studio | Kamburcito Studio
+    Website Design for Law Firms and Medical Practices | Kamburcito Studio
   </title>
 
   <meta
     name="description"
-    content="Kamburcito Studio designs and develops distinctive, responsive websites for small businesses and growing brands worldwide."
+    content="Fast, trustworthy websites for law firms and medical practices. Fixed-price projects from $1,800. Founder-led studio, in English and Spanish."
   />
 
   <link rel="canonical" href="https://kamburcito.com/" />
@@ -1160,11 +1160,11 @@ manifestoObserver.observe(
   <meta property="og:type" content="website" />
   <meta
     property="og:title"
-    content="Creative Web Design & Development Studio | Kamburcito Studio"
+    content="Website Design for Law Firms and Medical Practices | Kamburcito Studio"
   />
   <meta
     property="og:description"
-    content="Distinctive websites, thoughtful design, and modern development for small businesses and growing brands."
+    content="Fast, trustworthy websites for law firms and medical practices. Fixed-price projects from $1,800. Founder-led studio, in English and Spanish."
   />
   <meta property="og:url" content="https://kamburcito.com/" />
   <meta
@@ -1175,11 +1175,11 @@ manifestoObserver.observe(
   <meta name="twitter:card" content="summary_large_image" />
   <meta
     name="twitter:title"
-    content="Creative Web Design & Development Studio | Kamburcito Studio"
+    content="Website Design for Law Firms and Medical Practices | Kamburcito Studio"
   />
   <meta
     name="twitter:description"
-    content="Distinctive websites, thoughtful design, and modern development for small businesses and growing brands."
+    content="Fast, trustworthy websites for law firms and medical practices. Fixed-price projects from $1,800. Founder-led studio, in English and Spanish."
   />
   <meta
     name="twitter:image"
@@ -1194,33 +1194,30 @@ manifestoObserver.observe(
   <section class="hero-cinematic" aria-labelledby="home-hero-title">
     <div class="hero-cinematic__content">
       <div class="hero-cinematic__inner">
-        <p
-          class="hero-cinematic__eyebrow"
-        >
-          Boutique Web Design Studio
+        <p class="hero-cinematic__eyebrow">
+          Web design for law firms and medical practices
         </p>
 
-        <h1
-          id="home-hero-title"
-        >
-          Websites designed with clarity, character and intention
+        <h1 id="home-hero-title">
+          Websites that turn visitors into client inquiries.
         </h1>
 
-        <h2
-          class="hero-cinematic__subtitle"
-        >
-          Founder-led design and development for brands ready for a stronger
-          digital presence
-        </h2>
+        <p class="hero-cinematic__subtitle">
+          I design and build fast, trustworthy websites for law firms, clinics
+          and medical practices, and connect them to the follow-up that answers
+          every inquiry. You work with me directly, from first call to launch.
+        </p>
 
-        <div
-          class="hero-actions"
-        >
-          <a
-            href="/work"
-            class="btn btn-primary"
-          >
-            View My Work
+        <p class="hero-cinematic__note">
+          Fixed-price projects from $1,800. Quote in writing before we start.
+        </p>
+
+        <div class="hero-actions">
+          <a href="/get-started/" class="btn btn-primary">
+            Get a free website review
+          </a>
+          <a href="/work/" class="btn btn-secondary">
+            See my work
           </a>
         </div>
       </div>
@@ -1237,6 +1234,22 @@ manifestoObserver.observe(
       <span aria-hidden="true">↓</span>
     </a>
   </section>
+
+  <section class="home-proof" aria-label="Track record">
+    <div class="wide-container home-proof__inner">
+      <ul class="home-proof__facts">
+        <li>50+ websites delivered</li>
+        <li>Since 2019</li>
+        <li>Upwork Top Rated Plus</li>
+        <li>100% Job Success</li>
+      </ul>
+      <p class="home-proof__clients">
+        <span>FemSculpt</span> · <span>Immigration Law DFW</span> ·
+        <span>Beccar Varela</span> · <span>NC Builders</span>
+      </p>
+    </div>
+  </section>
+
   <section id="process" class="section process-section" aria-labelledby="process-title">
     <div class="wide-container process-container">
       <header class="process-heading">

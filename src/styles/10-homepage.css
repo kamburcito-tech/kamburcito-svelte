@@ -44,7 +44,7 @@
   text-wrap: balance;
 }
 
-.hero-cinematic h2.hero-cinematic__subtitle {
+.hero-cinematic .hero-cinematic__subtitle {
   max-width: 34rem;
   margin: 32px 0 0;
   padding: 0;
@@ -63,9 +63,22 @@
   -webkit-text-fill-color: currentColor;
 }
 
+.hero-cinematic__note {
+  max-width: 34rem;
+  margin: 18px 0 0;
+  color: color-mix(in srgb, var(--paper) 62%, transparent);
+  font-family: 'Manrope Variable', Arial, sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: -0.005em;
+}
+
 .hero-cinematic .hero-actions {
   display: flex;
-  margin-top: 38px;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 34px;
 }
 
 .hero-cinematic .hero-actions .btn {
@@ -132,6 +145,60 @@
   .hero-cinematic__scroll span:last-child {
     animation: none;
   }
+}
+
+/* ================================
+   Proof strip (directly under the hero)
+================================ */
+
+.home-proof {
+  position: relative;
+  padding: 22px 0;
+  border-block: 1px solid var(--line);
+  background: var(--bg-soft);
+  font-family: 'Manrope Variable', Arial, sans-serif;
+}
+
+.home-proof__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px 32px;
+}
+
+.home-proof__facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: var(--text);
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+/* Trailing separator, so a wrapped line never starts with a dot. */
+.home-proof__facts li:not(:last-child)::after {
+  content: '·' / '';
+  margin-inline: 12px;
+  color: var(--accent);
+}
+
+.home-proof__clients {
+  margin: 0;
+  color: var(--muted);
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+}
+
+.home-proof__clients span {
+  white-space: nowrap;
 }
 /* ================================
    Studio
