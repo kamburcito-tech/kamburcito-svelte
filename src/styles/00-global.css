@@ -236,3 +236,20 @@ h6 span,
     transition-duration: 0.001ms !important;
   }
 }
+
+/* -----------------------------------------------------
+   Brand palette shared by the hero cards and the home
+   sections, plus the soft teal band (--tint).
+----------------------------------------------------- */
+:root {
+  --brand-teal: #0e7c86;
+  --brand-teal-dark: #0b3a40;
+  --brand-champagne: #c9a96e;
+  --brand-navy: #0b2540;
+  --brand-border: #d9e4ec;
+  --tint: #e6f4f5;
+}
+
+:root[data-theme='dark'] {
+  --tint: #0f2c38;
+}

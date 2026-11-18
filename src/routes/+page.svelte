@@ -227,26 +227,80 @@ function handleStudioKeydown(event) {
   },
 ];
 
+  // Services honeycomb. `col` / `row` place each hexagon on the desktop board
+  // (columns step 0.75 of a hexagon across, rows step half a hexagon down).
   const services = [
-  {
-    number: '01',
-    title: 'Website redesign',
-    text: 'Your current site, rebuilt to look credible, load fast and make the next step obvious.',
-    accent: 'cyan'
-  },
-  {
-    number: '02',
-    title: 'New website',
-    text: 'Design and development from scratch, on WordPress or SvelteKit, built so your team can edit it.',
-    accent: 'violet'
-  },
-  {
-    number: '03',
-    title: 'Speed and lead follow-up',
-    text: 'Core Web Vitals tuning, contact forms that work, and HubSpot automations: welcome email, follow-up and reminders.',
-    accent: 'gold'
-  }
-];
+    {
+      title: 'Website design and development',
+      text: 'Custom sites built to look credible and turn visitors into inquiries.',
+      tone: 'teal',
+      col: 0,
+      row: 1,
+      icon: '<rect x="3" y="4" width="18" height="13" rx="2"/><path d="M3 8h18M8 21h8M12 17v4"/>'
+    },
+    {
+      title: 'SEO',
+      text: 'Service pages, local search basics and structure that gets you found.',
+      tone: 'dark',
+      col: 2,
+      row: 1,
+      icon: '<circle cx="11" cy="11" r="6"/><path d="m20 20-4.35-4.35"/>'
+    },
+    {
+      title: 'Content and AI content',
+      text: 'Articles and pages in your brand voice, reviewed by a person before they go live.',
+      tone: 'teal',
+      col: 4,
+      row: 1,
+      icon: '<path d="M14 3H6v18h12V9"/><path d="M9 13h6M9 17h4"/><path d="M18 2v4M16 4h4"/>'
+    },
+    {
+      title: 'Healthcare advertising',
+      text: 'Landing pages and Google and Meta campaigns that bring in new patients.',
+      tone: 'dark',
+      col: 1,
+      row: 2,
+      icon: '<path d="M3 10.5v3a1 1 0 0 0 1 1h2.5L12 19V5L6.5 9.5H4a1 1 0 0 0-1 1z"/><path d="M15.5 9a4 4 0 0 1 0 6M18.5 6a8 8 0 0 1 0 12"/>'
+    },
+    {
+      title: 'Lead follow-up',
+      text: 'Forms that work, plus HubSpot emails, reminders and follow-up.',
+      tone: 'teal',
+      col: 3,
+      row: 2,
+      icon: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/>'
+    },
+    {
+      title: 'Brand and imagery',
+      text: 'Logo, colors, type and product or service visuals.',
+      tone: 'teal',
+      col: 0,
+      row: 3,
+      icon: '<path d="M12 3a9 9 0 1 0 0 18c1.1 0 1.5-.8 1.5-1.5 0-.4-.2-.8-.4-1.1-.3-.3-.4-.7-.4-1.1 0-.8.7-1.5 1.5-1.5H16a5 5 0 0 0 5-5c0-4.4-4-7.8-9-7.8z"/><circle cx="7.5" cy="11.5" r="1"/><circle cx="10.5" cy="7.5" r="1"/><circle cx="15.5" cy="8.5" r="1"/>'
+    },
+    {
+      title: 'Speed and care',
+      text: 'Core Web Vitals tuning and an optional monthly plan for updates.',
+      tone: 'dark',
+      col: 2,
+      row: 3,
+      icon: '<path d="M4.5 18a9 9 0 1 1 15 0"/><path d="m12 13 4-4"/><circle cx="12" cy="13" r="1"/>'
+    },
+    {
+      title: 'On-demand services',
+      text: 'Tailor-made help for anything else your practice needs.',
+      tone: 'gold',
+      col: 4,
+      row: 3,
+      icon: '<path d="M12 3v4M12 17v4M3 12h4M17 12h4M5.6 5.6l2.9 2.9M15.5 15.5l2.9 2.9M5.6 18.4l2.9-2.9M15.5 8.5l2.9-2.9"/>'
+    }
+  ];
+
+  // Empty tint hexagons that complete the honeycomb edges (decoration only).
+  const serviceDecor = [
+    { col: 3, row: 0 },
+    { col: 1, row: 4 }
+  ];
 
   const steps = [
     {
@@ -1309,24 +1363,37 @@ manifestoObserver.observe(
     </a>
   </section>
 
-  <section id="services" class="services-section home-services" aria-labelledby="services-title">
+  <section id="services" class="home-hex" aria-labelledby="services-title">
     <div class="wide-container">
-      <header class="services-heading">
-        <h2 id="services-title">What I do</h2>
+      <header class="home-hex__heading">
+        <p class="home-kicker">Services</p>
+        <h2 id="services-title">Everything your practice needs online.</h2>
+        <p class="home-lead">One person to talk to, from first call to launch.</p>
       </header>
 
-      <div class="services-grid services-grid--three">
-        {#each services as service (service.number)}
-          <a class="service-card {service.accent}" href="/get-started/">
-            <div class="service-top">
-              <span aria-hidden="true">{service.number}</span>
-            </div>
-            <div class="service-content">
-              <h3>{service.title}</h3>
-              <p>{service.text}</p>
-            </div>
-            <span class="service-arrow" aria-hidden="true">→</span>
-          </a>
+      <div class="home-hex__board">
+        <ul class="home-hex__grid">
+          {#each services as service (service.title)}
+            <li class="home-hex__cell" style:--col={service.col} style:--row={service.row}>
+              <a class="home-hex__item home-hex__item--{service.tone}" href="/get-started/">
+                <div class="home-hex__shape">
+                  <svg class="home-hex__icon" viewBox="0 0 24 24" aria-hidden="true">
+                    {@html service.icon}
+                  </svg>
+                  <h3 class="home-hex__title">{service.title}</h3>
+                  <p class="home-hex__text">{service.text}</p>
+                </div>
+              </a>
+            </li>
+          {/each}
+        </ul>
+        {#each serviceDecor as decor (`${decor.col}-${decor.row}`)}
+          <span
+            class="home-hex__decor"
+            style:--col={decor.col}
+            style:--row={decor.row}
+            aria-hidden="true"
+          ></span>
         {/each}
       </div>
     </div>

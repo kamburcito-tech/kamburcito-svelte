@@ -539,45 +539,243 @@
 }
 
 /* ================================
-   What I do / How it works / Pricing
+   Shared heading pieces for the home sections below the hero
+================================ */
+
+.home-kicker {
+  margin: 0 0 16px;
+  color: var(--accent);
+  font-family: 'Manrope Variable', Arial, sans-serif;
+  font-size: 0.74rem;
+  font-weight: 800;
+  line-height: 1.4;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+:root[data-theme='light'] .home-kicker {
+  color: var(--brand-teal);
+}
+
+.home-lead {
+  margin: 18px 0 0;
+  color: var(--muted);
+  font-family: 'Manrope Variable', Arial, sans-serif;
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+/* ================================
+   Services honeycomb
+   Phones and tablets get rounded tiles; the honeycomb starts at 1024px.
+================================ */
+
+.home-hex {
+  --hex-clip: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
+  padding: 110px 0;
+  background: var(--bg);
+}
+
+.home-hex__heading {
+  max-width: 760px;
+  margin: 0 auto 48px;
+  text-align: center;
+}
+
+.home-hex__heading h2 {
+  margin: 0;
+  text-wrap: balance;
+}
+
+.home-hex__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.home-hex__decor {
+  display: none;
+}
+
+.home-hex__item {
+  --tone-bg: var(--brand-teal);
+  --tone-ink: #fff;
+  position: relative;
+  display: block;
+  height: 100%;
+  color: var(--tone-ink);
+  text-decoration: none;
+  transition:
+    transform 0.3s ease,
+    filter 0.3s ease;
+}
+
+.home-hex__item--dark {
+  --tone-bg: var(--brand-teal-dark);
+}
+
+.home-hex__item--gold {
+  --tone-bg: var(--brand-champagne);
+  --tone-ink: var(--brand-navy);
+}
+
+/* Focus ring sits behind the shape, so it follows the hexagon outline too. */
+.home-hex__item::before {
+  content: '';
+  position: absolute;
+  inset: -5px;
+  border-radius: 25px;
+  background: var(--text);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.home-hex__item:focus-visible {
+  outline: none;
+}
+
+.home-hex__item:focus-visible::before {
+  opacity: 1;
+}
+
+.home-hex__item:hover {
+  transform: translateY(-4px);
+  filter: brightness(1.08);
+}
+
+.home-hex__shape {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 100%;
+  min-height: 190px;
+  padding: 26px 20px;
+  border-radius: 20px;
+  background: var(--tone-bg);
+  text-align: center;
+}
+
+.home-hex__icon {
+  width: 30px;
+  height: 30px;
+  margin-bottom: 4px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.home-hex__title {
+  margin: 0;
+  color: inherit;
+  font-family: 'Manrope Variable', Arial, sans-serif;
+  font-size: 1rem;
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.home-hex__text {
+  margin: 0;
+  color: inherit;
+  font-family: 'Manrope Variable', Arial, sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  line-height: 1.45;
+  opacity: 0.9;
+  text-wrap: pretty;
+}
+
+@media (max-width: 720px) {
+  .home-hex {
+    padding: 72px 0;
+  }
+}
+
+@media (max-width: 420px) {
+  .home-hex__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .home-hex__shape {
+    min-height: 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  /* Flat-top hexagons: neighbours sit 0.75 w across and h / 2 down, plus the gap
+     measured perpendicular to the shared edge. Rows 0 and 4 hold decoration. */
+  .home-hex__board {
+    --hex-w: clamp(220px, 20vw, 270px);
+    --hex-h: calc(var(--hex-w) * 0.866);
+    --hex-gap: 8px;
+    --hex-dx: calc(var(--hex-w) * 0.75 + var(--hex-gap) * 0.866);
+    --hex-dy: calc((var(--hex-h) + var(--hex-gap)) / 2);
+    position: relative;
+    width: calc(var(--hex-dx) * 4 + var(--hex-w));
+    height: calc(var(--hex-dy) * 4 + var(--hex-h));
+    margin-inline: auto;
+  }
+
+  .home-hex__grid {
+    display: block;
+  }
+
+  .home-hex__cell,
+  .home-hex__decor {
+    position: absolute;
+    top: calc(var(--row) * var(--hex-dy));
+    left: calc(var(--col) * var(--hex-dx));
+    width: var(--hex-w);
+    height: var(--hex-h);
+  }
+
+  .home-hex__decor {
+    display: block;
+    clip-path: var(--hex-clip);
+    background: var(--tint);
+  }
+
+  .home-hex__item::before {
+    border-radius: 0;
+    clip-path: var(--hex-clip);
+  }
+
+  .home-hex__shape {
+    min-height: 0;
+    padding: 0 17%;
+    border-radius: 0;
+    clip-path: var(--hex-clip);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-hex__item:hover {
+    transform: none;
+  }
+}
+
+/* ================================
+   How it works / Pricing
    (built on the services-section styles)
 ================================ */
 
-.home-services,
 .home-steps,
 .home-pricing {
   padding: 96px 0;
 }
 
 /* Body copy in the sans-serif used by the hero and FAQ, for readability. */
-:is(.home-services, .home-steps, .home-pricing) p {
+:is(.home-steps, .home-pricing) p {
   font-family: 'Manrope Variable', Arial, sans-serif;
-}
-
-.home-services .service-content p {
-  font-size: 0.98rem;
-}
-
-.home-services .service-content h3 {
-  text-wrap: balance;
-}
-
-.services-grid.services-grid--three {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
-.home-services .service-card {
-  min-height: 320px;
-}
-
-/* Room for the arrow in the bottom-right corner. */
-.home-services .service-content {
-  padding-right: 56px;
-}
-
-.home-services .service-card:focus-visible {
-  outline: 3px solid var(--accent);
-  outline-offset: 4px;
 }
 
 .home-steps__list {
@@ -690,12 +888,6 @@
   }
 }
 
-@media (max-width: 900px) {
-  .services-grid.services-grid--three {
-    grid-template-columns: minmax(0, 1fr);
-  }
-}
-
 @media (max-width: 720px) {
   .home-steps__list {
     grid-template-columns: minmax(0, 1fr);
@@ -740,11 +932,6 @@
   .home-pricing__price {
     white-space: normal;
     text-align: right;
-  }
-
-  .home-services .service-card {
-    min-height: 0;
-    gap: 40px;
   }
 }
 
