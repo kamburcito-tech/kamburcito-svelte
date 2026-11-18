@@ -1,6 +1,7 @@
 <script>
   import { afterNavigate } from '$app/navigation';
   import { resolve } from '$app/paths';
+  import { contactEmailHref, whatsappHref } from '$lib/contact.js';
 
   import '@fontsource-variable/cormorant-garamond';
   import '@fontsource-variable/manrope';
@@ -13,11 +14,6 @@
   let { children } = $props();
 
   let mobileMenuOpen = $state(false);
-
-  const contactEmailHref = 'mailto:kamburcito@gmail.com';
-  const whatsappHref =
-    'https://wa.me/5491138012415?text=' +
-    encodeURIComponent("Hi! I'd like to ask about a website.");
 
   function closeMobileMenu() {
     mobileMenuOpen = false;

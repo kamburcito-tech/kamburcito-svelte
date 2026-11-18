@@ -586,6 +586,216 @@
   border-color: transparent;
 }
 
+/* ================================
+   What I do / How it works / Pricing
+   (built on the services-section styles)
+================================ */
+
+.home-services,
+.home-steps,
+.home-pricing {
+  padding: 96px 0;
+}
+
+/* Body copy in the sans-serif used by the hero and FAQ, for readability. */
+:is(.home-services, .home-steps, .home-pricing) p {
+  font-family: 'Manrope Variable', Arial, sans-serif;
+}
+
+.home-services .service-content p {
+  font-size: 0.98rem;
+}
+
+.home-services .service-content h3 {
+  text-wrap: balance;
+}
+
+.services-grid.services-grid--three {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.home-services .service-card {
+  min-height: 320px;
+}
+
+/* Room for the arrow in the bottom-right corner. */
+.home-services .service-content {
+  padding-right: 56px;
+}
+
+.home-services .service-card:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 4px;
+}
+
+.home-steps__list {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 22px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.home-steps__item {
+  padding-top: 26px;
+  border-top: 1px solid var(--line-strong);
+}
+
+.home-steps__number {
+  margin-bottom: 20px;
+  color: var(--accent);
+  font-family: 'Manrope Variable', Arial, sans-serif;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+}
+
+.home-steps__item h3 {
+  margin: 0;
+  font-family: 'Cormorant Garamond Variable', Georgia, serif;
+  font-size: clamp(1.6rem, 2vw, 2.1rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
+.home-steps__item p {
+  margin: 14px 0 0;
+  font-family: 'Manrope Variable', Arial, sans-serif;
+  font-size: 0.98rem;
+  line-height: 1.65;
+}
+
+.home-pricing__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Manrope Variable', Arial, sans-serif;
+  text-align: left;
+}
+
+.home-pricing__table th,
+.home-pricing__table td {
+  padding: 24px 20px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: baseline;
+}
+
+.home-pricing__table :is(th, td):first-child {
+  padding-left: 0;
+}
+
+.home-pricing__table :is(th, td):last-child {
+  padding-right: 0;
+}
+
+.home-pricing__table thead th {
+  padding-top: 0;
+  padding-bottom: 14px;
+  border-bottom-color: var(--line-strong);
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.home-pricing__table tbody th {
+  width: 24%;
+  color: var(--text);
+  font-family: 'Cormorant Garamond Variable', Georgia, serif;
+  font-size: clamp(1.5rem, 2vw, 2rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.home-pricing__price {
+  width: 24%;
+  color: var(--accent);
+  font-size: 1.05rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.home-pricing__table tbody td:last-child {
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.home-pricing__note {
+  margin: 18px 0 0;
+  font-family: 'Manrope Variable', Arial, sans-serif;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+@media (max-width: 1180px) {
+  .home-steps__list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 40px;
+  }
+}
+
+@media (max-width: 900px) {
+  .services-grid.services-grid--three {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 720px) {
+  .home-steps__list {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 32px;
+  }
+
+  /* Stack each row: name and price on one line, details below. */
+  .home-pricing__table thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .home-pricing__table tr {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: baseline;
+    column-gap: 16px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .home-pricing__table th,
+  .home-pricing__table td {
+    width: auto;
+    padding: 0;
+    border: 0;
+  }
+
+  .home-pricing__table tbody th {
+    white-space: nowrap;
+  }
+
+  .home-pricing__table tbody td:last-child {
+    grid-column: 1 / -1;
+    margin-top: 8px;
+  }
+
+  .home-pricing__price {
+    white-space: normal;
+    text-align: right;
+  }
+
+  .home-services .service-card {
+    min-height: 0;
+    gap: 40px;
+  }
+}
+
 /* Work Section */
 
 .work-section {

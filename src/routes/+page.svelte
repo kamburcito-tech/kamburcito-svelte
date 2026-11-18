@@ -16,6 +16,7 @@
   import beachBitesImage from '$lib/assets/working_on/beach-bites-club-working-on-homepage.webp?enhanced&w=500;360';
   import petraValdezImage from '$lib/assets/working_on/petra-valdez-working-on-homepage.webp?enhanced&w=500;360';
   import HeroCardColumns from '$lib/components/HeroCardColumns.svelte';
+  import { whatsappHref } from '$lib/contact.js';
 
   // WebGL effects (and three.js) load only on larger screens without reduced motion.
   const WEBGL_MEDIA_QUERY = '(min-width: 721px) and (prefers-reduced-motion: no-preference)';
@@ -226,32 +227,105 @@ function handleStudioKeydown(event) {
   },
 ];
 
- const services = [
+  const services = [
   {
     number: '01',
-    title: 'Web Design',
-    text: 'Custom websites with strong layouts, clear structure, and a premium visual direction.',
+    title: 'Website redesign',
+    text: 'Your current site, rebuilt to look credible, load fast and make the next step obvious.',
     accent: 'cyan'
   },
   {
     number: '02',
-    title: 'Product Design',
-    text: 'Interface concepts, user flows, and digital experiences made to feel intuitive and polished.',
+    title: 'New website',
+    text: 'Design and development from scratch, on WordPress or SvelteKit, built so your team can edit it.',
     accent: 'violet'
   },
   {
     number: '03',
-    title: 'Branding',
-    text: 'Visual direction, color systems, typography, and brand details that make your business memorable.',
-    accent: 'pink'
-  },
-  {
-    number: '04',
-    title: 'Web Development',
-    text: 'Responsive builds with clean code, smooth interactions, and client-friendly structure.',
+    title: 'Speed and lead follow-up',
+    text: 'Core Web Vitals tuning, contact forms that work, and HubSpot automations: welcome email, follow-up and reminders.',
     accent: 'gold'
   }
 ];
+
+  const steps = [
+    {
+      title: 'Free review or call',
+      text: 'We talk about your practice, your clients and what the site has to do.'
+    },
+    {
+      title: 'Fixed quote in writing',
+      text: 'Scope, price and revision rounds agreed before I start.'
+    },
+    {
+      title: 'Design and build',
+      text: 'You see the design first, then the working site, with agreed review rounds.'
+    },
+    {
+      title: 'Launch and support',
+      text: 'I test, launch and stay available. An optional care plan covers updates and fixes.'
+    }
+  ];
+
+  const pricingPlans = [
+    {
+      name: 'Starter',
+      price: 'from $1,800',
+      text: 'About 5 pages, mobile design, contact form and speed setup.'
+    },
+    {
+      name: 'Standard',
+      price: 'from $3,500',
+      text: 'Up to about 10 pages, plus HubSpot follow-up or a bilingual setup.'
+    },
+    {
+      name: 'Custom',
+      price: 'from $6,000',
+      text: 'Galleries, integrations and larger sites, quoted after a call.'
+    },
+    {
+      name: 'Care plan',
+      price: '$120 to $200 a month',
+      text: 'Updates, backups, fixes and speed checks.'
+    }
+  ];
+
+  const faqs = [
+    {
+      question: 'How much does a website cost?',
+      answer:
+        'Fixed-price projects start from $1,800. You get a written quote before we start, listing exactly what’s included.'
+    },
+    {
+      question: 'How long does it take?',
+      answer:
+        'It depends on the size of the project and how quickly content and feedback arrive. Your written quote includes a timeline.'
+    },
+    {
+      question: 'Do you work with clients outside Argentina?',
+      answer:
+        'Yes. I work with clients in the US and elsewhere, in English and Spanish, and I schedule calls in your time zone.'
+    },
+    {
+      question: 'Can I edit the site myself?',
+      answer:
+        'Yes. Sites are built so your team can update text, images and pages without a developer.'
+    },
+    {
+      question: 'Do you handle legal or medical compliance?',
+      answer:
+        'I build forms and pages following common best practices and can work with your counsel. Advertising and privacy compliance stays the client’s responsibility.'
+    },
+    {
+      question: 'What do you need from me?',
+      answer: 'Your content and photos, or I can help shape them. We agree this in the quote.'
+    },
+    {
+      question: 'What happens after launch?',
+      answer:
+        'I test, launch and stay available. An optional care plan covers updates, backups and fixes.'
+    }
+  ];
 
   const projects = [
     {
@@ -1250,6 +1324,79 @@ manifestoObserver.observe(
     </div>
   </section>
 
+  <section id="services" class="services-section home-services" aria-labelledby="services-title">
+    <div class="wide-container">
+      <header class="services-heading">
+        <h2 id="services-title">What I do</h2>
+      </header>
+
+      <div class="services-grid services-grid--three">
+        {#each services as service (service.number)}
+          <a class="service-card {service.accent}" href="/get-started/">
+            <div class="service-top">
+              <span aria-hidden="true">{service.number}</span>
+            </div>
+            <div class="service-content">
+              <h3>{service.title}</h3>
+              <p>{service.text}</p>
+            </div>
+            <span class="service-arrow" aria-hidden="true">→</span>
+          </a>
+        {/each}
+      </div>
+    </div>
+  </section>
+
+  <section id="how-it-works" class="services-section home-steps" aria-labelledby="how-it-works-title">
+    <div class="wide-container">
+      <header class="services-heading">
+        <h2 id="how-it-works-title">How it works</h2>
+      </header>
+
+      <ol class="home-steps__list">
+        {#each steps as step, index (step.title)}
+          <li class="home-steps__item">
+            <div class="home-steps__number" aria-hidden="true">
+              {String(index + 1).padStart(2, '0')}
+            </div>
+            <h3>{step.title}</h3>
+            <p>{step.text}</p>
+          </li>
+        {/each}
+      </ol>
+    </div>
+  </section>
+
+  <section id="pricing" class="services-section home-pricing" aria-labelledby="pricing-title">
+    <div class="wide-container">
+      <header class="services-heading">
+        <h2 id="pricing-title">Fixed prices, no surprises</h2>
+        <p>Every quote is in writing and lists exactly what’s included.</p>
+      </header>
+
+      <table class="home-pricing__table">
+        <thead>
+          <tr>
+            <th scope="col">Project</th>
+            <th scope="col">Price</th>
+            <th scope="col">What’s included</th>
+          </tr>
+        </thead>
+        <tbody>
+          {#each pricingPlans as plan (plan.name)}
+            <tr>
+              <th scope="row">{plan.name}</th>
+              <td class="home-pricing__price">{plan.price}</td>
+              <td>{plan.text}</td>
+            </tr>
+          {/each}
+        </tbody>
+      </table>
+
+      <p class="home-pricing__note">Prices are in USD.</p>
+    </div>
+  </section>
+
   <section id="process" class="section process-section" aria-labelledby="process-title">
     <div class="wide-container process-container">
       <header class="process-heading">
@@ -1573,172 +1720,45 @@ manifestoObserver.observe(
     </header>
 
     <div class="home-faq__list">
-      <details class="home-faq__item">
-        <summary class="home-faq__question">
-          <span>What’s your process, and how do revisions work?</span>
+      {#each faqs as faq (faq.question)}
+        <details class="home-faq__item">
+          <summary class="home-faq__question">
+            <span>{faq.question}</span>
 
-          <span class="home-faq__icon" aria-hidden="true">
-            <svg viewBox="0 0 20 20">
-              <path d="M4.5 7.5 10 13l5.5-5.5" />
-            </svg>
-          </span>
-        </summary>
+            <span class="home-faq__icon" aria-hidden="true">
+              <svg viewBox="0 0 20 20">
+                <path d="M4.5 7.5 10 13l5.5-5.5" />
+              </svg>
+            </span>
+          </summary>
 
-        <div class="home-faq__answer">
-          <p>
-            Every project moves through strategy, design, development, quality
-            assurance, and launch. You receive clear milestones and focused
-            feedback stages throughout the process. Revisions are included
-            within the agreed scope, while larger changes can be handled as a
-            separate scope update.
-          </p>
-        </div>
-      </details>
-
-      <details class="home-faq__item">
-        <summary class="home-faq__question">
-          <span>What should I budget for a custom website?</span>
-
-          <span class="home-faq__icon" aria-hidden="true">
-            <svg viewBox="0 0 20 20">
-              <path d="M4.5 7.5 10 13l5.5-5.5" />
-            </svg>
-          </span>
-        </summary>
-
-        <div class="home-faq__answer">
-          <p>
-            Every website is quoted according to its size, design requirements,
-            integrations, and functionality. You receive a clear fixed-price
-            proposal before work begins, so you know exactly what is included.
-            You can also review the
-            <a href="/pricing">pricing page</a>
-            for starting points and package examples.
-          </p>
-        </div>
-      </details>
-
-      <details class="home-faq__item">
-        <summary class="home-faq__question">
-          <span>What timeline should I expect?</span>
-
-          <span class="home-faq__icon" aria-hidden="true">
-            <svg viewBox="0 0 20 20">
-              <path d="M4.5 7.5 10 13l5.5-5.5" />
-            </svg>
-          </span>
-        </summary>
-
-        <div class="home-faq__answer">
-          <p>
-            Most small-business websites take approximately two to six weeks,
-            depending on the number of pages, content readiness, functionality,
-            and feedback timeline. Your project schedule and milestones are
-            confirmed before kickoff.
-          </p>
-        </div>
-      </details>
-
-      <details class="home-faq__item">
-        <summary class="home-faq__question">
-          <span>What makes Kamburcito Studio different?</span>
-
-          <span class="home-faq__icon" aria-hidden="true">
-            <svg viewBox="0 0 20 20">
-              <path d="M4.5 7.5 10 13l5.5-5.5" />
-            </svg>
-          </span>
-        </summary>
-
-        <div class="home-faq__answer">
-          <p>
-            Kamburcito Studio is founder-led from beginning to end. You work
-            directly with Patty throughout strategy, design, development, and
-            launch—without being passed between departments. The result is a
-            more personal process, clearer communication, and a website shaped
-            around your actual business goals.
-          </p>
-        </div>
-      </details>
-
-      <details class="home-faq__item">
-        <summary class="home-faq__question">
-          <span>What platforms and technology do you use?</span>
-
-          <span class="home-faq__icon" aria-hidden="true">
-            <svg viewBox="0 0 20 20">
-              <path d="M4.5 7.5 10 13l5.5-5.5" />
-            </svg>
-          </span>
-        </summary>
-
-        <div class="home-faq__answer">
-          <p>
-            The platform is selected around the needs of each project rather
-            than following a single template. Kamburcito Studio works with
-            WordPress, Elementor, SvelteKit, Shopify, Squarespace, and other
-            modern tools depending on your content, editing, e-commerce, and
-            performance requirements.
-          </p>
-        </div>
-      </details>
-
-      <details class="home-faq__item">
-        <summary class="home-faq__question">
-          <span>Can you redesign or improve an existing website?</span>
-
-          <span class="home-faq__icon" aria-hidden="true">
-            <svg viewBox="0 0 20 20">
-              <path d="M4.5 7.5 10 13l5.5-5.5" />
-            </svg>
-          </span>
-        </summary>
-
-        <div class="home-faq__answer">
-          <p>
-            Yes. Existing websites can be redesigned, reorganized, optimized
-            for mobile, improved for performance, or migrated to a more suitable
-            platform. The first step is reviewing what already works, what is
-            limiting the site, and what should be preserved.
-            <a href="/get-started">Start your project →</a>
-          </p>
-        </div>
-      </details>
+          <div class="home-faq__answer">
+            <p>{faq.answer}</p>
+          </div>
+        </details>
+      {/each}
     </div>
   </div>
 </section>
 
- <section id="contact" class="final-cta">
+ <section id="contact" class="final-cta" aria-labelledby="closing-title">
   <div class="wide-container cta-inner">
     <div class="cta-content">
-      <p class="eyebrow">Open Studio</p>
+      <h2 id="closing-title">Tell me about your project.</h2>
 
-      <h2>
-        Ready for a website
-        <span>that feels like your brand?</span>
-      </h2>
-
-      <p>
-        Tell me what you’re building or improving. I’ll help you shape it into a polished website
-        with clear direction, strong visuals, and a smooth user experience.
-      </p>
+      <p>I’ll reply with a clear next step.</p>
 
       <div class="cta-actions">
-        <a href="/get-started" class="btn btn-primary">Get a Quote</a>
-        <a href="/work" class="btn btn-secondary">View Selected Work</a>
+        <a href="/get-started/" class="btn btn-primary">Get a free website review</a>
+        <a
+          href={whatsappHref}
+          class="btn btn-secondary"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          WhatsApp me
+        </a>
       </div>
-    </div>
-  </div>
-
-  <div class="wide-container available-strip">
-    <span>Available for</span>
-
-    <div class="available-list">
-      <p>Web Design</p>
-      <p>Branding</p>
-      <p>Product Design</p>
-      <p>Web Development</p>
-      <p>Website Redesigns</p>
     </div>
   </div>
 </section>
