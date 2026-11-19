@@ -16,7 +16,7 @@
   import beachBitesImage from '$lib/assets/working_on/beach-bites-club-working-on-homepage.webp?enhanced&w=500;360';
   import petraValdezImage from '$lib/assets/working_on/petra-valdez-working-on-homepage.webp?enhanced&w=500;360';
   import HeroCardColumns from '$lib/components/HeroCardColumns.svelte';
-  import { whatsappHref } from '$lib/contact.js';
+  import { linkedinHref, whatsappHref } from '$lib/contact.js';
 
   // WebGL effects (and three.js) load only on larger screens without reduced motion.
   const WEBGL_MEDIA_QUERY = '(min-width: 721px) and (prefers-reduced-motion: no-preference)';
@@ -39,7 +39,7 @@
       },
       image: 'https://kamburcito.com/images/kamburcito-social-preview.webp',
       description:
-        'Websites, SEO and content for cosmetic surgery, medical and wellness practices. Fixed-price projects from $1,800. Founder-led studio, in English and Spanish.',
+        'Web designer and developer in Buenos Aires building websites for healthcare and legal practices. WordPress, SvelteKit, SEO. Available for remote roles and contracts.',
       founder: {
         '@id': 'https://kamburcito.com/#patricia-diaz'
       },
@@ -69,6 +69,14 @@
       name: 'Patricia Diaz',
       url: 'https://kamburcito.com/',
       jobTitle: 'Web Designer and Developer',
+      description:
+        'Web designer and developer in Buenos Aires building websites for healthcare and legal practices. WordPress, SvelteKit, SEO. Available for remote roles and contracts.',
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Buenos Aires',
+        addressCountry: 'AR'
+      },
+      sameAs: [linkedinHref],
       worksFor: {
         '@id': 'https://kamburcito.com/#business'
       },
@@ -76,11 +84,14 @@
         'Web Design',
         'Front-end Development',
         'WordPress',
+        'Elementor',
         'SvelteKit',
         'Tailwind CSS',
         'Responsive Web Design',
         'Website Performance',
-        'On-page SEO'
+        'Core Web Vitals',
+        'On-page SEO',
+        'HubSpot'
       ]
     },
     {
@@ -89,7 +100,7 @@
       url: 'https://kamburcito.com/',
       name: 'Kamburcito Studio',
       description:
-        'Websites, SEO and content for cosmetic surgery, medical and wellness practices. Fixed-price projects from $1,800. Founder-led studio, in English and Spanish.',
+        'Web designer and developer in Buenos Aires building websites for healthcare and legal practices. WordPress, SvelteKit, SEO. Available for remote roles and contracts.',
       publisher: {
         '@id': 'https://kamburcito.com/#business'
       },
@@ -99,12 +110,12 @@
       '@type': 'WebPage',
       '@id': 'https://kamburcito.com/#webpage',
       url: 'https://kamburcito.com/',
-      name: 'Website Design and Marketing for Cosmetic Surgery and Medical Practices | Kamburcito Studio',
+      name: 'Patricia Diaz | Web Designer and Developer | Kamburcito Studio',
       isPartOf: {
         '@id': 'https://kamburcito.com/#website'
       },
       about: {
-        '@id': 'https://kamburcito.com/#business'
+        '@id': 'https://kamburcito.com/#patricia-diaz'
       },
       inLanguage: 'en'
     }
@@ -1318,13 +1329,11 @@ manifestoObserver.observe(
 </script>
 
 <svelte:head>
-  <title>
-    Website Design and Marketing for Cosmetic Surgery and Medical Practices | Kamburcito Studio
-  </title>
+  <title>Patricia Diaz | Web Designer and Developer | Kamburcito Studio</title>
 
   <meta
     name="description"
-    content="Websites, SEO and content for cosmetic surgery, medical and wellness practices. Fixed-price projects from $1,800. Founder-led studio, in English and Spanish."
+    content="Web designer and developer in Buenos Aires building websites for healthcare and legal practices. WordPress, SvelteKit, SEO. Available for remote roles and contracts."
   />
 
   <link rel="canonical" href="https://kamburcito.com/" />
@@ -1332,11 +1341,11 @@ manifestoObserver.observe(
   <meta property="og:type" content="website" />
   <meta
     property="og:title"
-    content="Website Design and Marketing for Cosmetic Surgery and Medical Practices | Kamburcito Studio"
+    content="Patricia Diaz | Web Designer and Developer | Kamburcito Studio"
   />
   <meta
     property="og:description"
-    content="Websites, SEO and content for cosmetic surgery, medical and wellness practices. Fixed-price projects from $1,800. Founder-led studio, in English and Spanish."
+    content="Web designer and developer in Buenos Aires building websites for healthcare and legal practices. WordPress, SvelteKit, SEO. Available for remote roles and contracts."
   />
   <meta property="og:url" content="https://kamburcito.com/" />
   <meta
@@ -1347,11 +1356,11 @@ manifestoObserver.observe(
   <meta name="twitter:card" content="summary_large_image" />
   <meta
     name="twitter:title"
-    content="Website Design and Marketing for Cosmetic Surgery and Medical Practices | Kamburcito Studio"
+    content="Patricia Diaz | Web Designer and Developer | Kamburcito Studio"
   />
   <meta
     name="twitter:description"
-    content="Websites, SEO and content for cosmetic surgery, medical and wellness practices. Fixed-price projects from $1,800. Founder-led studio, in English and Spanish."
+    content="Web designer and developer in Buenos Aires building websites for healthcare and legal practices. WordPress, SvelteKit, SEO. Available for remote roles and contracts."
   />
   <meta
     name="twitter:image"
@@ -1366,30 +1375,29 @@ manifestoObserver.observe(
   <section class="hero-cinematic" aria-labelledby="home-hero-title">
     <div class="hero-cinematic__content">
       <div class="hero-cinematic__inner">
-        <p class="hero-cinematic__eyebrow">
-          Web design for aesthetic, wellness and medical practices
-        </p>
+        <p class="hero-cinematic__eyebrow">Web designer and developer</p>
 
         <h1 id="home-hero-title">
-          Websites that turn visitors into client inquiries.
+          Websites for healthcare and legal practices, built to earn trust.
         </h1>
 
         <p class="hero-cinematic__subtitle">
-          I design and build fast, trustworthy websites for cosmetic surgeons,
-          clinics, labs and law firms, and connect them to the follow-up that answers
-          every inquiry. You work with me directly, from first call to launch.
+          I’m Patricia Diaz, a web designer and developer based in Buenos Aires.
+          Since 2019 I’ve built 50+ websites with WordPress and SvelteKit, with SEO
+          and HubSpot follow-up. I work in English and Spanish.
         </p>
 
-        <p class="hero-cinematic__note">
-          Fixed-price projects from $1,800. Quote in writing before we start.
-        </p>
+        <p class="hero-cinematic__note">Available for remote roles and contracts.</p>
 
         <div class="hero-actions">
-          <a href="/get-started/" class="btn btn-primary">
-            Get a free website review
-          </a>
-          <a href="/work/" class="btn btn-secondary">
-            See my work
+          <a href="/work/" class="btn btn-primary">See my work</a>
+          <a
+            href="/Patricia-Diaz-CV.pdf"
+            class="btn btn-secondary"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Download CV
           </a>
         </div>
       </div>
