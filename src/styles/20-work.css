@@ -100,6 +100,64 @@
   outline-offset: 5px;
 }
 
+/* Availability line under the subtitle */
+.work-page-hero .work-hero-inner > p.work-hero-note {
+  margin-top: 18px;
+  font-family: 'Manrope Variable', Arial, sans-serif;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+  opacity: 0.86;
+}
+
+/* Hero buttons: centered row that wraps on narrow screens */
+.work-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 36px;
+}
+
+.work-hero-actions .work-hero-button {
+  margin: 0;
+}
+
+/* Secondary button stays white-on-dark in both themes. */
+:root .work-page-hero .work-hero-button.work-hero-button--ghost {
+  border: 1px solid rgba(255, 255, 255, 0.72) !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+  box-shadow: none !important;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+
+:root .work-page-hero .work-hero-button.work-hero-button--ghost:hover {
+  border-color: #ffffff !important;
+  background: rgba(255, 255, 255, 0.16) !important;
+}
+
+.work-hero-button--ghost:focus-visible {
+  outline: 2px solid #ffffff;
+}
+
+@media (max-width: 900px) {
+  .work-hero-actions {
+    width: 100%;
+    margin-top: 32px;
+  }
+}
+
+/* Keep the H1 to three lines on phones. */
+@media (max-width: 480px) {
+  .work-page-hero .work-hero-inner h1 {
+    font-size: 11.5vw;
+  }
+}
+
 .work-featured-list {
   padding: 40px 0 160px;
 }

@@ -117,11 +117,11 @@ let workHeroCanvasWrap;
 </script>
 
 <svelte:head>
-  <title>Selected Website Projects | Kamburcito Studio</title>
+  <title>Selected Work | Patricia Diaz, Web Designer and Developer</title>
 
   <meta
     name="description"
-    content="Explore selected websites, redesigns, e-commerce projects, and digital experiences created by Kamburcito Studio."
+    content="Selected website projects for healthcare and legal practices, built with WordPress and SvelteKit by Patricia Diaz in Buenos Aires."
   />
 
   <link rel="canonical" href="https://kamburcito.com/work/" />
@@ -129,11 +129,11 @@ let workHeroCanvasWrap;
   <meta property="og:type" content="website" />
   <meta
     property="og:title"
-    content="Selected Website Projects | Kamburcito Studio"
+    content="Selected Work | Patricia Diaz, Web Designer and Developer"
   />
   <meta
     property="og:description"
-    content="A collection of custom websites, redesigns, stores, and digital experiences for real businesses."
+    content="Selected website projects for healthcare and legal practices, built with WordPress and SvelteKit by Patricia Diaz in Buenos Aires."
   />
   <meta property="og:url" content="https://kamburcito.com/work/" />
   <meta
@@ -146,16 +146,29 @@ let workHeroCanvasWrap;
 
 <section class="work-page-hero">
   <div class="wide-container work-hero-inner">
-    <h1>A closer look at my work.</h1>
+    <h1>Websites built for healthcare and legal practices.</h1>
 
     <p>
-      I design and build distinctive websites that feel true to your business
-      and make it easy for the right people to connect.
+      A selection of projects from 50+ websites I've designed and built since
+      2019, with WordPress and SvelteKit. Each one is made to look credible,
+      load fast and make the next step clear.
     </p>
 
-    <a href="#featured-work" class="work-hero-button">
-      EXPLORE MY PROJECTS <span aria-hidden="true">↓</span>
-    </a>
+    <p class="work-hero-note">Available for remote roles and contracts.</p>
+
+    <div class="work-hero-actions">
+      <a href="#featured-work" class="work-hero-button">
+        Explore my projects <span aria-hidden="true">↓</span>
+      </a>
+      <a
+        href="/Patricia-Diaz-CV.pdf"
+        class="work-hero-button work-hero-button--ghost"
+        target="_blank"
+        rel="noopener"
+      >
+        Download CV
+      </a>
+    </div>
   </div>
 </section>
 
