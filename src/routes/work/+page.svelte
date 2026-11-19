@@ -4,28 +4,73 @@
 
   const featuredProjects = [
     {
-  eyebrow: 'Featured Project',
-  title: 'Wellness Brand Website',
-  description:
-    'A calming wellness website designed to feel trustworthy, clear, and approachable while guiding visitors toward services and next steps.',
-  role: 'Design · Development',
-  platform: 'WordPress',
-  image: '/images/work/spry-society-work-project.webp',
-  link: 'https://thesprysociety.com/',
-  cta: 'Visit Website →'
-},
-{ 
-  eyebrow: 'Featured Project',
-  title: 'Law Firm Website',
-  description:
-    'A professional law firm website focused on credibility, clear service pages, and a polished experience for potential clients.',
-  role: 'Design · Development',
-  platform: 'WordPress',
-  image: '/images/work/law-firm-work-project.webp',
-  link: 'https://beccarvarela.com/en/',
-  cta: 'Visit Website →'
-},
- {
+      eyebrow: 'Featured Project',
+      title: 'FemSculpt',
+      description:
+        'Full website redesign for a cosmetic gynecology practice, with HubSpot follow-up automations.',
+      role: 'Design · Development',
+      platform: 'WordPress',
+      image: '/images/work/femsculpt-work-project.webp',
+      link: 'https://femsculpt.com/',
+      cta: 'View Live Site →'
+    },
+    {
+      eyebrow: 'Featured Project',
+      title: 'Immigration Law DFW',
+      description:
+        'Website design and build for an immigration law firm in the Dallas–Fort Worth area.',
+      role: 'Design · Development',
+      platform: 'WordPress',
+      image: '/images/work/din-law-firm-work-project.webp',
+      link: 'https://immigrationlawdfw.com/',
+      cta: 'Visit Website →'
+    },
+    {
+      eyebrow: 'Featured Project',
+      title: 'Beccar Varela',
+      description: 'Website design and build for a corporate law firm.',
+      role: 'Design · Development',
+      platform: 'WordPress',
+      image: '/images/work/law-firm-work-project.webp',
+      link: 'https://beccarvarela.com/en/',
+      cta: 'Visit Website →'
+    },
+    {
+      eyebrow: 'Featured Project',
+      title: 'NC Builders',
+      description:
+        "Website redesign for a Nevada City builder, developed from the client's mockup and style guide on WordPress and Elementor, optimized for speed and Core Web Vitals.",
+      role: 'Development · Performance Optimization',
+      platform: 'WordPress / Elementor',
+      image: '/images/work/nc-builders-work-project.webp',
+      link: 'https://ncbuilders.biz/',
+      cta: 'Visit Website →'
+    },
+    {
+      eyebrow: 'Featured Project',
+      title: 'Shady Grove Fertility',
+      description: 'Design updates and ongoing site support for a fertility practice.',
+      role: 'Website Support · Design Updates',
+      platform: 'WordPress',
+      image: '/images/work/shady-grove-fertility-work-project.webp',
+      link: 'https://shadygrovefertility.com/',
+      cta: 'View Live Site →'
+    }
+  ];
+
+  const moreProjects = [
+    {
+      eyebrow: 'Featured Project',
+      title: 'Wellness Brand Website',
+      description:
+        'A calming wellness website designed to feel trustworthy, clear, and approachable while guiding visitors toward services and next steps.',
+      role: 'Design · Development',
+      platform: 'WordPress',
+      image: '/images/work/spry-society-work-project.webp',
+      link: 'https://thesprysociety.com/',
+      cta: 'Visit Website →'
+    },
+    {
       eyebrow: 'Featured Project',
       title: 'Conduct Science',
       description:
@@ -35,8 +80,8 @@
       image: '/images/work/conductscience-work-project.webp',
       link: 'https://conductscience.com/',
       cta: 'View Live Site →'
-},
-{
+    },
+    {
       eyebrow: 'Featured Project',
       title: 'SurfaceWorks',
       description:
@@ -49,39 +94,6 @@
     },
     {
       eyebrow: 'Featured Project',
-      title: 'Shady Grove Fertility',
-      description:
-        'Healthcare website support focused on visual consistency, content updates, and maintaining a polished user experience across key pages.',
-      role: 'Website Support · Design Updates',
-      platform: 'WordPress',
-      image: '/images/work/shady-grove-fertility-work-project.webp',
-      link: 'https://shadygrovefertility.com/',
-      cta: 'View Live Site →'
-    },
-    {
-      eyebrow: 'Featured Project',
-      title: 'Immigration Law Firm Website',
-      description:
-         'A legal services website built to make immigration support feel clear, organized, and easier for visitors to understand.',
-      role: 'Design · Development',
-      platform: 'WordPress',
-      image: '/images/work/din-law-firm-work-project.webp',
-      link: 'https://immigrationlawdfw.com/',
-      cta: 'Visit Website →'
-},
-    {
-      eyebrow: 'Featured Project',
-      title: 'NC Builders',
-      description:
-        'A website redesign for a Nevada City builder, developed from the client\'s mockup and style guide into a premium WordPress site, and optimized for speed and Core Web Vitals.',
-      role: 'Development · Performance Optimization',
-      platform: 'WordPress / Elementor',
-      image: '/images/work/nc-builders-work-project.webp',
-      link: 'https://ncbuilders.biz/',
-      cta: 'Visit Website →'
-    },
-    {
-      eyebrow: 'Featured Project',
       title: 'Takahiro Ogawa',
       description:
         'A personal brand website with a strong editorial feel, designed to showcase creative work with a clean and memorable visual direction.',
@@ -89,17 +101,6 @@
       platform: 'Squarespace',
       image: '/images/work/takahiro-artist-work-project.webp',
       link: 'https://takahiroogawa.com/',
-      cta: 'View Live Site →'
-    },
-    {
-      eyebrow: 'Featured Project',
-      title: 'FemSculpt Cosmetic Gynecology',
-      description:
-        'A polished healthcare website for a Chicago cosmetic gynecology practice, designed to present specialized treatments clearly and encourage private consultations.',
-      role: 'Design · Development',
-      platform: 'WordPress',
-      image: '/images/work/femsculpt-work-project.webp',
-      link: 'https://femsculpt.com/',
       cta: 'View Live Site →'
     },
     {
@@ -173,42 +174,55 @@
   </div>
 </section>
 
+{#snippet projectCard(project)}
+  <article class="work-featured-card">
+    <div class="work-featured-image">
+      <img src={project.image} alt={project.title} />
+    </div>
+
+    <div class="work-featured-content">
+      <p class="eyebrow">{project.eyebrow}</p>
+
+      <h2>{project.title}</h2>
+
+      <p>{project.description}</p>
+
+      <div class="work-meta-grid">
+        <div>
+          <span>Role</span>
+          <strong>{project.role}</strong>
+        </div>
+
+        <div>
+          <span>Platform</span>
+          <strong>{project.platform}</strong>
+        </div>
+      </div>
+
+      <a
+        href={project.link}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {project.cta || 'Visit Live Website →'}
+      </a>
+    </div>
+  </article>
+{/snippet}
+
 <section id="featured-work" class="work-featured-list">
   <div class="wide-container">
-    {#each featuredProjects as project, index}
-      <article class="work-featured-card">
-        <div class="work-featured-image">
-          <img src={project.image} alt={project.title} />
-        </div>
+    {#each featuredProjects as project (project.link)}
+      {@render projectCard(project)}
+    {/each}
+  </div>
 
-        <div class="work-featured-content">
-          <p class="eyebrow">{project.eyebrow}</p>
-
-          <h2>{project.title}</h2>
-
-          <p>{project.description}</p>
-
-          <div class="work-meta-grid">
-            <div>
-              <span>Role</span>
-              <strong>{project.role}</strong>
-            </div>
-
-            <div>
-              <span>Platform</span>
-              <strong>{project.platform}</strong>
-            </div>
-          </div>
-
-          <a
-            href={project.link}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {project.cta || 'Visit Live Website →'}
-          </a>
-        </div>
-      </article>
+  <!-- The heading is the first child, so the image side keeps alternating
+       from the last featured card. -->
+  <div class="wide-container work-more">
+    <h2 class="work-more__title">More projects</h2>
+    {#each moreProjects as project (project.link)}
+      {@render projectCard(project)}
     {/each}
   </div>
 </section>

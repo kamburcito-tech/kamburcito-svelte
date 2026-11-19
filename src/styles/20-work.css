@@ -177,6 +177,19 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.09);
 }
 
+/* "More projects" group below the featured five */
+.work-more {
+  margin-top: clamp(72px, 9vw, 120px);
+}
+
+.work-featured-list .work-more__title {
+  margin: 0 0 clamp(8px, 1.5vw, 20px);
+  color: var(--text);
+  font-size: clamp(1.9rem, 3vw, 2.8rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
 /* Default: image left, content right */
 .work-featured-image {
   grid-column: 1;
