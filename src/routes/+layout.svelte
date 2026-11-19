@@ -86,8 +86,8 @@
 
       <nav class="desktop-nav" aria-label="Main navigation">
         <a href={resolve('/work')}>Work</a>
-        <a href={resolve('/pricing')}>Pricing</a>
-        <a href={resolve('/get-started')}>Get a Quote</a>
+        <a href="{resolve('/')}#about">About</a>
+        <a href="{resolve('/')}#contact">Contact</a>
       </nav>
 
       <div class="nav-actions">
@@ -130,12 +130,11 @@
         </button>
 
         <a
-          href={resolve('/get-started')}
+          href="{resolve('/')}#contact"
           class="mini-cta btn-primary"
-          aria-label="Start a website project"
           onclick={closeMobileMenu}
         >
-          Get Started
+          Contact
         </a>
         <button
           type="button"
@@ -156,8 +155,8 @@
   <nav id="mobile-navigation" class="mobile-menu" aria-label="Mobile navigation" hidden={!mobileMenuOpen}>
     <a href={resolve('/')} onclick={closeMobileMenu}>Home</a>
     <a href={resolve('/work')} onclick={closeMobileMenu}>Work</a>
-    <a href={resolve('/pricing')} onclick={closeMobileMenu}>Pricing</a>
-    <a href={resolve('/get-started')} onclick={closeMobileMenu}>Get Started</a>
+    <a href="{resolve('/')}#about" onclick={closeMobileMenu}>About</a>
+    <a href="{resolve('/')}#contact" onclick={closeMobileMenu}>Contact</a>
     <a
       class="mobile-menu-contact"
       href={contactEmailHref}

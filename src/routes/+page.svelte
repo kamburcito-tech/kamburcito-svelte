@@ -2,12 +2,6 @@
   import { onMount } from 'svelte';
   import '../styles/10-homepage.css';
   import '../styles/90-homepage-responsive.css';
-  import conductScienceImage from '$lib/assets/projects/conductscience-homepage-projects.webp?enhanced&w=960;640;400';
-  import sgfImage from '$lib/assets/projects/sgf-homepage-project.webp?enhanced&w=623;400';
-  import crueltyFreeImage from '$lib/assets/projects/cruelty-free-homepage-projects.webp?enhanced&w=960;640;400';
-  import surfaceWorksImage from '$lib/assets/projects/surfaceworks-homepage-project.webp?enhanced&w=623;400';
-  import takahiroImage from '$lib/assets/projects/takahiro-artist-homepage-project.webp?enhanced&w=960;640;400';
-  import larkImage from '$lib/assets/projects/lark-homepage-project.webp?enhanced&w=960;640;400';
   import financialAdvisorImage from '$lib/assets/working_on/financial-advisor-working-on-homepage.webp?enhanced&w=500;360';
   import casaNidoImage from '$lib/assets/working_on/casa-nido-working-on-homepage.webp?enhanced&w=736;500;360';
   import lumaStudioImage from '$lib/assets/working_on/luma-studio-working-on-homepage.webp?enhanced&w=500;360';
@@ -16,7 +10,13 @@
   import beachBitesImage from '$lib/assets/working_on/beach-bites-club-working-on-homepage.webp?enhanced&w=500;360';
   import petraValdezImage from '$lib/assets/working_on/petra-valdez-working-on-homepage.webp?enhanced&w=500;360';
   import HeroCardColumns from '$lib/components/HeroCardColumns.svelte';
-  import { linkedinHref, whatsappHref } from '$lib/contact.js';
+  import { contactEmail, contactEmailHref, linkedinHref, whatsappHref } from '$lib/contact.js';
+
+  // Client-offer sections (Services, Who I help, How it works, Pricing, the process
+  // route, Currently working on, testimonials, the manifesto/Three.js band, FAQ and the
+  // project CTA) stay in this file but only render when this is true. While false, the
+  // manifesto canvas never mounts, so three.js is never downloaded.
+  const showClientSections = false;
 
   // WebGL effects (and three.js) load only on larger screens without reduced motion.
   const WEBGL_MEDIA_QUERY = '(min-width: 721px) and (prefers-reduced-motion: no-preference)';
@@ -436,49 +436,53 @@ function handleStudioKeydown(event) {
     }
   ];
 
+  // Selected work rail on the home page (static screenshots from static/images/work).
   const projects = [
     {
-      title: 'Conduct Science',
-      type: 'Scientific E-Commerce',
-      stack: 'WordPress / WooCommerce',
-      image: conductScienceImage,
-      url: 'https://conductscience.com'
+      title: 'FemSculpt',
+      type: 'Cosmetic gynecology',
+      stack: 'WordPress',
+      image: '/images/work/femsculpt-work-project.webp',
+      url: 'https://femsculpt.com/'
+    },
+    {
+      title: 'Immigration Law DFW',
+      type: 'Law firm',
+      stack: 'WordPress',
+      image: '/images/work/din-law-firm-work-project.webp',
+      url: 'https://immigrationlawdfw.com/'
+    },
+    {
+      title: 'Beccar Varela',
+      type: 'Law firm',
+      stack: 'WordPress',
+      image: '/images/work/law-firm-work-project.webp',
+      url: 'https://beccarvarela.com/en/'
+    },
+    {
+      title: 'NC Builders',
+      type: 'Construction company',
+      stack: 'WordPress / Elementor',
+      image: '/images/work/nc-builders-work-project.webp',
+      url: 'https://ncbuilders.biz/'
     },
     {
       title: 'Shady Grove Fertility',
-      type: 'Healthcare Website',
-      stack: 'WordPress / Custom Design',
-      image: sgfImage,
-      url: 'https://shadygrovefertility.com'
-    },
-    {
-      title: 'Cruelty-Free Kitty',
-      type: 'Editorial + Shop',
-      stack: 'WordPress / Content Site',
-      image: crueltyFreeImage,
-      url: 'https://crueltyfreekitty.com'
-    },
-    {
-      title: 'SurfaceWorks',
-      type: 'Service Business',
-      stack: 'WordPress / Redesign',
-      image: surfaceWorksImage,
-      url: 'https://surfaceworks.com'
-    },
-    {
-      title: 'Takahiro Ogawa',
-      type: 'Creative Portfolio',
-      stack: 'Squarespace / Design',
-      image: takahiroImage,
-      url: 'https://takahiroogawa.com'
-    },
-    {
-      title: 'Digital Coaching',
-      type: 'Coaching Website',
-      stack: 'Webflow/ Redesign & Dev',
-      image: larkImage,
-      url: 'https://www.lark.com/'
+      type: 'Website support',
+      stack: 'WordPress / Website Support',
+      image: '/images/work/shady-grove-fertility-work-project.webp',
+      url: 'https://shadygrovefertility.com/'
     }
+  ];
+
+  const skills = [
+    'WordPress',
+    'SvelteKit',
+    'SEO',
+    'HubSpot',
+    'Core Web Vitals',
+    'Elementor',
+    'English and Spanish'
   ];
 
   let workRail;
@@ -1406,15 +1410,16 @@ manifestoObserver.observe(
       <HeroCardColumns />
     </div>
     <a
-      href="#studio"
+      href="#work"
       class="hero-cinematic__scroll"
-      aria-label="Scroll to current studio work"
+      aria-label="Scroll to selected work"
     >
       <span>Scroll</span>
       <span aria-hidden="true">↓</span>
     </a>
   </section>
 
+  {#if showClientSections}
   <section id="services" class="home-hex" aria-labelledby="services-title">
     <div class="wide-container">
       <header class="home-hex__heading">
@@ -1611,7 +1616,8 @@ manifestoObserver.observe(
     </div>
   </div>
 </section>
-  
+  {/if}
+
 <section
   id="work"
   class="section work-section"
@@ -1694,11 +1700,12 @@ manifestoObserver.observe(
           onmouseenter={playProjectSound}
         >
           <div class="project-image-wrap">
-            <enhanced:img
+            <img
               src={project.image}
               alt={isDuplicate ? '' : `${project.title} website project`}
               class="project-image"
-              sizes="(max-width: 700px) 82vw, 520px"
+              width="1600"
+              height="1000"
               loading="lazy"
               decoding="async"
             />
@@ -1729,7 +1736,18 @@ manifestoObserver.observe(
   </div>
 </section>
 
+  <section id="skills" class="home-skills" aria-labelledby="skills-title">
+    <div class="wide-container home-skills__inner">
+      <h2 id="skills-title" class="home-kicker">Skills</h2>
+      <ul class="home-skills__list">
+        {#each skills as skill (skill)}
+          <li>{skill}</li>
+        {/each}
+      </ul>
+    </div>
+  </section>
 
+  {#if showClientSections}
  <section class="section testimonials-section">
   <div class="wide-container testimonials-header">
     <p class="eyebrow">Testimonials</p>
@@ -1785,6 +1803,7 @@ manifestoObserver.observe(
     </div>
   </div>
 </section>
+  {/if}
 
 <section id="about" class="about-studio" aria-labelledby="about-studio-title" bind:this={aboutSection}>
   <div class="about-studio__container">
@@ -1794,10 +1813,18 @@ manifestoObserver.observe(
         A little creativity. A lot of intention.
       </h2>
       <div class="about-studio__description">
-        <p>Hey, I'm Patricia — an independent web designer and developer based in Buenos Aires.</p>
-        <p>I bring design, development, and thoughtful details together to create websites that look good, work beautifully, and feel true to the people behind them.</p>
+        <p>
+          I’m a web designer and developer from Buenos Aires. Since 2019 I’ve built
+          websites for law firms, medical practices and growing businesses, from first
+          design to launch.
+        </p>
+        <p>
+          Since December 2024 I’ve also supported Conduct Science with web design, product
+          imagery, SEO and AI-assisted blog content. I’m currently studying Systems Analysis
+          at IFTS 18, and I hold a Master’s in Digital Marketing.
+        </p>
       </div>
-      <a class="about-studio__cta" href="/get-started">Let's work together <span aria-hidden="true">↗</span></a>
+      <a class="about-studio__cta" href="#contact">Let's work together <span aria-hidden="true">↗</span></a>
       <p class="about-studio__identity">
         <span>DESIGNER + DEVELOPER</span>
         <span>BASED IN BUENOS AIRES · WORKING WORLDWIDE</span>
@@ -1817,6 +1844,7 @@ manifestoObserver.observe(
   </div>
 </section>
 
+  {#if showClientSections}
  <section bind:this={manifestoSection} class="manifesto-section">
   <canvas bind:this={canvas} id="hero-webgl"></canvas>
 
@@ -1874,7 +1902,7 @@ manifestoObserver.observe(
   </div>
 </section>
 
- <section id="contact" class="final-cta" aria-labelledby="closing-title">
+ <section id="project-contact" class="final-cta" aria-labelledby="closing-title">
   <div class="wide-container cta-inner">
     <div class="cta-content">
       <h2 id="closing-title">Tell me about your project.</h2>
@@ -1895,6 +1923,46 @@ manifestoObserver.observe(
     </div>
   </div>
 </section>
+  {/if}
+
+  <section id="contact" class="final-cta home-contact" aria-labelledby="contact-title">
+    <div class="wide-container cta-inner">
+      <div class="cta-content">
+        <p class="eyebrow">Contact</p>
+        <h2 id="contact-title">Open to remote roles and contracts.</h2>
+
+        <ul class="home-contact__links">
+          <li>
+            <span>Email</span>
+            <a href={contactEmailHref}>{contactEmail}</a>
+          </li>
+          <li>
+            <span>LinkedIn</span>
+            <a href={linkedinHref} target="_blank" rel="noopener noreferrer">
+              linkedin.com/in/patricia-d-ab25a61a6
+            </a>
+          </li>
+          <li>
+            <span>WhatsApp</span>
+            <a href={whatsappHref} target="_blank" rel="noopener noreferrer">
+              Chat on WhatsApp
+            </a>
+          </li>
+        </ul>
+
+        <div class="cta-actions">
+          <a
+            href="/Patricia-Diaz-CV.pdf"
+            class="btn btn-primary"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Download CV
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
 
 
   {#if dragCursorVisible}
