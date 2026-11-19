@@ -1,6 +1,6 @@
 <script>
- import '../../styles/20-work.css';
-let workHeroCanvasWrap;
+  import '../../styles/20-work.css';
+  import CellsBackground from '$lib/components/CellsBackground.svelte';
 
   const featuredProjects = [
     {
@@ -145,6 +145,7 @@ let workHeroCanvasWrap;
 </svelte:head>
 
 <section class="work-page-hero">
+  <CellsBackground />
   <div class="wide-container work-hero-inner">
     <h1>Websites built for healthcare and legal practices.</h1>
 
