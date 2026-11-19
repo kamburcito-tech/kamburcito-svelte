@@ -1,7 +1,12 @@
+<script module>
+  // The instance currently animating; starting another one pauses it.
+  let active = null;
+</script>
+
 <script>
   // Living cell-tissue background, plain WebGL (no three.js). Shaders, uniforms
   // and mouse smoothing are ported unchanged from kamburcito-cells-mid.html.
-  // Fills its positioned parent; pointer input is read from that parent.
+  // Fills its positioned parent, which supplies the background color.
   import { onMount, onDestroy } from 'svelte';
 
   const VS = `attribute vec2 a;void main(){gl_Position=vec4(a,0.,1.);}`;
@@ -49,14 +54,42 @@ void main(){
  vec2 c=gl_FragCoord.xy/uRes;float vg=smoothstep(1.25,.15,length(c-.5));col*=.55+.45*vg;
  gl_FragColor=vec4(col,1.);}`;
 
+  // opacity: canvas opacity once shown (it fades in from 0).
+  // interactionTarget: element whose pointer moves drive the lens; defaults to the parent.
+  // scale: render scale of CSS size × devicePixelRatio (capped at 1.5) from 768px up; 0.5 below.
+  let { opacity = 1, interactionTarget = undefined, scale = 0.75 } = $props();
+
+  let wrapper;
   let canvas;
   let shown = $state(false);
   let cleanup = () => {};
 
   onMount(() => {
-    const host = canvas.parentElement?.parentElement;
+    // Create the WebGL context lazily, once the element is within about one
+    // screen of the viewport.
+    let teardown;
+    const near = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        near.disconnect();
+        teardown = start();
+      },
+      { rootMargin: '100% 0px' }
+    );
+    near.observe(wrapper);
+    cleanup = () => {
+      near.disconnect();
+      teardown?.();
+    };
+  });
+
+  onDestroy(() => cleanup());
+
+  function start() {
+    const target = interactionTarget ?? wrapper.parentElement;
     const gl = canvas.getContext('webgl', { antialias: false, alpha: false });
-    if (!host || !gl) return;
+    // No WebGL: the canvas stays hidden and the parent's background shows.
+    if (!target || !gl) return;
 
     const compile = (type, src) => {
       const s = gl.createShader(type);
@@ -71,7 +104,6 @@ void main(){
     gl.attachShader(pr, fs);
     gl.linkProgram(pr);
     if (!gl.getProgramParameter(pr, gl.LINK_STATUS)) {
-      // The static gradient behind the canvas stays as the fallback.
       gl.getExtension('WEBGL_lose_context')?.loseContext();
       return;
     }
@@ -97,11 +129,11 @@ void main(){
     let lost = false;
 
     const size = () => {
-      const w = host.clientWidth, h = host.clientHeight;
+      const w = wrapper.clientWidth, h = wrapper.clientHeight;
       if (!w || !h) return;
-      const scale = (w < 768 ? 0.5 : 0.75) * Math.min(window.devicePixelRatio || 1, 1.5);
-      canvas.width = Math.max(1, Math.round(w * scale));
-      canvas.height = Math.max(1, Math.round(h * scale));
+      const s = (w < 768 ? 0.5 : scale) * Math.min(window.devicePixelRatio || 1, 1.5);
+      canvas.width = Math.max(1, Math.round(w * s));
+      canvas.height = Math.max(1, Math.round(h * s));
       gl.viewport(0, 0, canvas.width, canvas.height);
     };
 
@@ -128,19 +160,28 @@ void main(){
       raf = requestAnimationFrame(frame);
     };
 
+    const stop = () => {
+      if (raf) cancelAnimationFrame(raf);
+      raf = 0;
+      if (active === instance) active = null;
+    };
+    const instance = { stop };
+
     const update = () => {
       const run = !lost && !reduced && onScreen && !document.hidden;
-      if (run && !raf) raf = requestAnimationFrame(frame);
-      if (!run && raf) {
-        cancelAnimationFrame(raf);
-        raf = 0;
+      if (run && !raf) {
+        // Only one canvas animates at a time.
+        if (active && active !== instance) active.stop();
+        active = instance;
+        raf = requestAnimationFrame(frame);
       }
+      if (!run && raf) stop();
       if (reduced && !lost) draw(0); // One still frame, no animation.
     };
 
     const onMove = (e) => {
       if (e.pointerType === 'touch') return;
-      const r = host.getBoundingClientRect();
+      const r = wrapper.getBoundingClientRect();
       tm = [(e.clientX - r.left) / r.width, 1 - (e.clientY - r.top) / r.height];
       hovT = 1;
     };
@@ -163,28 +204,27 @@ void main(){
       size();
       if (reduced) draw(0);
     });
-    ro.observe(host);
+    ro.observe(wrapper);
     const io = new IntersectionObserver(([entry]) => {
       onScreen = entry.isIntersecting;
       update();
     });
-    io.observe(host);
+    io.observe(wrapper);
 
-    host.addEventListener('pointermove', onMove);
-    host.addEventListener('pointerleave', onLeave);
+    target.addEventListener('pointermove', onMove);
+    target.addEventListener('pointerleave', onLeave);
     document.addEventListener('visibilitychange', update);
     reducedQuery.addEventListener('change', onReduced);
     canvas.addEventListener('webglcontextlost', onContextLost);
 
     if (reduced) draw(0);
 
-    cleanup = () => {
-      cancelAnimationFrame(raf);
-      raf = 0;
+    return () => {
+      stop();
       ro.disconnect();
       io.disconnect();
-      host.removeEventListener('pointermove', onMove);
-      host.removeEventListener('pointerleave', onLeave);
+      target.removeEventListener('pointermove', onMove);
+      target.removeEventListener('pointerleave', onLeave);
       document.removeEventListener('visibilitychange', update);
       reducedQuery.removeEventListener('change', onReduced);
       canvas.removeEventListener('webglcontextlost', onContextLost);
@@ -194,23 +234,22 @@ void main(){
       gl.deleteShader(fs);
       gl.getExtension('WEBGL_lose_context')?.loseContext();
     };
-  });
-
-  onDestroy(() => cleanup());
+  }
 </script>
 
-<div class="cells-bg" aria-hidden="true">
+<div class="cells-bg" aria-hidden="true" bind:this={wrapper} style:--cells-opacity={opacity}>
   <canvas bind:this={canvas} class:is-shown={shown}></canvas>
 </div>
 
 <style>
+  /* Transparent until the canvas is shown, so the parent's own background is
+     both the first paint and the no-WebGL fallback. */
   .cells-bg {
     position: absolute;
     inset: 0;
     z-index: 0;
     overflow: hidden;
     pointer-events: none;
-    background: linear-gradient(135deg, #0a2f35 0%, #0b3a40 100%);
   }
 
   canvas {
@@ -222,7 +261,7 @@ void main(){
   }
 
   canvas.is-shown {
-    opacity: 1;
+    opacity: var(--cells-opacity, 1);
   }
 
   @media (prefers-reduced-motion: reduce) {

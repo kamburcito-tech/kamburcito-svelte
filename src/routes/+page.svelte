@@ -10,6 +10,7 @@
   import beachBitesImage from '$lib/assets/working_on/beach-bites-club-working-on-homepage.webp?enhanced&w=500;360';
   import petraValdezImage from '$lib/assets/working_on/petra-valdez-working-on-homepage.webp?enhanced&w=500;360';
   import HeroCardColumns from '$lib/components/HeroCardColumns.svelte';
+  import CellsBackground from '$lib/components/CellsBackground.svelte';
   import { contactEmail, contactEmailHref, linkedinHref, whatsappHref } from '$lib/contact.js';
 
   // Client-offer sections (Services, Who I help, How it works, Pricing, the process
@@ -1806,6 +1807,7 @@ manifestoObserver.observe(
   {/if}
 
 <section id="about" class="about-studio" aria-labelledby="about-studio-title" bind:this={aboutSection}>
+  <CellsBackground opacity={0.28} />
   <div class="about-studio__container">
     <div class="about-studio__content">
       <p class="about-studio__eyebrow">THE PERSON BEHIND KAMBURCITO</p>

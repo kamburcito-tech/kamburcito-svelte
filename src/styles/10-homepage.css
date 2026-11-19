@@ -1752,6 +1752,44 @@
   background: var(--about-background);
 }
 
+/* The cell canvas (CellsBackground) sits at z-index 0 inside the section. */
+.about-studio {
+  position: relative;
+  isolation: isolate;
+}
+
+.about-studio__container {
+  position: relative;
+  z-index: 2;
+}
+
+/* Soft scrim on the text side, in the section's own color, keeps the copy at
+   4.5:1 or more over the cells. It sits under the portrait, never over it. */
+.about-studio::before {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--about-background) 60%, transparent) 0%,
+    color-mix(in srgb, var(--about-background) 60%, transparent) 45%,
+    transparent 75%
+  );
+  content: '';
+  pointer-events: none;
+}
+
+@media (max-width: 980px) {
+  .about-studio::before {
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--about-background) 60%, transparent) 0%,
+      color-mix(in srgb, var(--about-background) 60%, transparent) 60%,
+      transparent 85%
+    );
+  }
+}
+
 .about-studio__container {
   display: grid;
   grid-template-columns: minmax(0, 11fr) minmax(0, 9fr);
