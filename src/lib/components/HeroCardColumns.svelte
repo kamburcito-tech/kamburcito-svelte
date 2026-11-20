@@ -1,16 +1,6 @@
 <script>
-  /** Visual test: while true, every site card shows the landing image below
-   *  (each keeps its own label chip; stat cards are unchanged). */
-  const landingTest = true;
-
-  const landingImage = {
-    src: '/images/hero/femsculpt-landing-card.webp',
-    width: 960,
-    height: 2525,
-    alt: 'Landing page of the FemSculpt cosmetic gynecology website'
-  };
-
   /**
+   * Display-only cards: no links, buttons or click handlers.
    * @typedef {object} HeroCard
    * @property {'site' | 'stat'} kind
    * @property {string} title  Site name, or the stat value ("50+").
@@ -19,12 +9,12 @@
    * @property {number} [width] Intrinsic width of `src`.
    * @property {number} [height] Intrinsic height of `src`.
    * @property {string} [alt]
-   * @property {string} href
    */
 
   /**
    * Cards alternate between the two columns in array order:
    * even indexes go to column 1, odd indexes to column 2.
+   * Keep the count even and one stat card per column so both loops match.
    * @type {HeroCard[]}
    */
   const cards = [
@@ -32,119 +22,115 @@
       kind: 'site',
       title: 'FemSculpt',
       label: 'Cosmetic gynecology',
-      src: '/images/hero/femsculpt-landing-card.webp',
+      src: '/images/hero/cards/femsculpt-landing.webp',
       width: 960,
       height: 2525,
-      alt: 'Landing page of the FemSculpt cosmetic gynecology website',
-      href: '/work'
+      alt: 'Landing page of the FemSculpt cosmetic gynecology website'
     },
     {
       kind: 'site',
       title: 'Immigration Law DFW',
       label: 'Law firm',
-      src: '/images/hero/cards/din-law-firm-card.webp',
-      width: 640,
-      height: 400,
-      alt: 'Homepage of the Immigration Law DFW law firm website',
-      href: '/work'
+      src: '/images/hero/cards/immigration-law-dfw-landing.webp',
+      width: 960,
+      height: 1611,
+      alt: 'Landing page of the Immigration Law DFW law firm website'
     },
     {
       kind: 'site',
       title: 'Beccar Varela',
       label: 'Law firm',
-      src: '/images/hero/cards/law-firm-card.webp',
-      width: 640,
-      height: 400,
-      alt: 'Homepage of the Beccar Varela law firm website',
-      href: '/work'
+      src: '/images/hero/cards/beccar-landing.webp',
+      width: 960,
+      height: 1552,
+      alt: 'Landing page of the Beccar Varela law firm website'
     },
-    { kind: 'stat', title: '50+', label: 'websites delivered', href: '/work' },
+    { kind: 'stat', title: '50+', label: 'websites delivered' },
     {
       kind: 'site',
       title: 'Shady Grove Fertility',
       label: 'Healthcare',
-      src: '/images/hero/cards/shady-grove-fertility-card.webp',
-      width: 640,
-      height: 400,
-      alt: 'Homepage of the Shady Grove Fertility healthcare website',
-      href: '/work'
+      src: '/images/hero/cards/shady-grove-landing.webp',
+      width: 960,
+      height: 1272,
+      alt: 'Landing page of the Shady Grove Fertility healthcare website'
+    },
+    {
+      kind: 'site',
+      title: 'Chicago Breast + Body',
+      label: 'Cosmetic surgery',
+      src: '/images/hero/cards/chicago-breast-body-landing.webp',
+      width: 960,
+      height: 1583,
+      alt: 'Landing page of the Chicago Breast + Body cosmetic surgery website'
+    },
+    { kind: 'stat', title: 'Since 2019', label: 'founder-led studio' },
+    {
+      kind: 'site',
+      title: 'NC Builders',
+      label: 'Home builder',
+      src: '/images/hero/cards/nc-builders-landing.webp',
+      width: 960,
+      height: 1406,
+      alt: 'Landing page of the NC Builders home builder website'
+    },
+    {
+      kind: 'site',
+      title: 'Cielo Weksler',
+      label: 'Aesthetic medicine',
+      src: '/images/hero/cards/cielo-weksler-landing.webp',
+      width: 960,
+      height: 1946,
+      alt: 'Landing page of the Cielo Weksler aesthetic medicine website'
     },
     {
       kind: 'site',
       title: 'Spry Society',
       label: 'Wellness',
       src: '/images/hero/cards/spry-society-card.webp',
-      width: 640,
-      height: 400,
-      alt: 'Homepage of the Spry Society wellness website',
-      href: '/work'
-    },
-    { kind: 'stat', title: 'Since 2019', label: 'founder-led studio', href: '/work' },
-    {
-      kind: 'site',
-      title: 'Lark',
-      src: '/images/hero/cards/lark-card.webp',
-      width: 640,
-      height: 376,
-      alt: 'Homepage of the Lark website',
-      href: '/work'
+      width: 960,
+      height: 600,
+      alt: 'Homepage of the Spry Society wellness website'
     },
     {
       kind: 'site',
       title: 'SurfaceWorks',
       label: 'Industrial services',
       src: '/images/hero/cards/surfaceworks-card.webp',
-      width: 640,
-      height: 400,
-      alt: 'Homepage of the SurfaceWorks industrial services website',
-      href: '/work'
+      width: 960,
+      height: 600,
+      alt: 'Homepage of the SurfaceWorks industrial services website'
+    },
+    {
+      kind: 'site',
+      title: 'Lark',
+      src: '/images/hero/cards/lark-card.webp',
+      width: 960,
+      height: 565,
+      alt: 'Homepage of the Lark website'
     }
   ];
 
   /** Loop speed: seconds of animation per card, so both columns move at the same pace. */
   const SECONDS_PER_CARD = 11.5;
-  /** Cards per column that can be on screen at load; these images load eagerly. */
-  const EAGER_PER_COLUMN = 3;
+  /** Cards per column that can be on screen at load (up to 4 at 1920px); these load eagerly. */
+  const EAGER_PER_COLUMN = 4;
 
   const columns = [
     cards.filter((_, index) => index % 2 === 0),
     cards.filter((_, index) => index % 2 === 1)
   ];
-
-  /** @param {HeroCard} card */
-  function describe(card) {
-    if (card.kind === 'stat') return `${card.title} ${card.label}. View the work page`;
-    return `${card.title}${card.label ? `, ${card.label}` : ''} website. View the work page`;
-  }
-
-  /**
-   * Keyboard focus may scroll the viewport to reveal a card;
-   * restore the loop's origin once focus leaves the carousel.
-   * @param {FocusEvent & { currentTarget: HTMLDivElement }} event
-   */
-  function handleFocusOut(event) {
-    const viewport = event.currentTarget;
-    const next = /** @type {Node | null} */ (event.relatedTarget);
-    if (next && viewport.contains(next)) return;
-    viewport.scrollTop = 0;
-  }
 </script>
 
 {#snippet card(/** @type {HeroCard} */ item, /** @type {number} */ index, /** @type {boolean} */ duplicate)}
-  <a
-    class="hc__card hc__card--{item.kind}"
-    href={item.href}
-    aria-label={duplicate ? undefined : describe(item)}
-    tabindex={duplicate ? -1 : undefined}
-  >
+  <div class="hc__card hc__card--{item.kind}">
     {#if item.kind === 'site'}
-      {@const image = landingTest ? landingImage : item}
       <img
-        src={image.src}
-        width={image.width}
-        height={image.height}
-        alt={duplicate ? '' : image.alt}
-        loading={index < EAGER_PER_COLUMN ? 'eager' : 'lazy'}
+        src={item.src}
+        width={item.width}
+        height={item.height}
+        alt={duplicate ? '' : item.alt}
+        loading={!duplicate && index < EAGER_PER_COLUMN ? 'eager' : 'lazy'}
         decoding="async"
       />
       <span class="hc__chip">
@@ -153,14 +139,14 @@
       </span>
     {:else}
       <span class="hc__stat-value">{item.title}</span>
-      <span class="hc__stat-rule"></span>
+      <span class="hc__stat-rule" aria-hidden="true"></span>
       <span class="hc__stat-label">{item.label}</span>
     {/if}
-  </a>
+  </div>
 {/snippet}
 
 <section class="hc" aria-label="Selected client websites and studio highlights">
-  <div class="hc__viewport" onfocusout={handleFocusOut}>
+  <div class="hc__viewport">
     {#each columns as column, columnIndex (columnIndex)}
       <div
         class="hc__track"
@@ -190,7 +176,7 @@
     --hc-card-w: 260px;
     --hc-card-h: 300px;
     --hc-gap: 24px;
-    /* Minimum side space; also keeps focus rings unclipped. */
+    /* Minimum side space. */
     --hc-pad-x: 12px;
 
     --hc-teal: #0e7c86;
@@ -219,7 +205,6 @@
     height: 100%;
     padding-inline: var(--hc-pad-x);
     overflow: hidden;
-    scroll-padding-block: var(--hc-gap);
   }
 
   /* Cards shrink proportionally once the panel is narrower than two full
@@ -251,20 +236,8 @@
     animation-direction: reverse;
   }
 
-  .hc:hover .hc__track,
-  .hc:focus-within .hc__track {
+  .hc:hover .hc__track {
     animation-play-state: paused;
-  }
-
-  /* Keyboard users get a still layout so the browser can scroll the
-     focused card into view inside the viewport. */
-  .hc:has(.hc__card:focus-visible) .hc__track {
-    padding-top: 6px;
-    animation: none;
-  }
-
-  .hc:has(.hc__card:focus-visible) .hc__track--down {
-    margin-top: calc((var(--hc-card-h) + var(--hc-gap)) / 2);
   }
 
   @keyframes hc-loop {
@@ -298,12 +271,7 @@
     background: #fff;
     box-shadow: 0 12px 32px rgba(11, 37, 64, 0.1);
     color: inherit;
-    text-decoration: none;
-  }
-
-  .hc__card:focus-visible {
-    outline: 3px solid var(--hc-teal);
-    outline-offset: 3px;
+    cursor: default;
   }
 
   .hc__card img {
