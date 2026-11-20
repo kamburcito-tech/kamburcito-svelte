@@ -1,4 +1,15 @@
 <script>
+  /** Visual test: while true, every site card shows the landing image below
+   *  (each keeps its own label chip; stat cards are unchanged). */
+  const landingTest = true;
+
+  const landingImage = {
+    src: '/images/hero/femsculpt-landing-card.webp',
+    width: 960,
+    height: 2525,
+    alt: 'Landing page of the FemSculpt cosmetic gynecology website'
+  };
+
   /**
    * @typedef {object} HeroCard
    * @property {'site' | 'stat'} kind
@@ -127,11 +138,12 @@
     tabindex={duplicate ? -1 : undefined}
   >
     {#if item.kind === 'site'}
+      {@const image = landingTest ? landingImage : item}
       <img
-        src={item.src}
-        width={item.width}
-        height={item.height}
-        alt={duplicate ? '' : item.alt}
+        src={image.src}
+        width={image.width}
+        height={image.height}
+        alt={duplicate ? '' : image.alt}
         loading={index < EAGER_PER_COLUMN ? 'eager' : 'lazy'}
         decoding="async"
       />
@@ -282,7 +294,7 @@
     height: var(--hc-card-h);
     overflow: hidden;
     border: 1px solid var(--hc-border);
-    border-radius: 24px;
+    border-radius: 6px;
     background: #fff;
     box-shadow: 0 12px 32px rgba(11, 37, 64, 0.1);
     color: inherit;
@@ -299,7 +311,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: top;
+    object-position: top center;
   }
 
   .hc__chip {
@@ -312,7 +324,7 @@
     max-width: calc(100% - 24px);
     padding: 8px 12px;
     border: 1px solid var(--hc-border);
-    border-radius: 12px;
+    border-radius: 4px;
     background: rgba(255, 255, 255, 0.94);
     box-shadow: 0 4px 12px rgba(11, 37, 64, 0.08);
     font-family: 'Manrope Variable', Arial, sans-serif;
@@ -375,7 +387,7 @@
       bottom: 8px;
       max-width: calc(100% - 16px);
       padding: 6px 9px;
-      border-radius: 10px;
+      border-radius: 4px;
     }
 
     .hc__chip-title {
