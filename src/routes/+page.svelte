@@ -1764,7 +1764,7 @@ manifestoObserver.observe(
             <h3 id="skills-{group.id}" class="home-skills__label">{group.label}</h3>
             <ul class="home-skills__cells" aria-labelledby="skills-{group.id}">
               {#each group.items as item (item)}
-                <li class="home-skills__cell">{item}</li>
+                <li class="home-skills__cell"><span class="home-skills__cell-body">{item}</span></li>
               {/each}
             </ul>
           </div>

@@ -886,41 +886,16 @@
 }
 
 /* ================================
-   Skills: cell chips over a faint tissue pattern
+   Skills: straight-edged Voronoi cells on a soft teal band
 ================================ */
 
-@property --cell-fill {
-  syntax: '<color>';
-  inherits: false;
-  initial-value: #e6f4f5;
-}
-
 .home-skills {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  padding: clamp(72px, 8vw, 112px) 0;
-  border-block: 1px solid var(--line);
-  background: var(--bg-soft);
+  padding: 90px 0 100px;
+  background: linear-gradient(180deg, #f7fafc 0%, #e6f4f5 100%);
 }
 
-/* Static cell-line pattern (tileable Voronoi outlines), faded at the edges. */
-.home-skills::before {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='360' height='360' viewBox='0 0 360 360'%3E%3Cpath d='M-86 199L13 185M-37 -1L2 -74M-37 359L2 286M-11 266L2 286M-11 266L13 185M-6 36L81 3M-6 104L21 177M-6 104L94 87M2 286L72 299M13 185L21 177M21 177L64 186M64 186L89 276M64 186L90 171M72 -61L81 3M72 299L81 363M72 299L89 276M81 3L91 11M89 276L171 264M90 171L94 87M90 171L157 173M91 11L106 71M91 11L198 -10M91 371L198 350M94 87L106 71M106 71L193 103M157 173L172 158M157 173L173 260M171 264L173 260M171 264L198 350M172 158L193 103M172 158L267 210M173 260L262 236M193 103L194 102M194 102L212 0M194 102L270 118M194 462L212 360M198 -10L212 0M198 350L212 360M212 0L244 -5M212 360L244 355M244 -5L294 104M244 355L266 344M244 355L294 464M262 236L267 210M262 236L278 259M266 -16L323 -1M266 344L278 259M266 344L323 359M267 210L274 199M270 118L274 199M270 118L294 104M274 199L373 185M278 259L349 266M294 104L344 93M323 -1L354 36M323 -1L362 -74M323 359L354 396M323 359L362 286M344 93L354 36M344 93L354 104M349 266L362 286M349 266L373 185M354 36L441 3M354 104L381 177M354 104L454 87' fill='none' stroke='%230E7C86' stroke-width='1.2' stroke-linejoin='round'/%3E%3C/svg%3E");
-  background-size: 360px 360px;
-  opacity: 0.06;
-  -webkit-mask-image: radial-gradient(ellipse 85% 95% at 50% 62%, #000 45%, transparent 100%);
-  mask-image: radial-gradient(ellipse 85% 95% at 50% 62%, #000 45%, transparent 100%);
-  content: '';
-  pointer-events: none;
-}
-
-:root[data-theme='dark'] .home-skills::before {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='360' height='360' viewBox='0 0 360 360'%3E%3Cpath d='M-86 199L13 185M-37 -1L2 -74M-37 359L2 286M-11 266L2 286M-11 266L13 185M-6 36L81 3M-6 104L21 177M-6 104L94 87M2 286L72 299M13 185L21 177M21 177L64 186M64 186L89 276M64 186L90 171M72 -61L81 3M72 299L81 363M72 299L89 276M81 3L91 11M89 276L171 264M90 171L94 87M90 171L157 173M91 11L106 71M91 11L198 -10M91 371L198 350M94 87L106 71M106 71L193 103M157 173L172 158M157 173L173 260M171 264L173 260M171 264L198 350M172 158L193 103M172 158L267 210M173 260L262 236M193 103L194 102M194 102L212 0M194 102L270 118M194 462L212 360M198 -10L212 0M198 350L212 360M212 0L244 -5M212 360L244 355M244 -5L294 104M244 355L266 344M244 355L294 464M262 236L267 210M262 236L278 259M266 -16L323 -1M266 344L278 259M266 344L323 359M267 210L274 199M270 118L274 199M270 118L294 104M274 199L373 185M278 259L349 266M294 104L344 93M323 -1L354 36M323 -1L362 -74M323 359L354 396M323 359L362 286M344 93L354 36M344 93L354 104M349 266L362 286M349 266L373 185M354 36L441 3M354 104L381 177M354 104L454 87' fill='none' stroke='%236FA9AC' stroke-width='1.2' stroke-linejoin='round'/%3E%3C/svg%3E");
-  opacity: 0.08;
+:root[data-theme='dark'] .home-skills {
+  background: linear-gradient(180deg, #0a2f35 0%, #0b3a40 100%);
 }
 
 .home-skills__heading {
@@ -929,11 +904,6 @@
 
 .home-skills__heading .home-kicker {
   margin: 0 0 14px;
-}
-
-/* The shared light-theme teal kicker is 4.3:1 on this band; nudge it darker here. */
-:root[data-theme='light'] .home-skills__heading .home-kicker {
-  color: color-mix(in srgb, var(--brand-teal) 75%, var(--brand-navy));
 }
 
 .home-skills__heading h2 {
@@ -946,18 +916,19 @@
   text-wrap: balance;
 }
 
-/* Build has the most chips, so it gets the widest column. */
+/* Build has the most cells, so it gets the widest column. */
 .home-skills__groups {
   display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.6fr) minmax(0, 1.3fr) minmax(0, 0.8fr);
-  gap: 44px clamp(28px, 3vw, 48px);
+  grid-template-columns:
+    minmax(0, 1.1fr) minmax(0, 2.4fr) minmax(0, 1.8fr) minmax(0, 1fr);
+  gap: 44px;
   margin-top: clamp(40px, 5vw, 64px);
 }
 
 .home-skills__label {
   margin: 0 0 18px;
   padding-bottom: 12px;
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid rgba(14, 124, 134, 0.25);
   color: var(--muted-strong);
   font-family: 'Manrope Variable', Arial, sans-serif;
   font-size: 0.74rem;
@@ -967,118 +938,113 @@
   text-transform: uppercase;
 }
 
+:root[data-theme='dark'] .home-skills__label {
+  border-bottom-color: rgba(127, 209, 214, 0.25);
+}
+
 .home-skills__cells {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 6px;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
+/* The li draws the membrane: four 1px drop-shadows trace the clipped shape. */
 .home-skills__cell {
-  --cell-tint: #e6f4f5;
-  --cell-fill: var(--cell-tint);
-  --cell-sheen: 45%;
-  --cell-membrane: rgba(14, 124, 134, 0.45);
-  --cell-membrane-active: #0e7c86;
-  --cell-highlight: rgba(255, 255, 255, 0.7);
+  --cell-membrane: rgba(14, 124, 134, 0.55);
+  --cell-fill: radial-gradient(120% 120% at 30% 25%, #ffffff 0%, #d4eef0 70%, #bfe4e8 100%);
   --cell-ink: #0b2540;
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  min-height: 46px;
-  padding: 14px 24px;
-  border: 1px solid var(--cell-membrane);
-  background: linear-gradient(
-    155deg,
-    color-mix(in srgb, var(--cell-fill) var(--cell-sheen), #ffffff) 0%,
-    var(--cell-fill) 78%
-  );
-  box-shadow: inset 2px 3px 6px var(--cell-highlight);
+  filter:
+    drop-shadow(1px 0 0 var(--cell-membrane))
+    drop-shadow(-1px 0 0 var(--cell-membrane))
+    drop-shadow(0 1px 0 var(--cell-membrane))
+    drop-shadow(0 -1px 0 var(--cell-membrane));
+  transition: transform 250ms ease;
+}
+
+.home-skills__cell-body {
+  display: block;
+  padding: 17px 28px;
+  clip-path: var(--p);
+  background: var(--cell-fill);
   color: var(--cell-ink);
   font-family: 'Manrope Variable', Arial, sans-serif;
-  font-size: 0.92rem;
+  font-size: 15px;
   font-weight: 600;
   line-height: 1.2;
   white-space: nowrap;
-  transition:
-    transform 250ms ease,
-    border-color 250ms ease,
-    --cell-fill 250ms ease;
+  transition: filter 250ms ease;
 }
 
-/* Eight membrane shapes, so neighbouring cells never repeat. */
+/* Eight cell outlines, cycled so neighbours never repeat. */
 .home-skills__cell:nth-child(8n + 1) {
-  border-radius: 58% 42% 55% 45% / 48% 56% 44% 52%;
+  --p: polygon(6% 14%, 38% 0, 82% 6%, 100% 38%, 92% 84%, 56% 100%, 12% 90%, 0 48%);
 }
 
 .home-skills__cell:nth-child(8n + 2) {
-  border-radius: 45% 55% 42% 58% / 55% 45% 57% 43%;
+  --p: polygon(14% 0, 70% 8%, 100% 30%, 94% 76%, 66% 100%, 20% 94%, 0 52%);
 }
 
 .home-skills__cell:nth-child(8n + 3) {
-  border-radius: 52% 48% 60% 40% / 42% 58% 46% 54%;
+  --p: polygon(0 22%, 30% 0, 76% 4%, 100% 44%, 84% 96%, 34% 100%, 4% 78%);
 }
 
 .home-skills__cell:nth-child(8n + 4) {
-  border-radius: 40% 60% 48% 52% / 57% 43% 52% 48%;
+  --p: polygon(10% 8%, 52% 0, 94% 14%, 100% 60%, 78% 100%, 28% 92%, 0 56%);
 }
 
 .home-skills__cell:nth-child(8n + 5) {
-  border-radius: 62% 38% 46% 54% / 46% 52% 48% 54%;
+  --p: polygon(4% 34%, 22% 4%, 68% 0, 100% 26%, 96% 72%, 60% 100%, 14% 88%);
 }
 
 .home-skills__cell:nth-child(8n + 6) {
-  border-radius: 48% 52% 38% 62% / 53% 47% 58% 42%;
+  --p: polygon(0 12%, 46% 4%, 90% 0, 100% 50%, 88% 92%, 40% 100%, 6% 82%);
 }
 
 .home-skills__cell:nth-child(8n + 7) {
-  border-radius: 55% 45% 52% 48% / 40% 60% 45% 55%;
+  --p: polygon(12% 0, 64% 6%, 100% 20%, 92% 68%, 70% 100%, 18% 96%, 0 40%);
 }
 
 .home-skills__cell:nth-child(8n + 8) {
-  border-radius: 43% 57% 58% 42% / 50% 44% 56% 50%;
+  --p: polygon(2% 26%, 34% 2%, 84% 0, 100% 42%, 90% 88%, 44% 100%, 8% 76%);
 }
 
-/* A deeper tint on every third cell gives the cluster tonal variety. */
+/* Tonal variety, like the cell background. */
 .home-skills__cell:nth-child(3n + 2) {
-  --cell-tint: #cdebed;
+  --cell-fill: radial-gradient(120% 120% at 70% 30%, #eaf7f8 0%, #bde3e7 75%, #a5d7dd 100%);
+}
+
+.home-skills__cell:nth-child(4n) {
+  --cell-fill: radial-gradient(120% 120% at 40% 30%, #ffffff 0%, #e6f4f5 100%);
 }
 
 .home-skills__cell:hover {
-  z-index: 1;
-  border-color: var(--cell-membrane-active);
-  --cell-fill: color-mix(in srgb, var(--cell-tint) 55%, #ffffff);
-  transform: scale(1.06);
+  transform: scale(1.07);
 }
 
 :root[data-theme='dark'] .home-skills__cell {
-  --cell-tint: #123f46;
-  --cell-sheen: 88%;
-  --cell-membrane: rgba(111, 169, 172, 0.45);
-  --cell-membrane-active: #6fa9ac;
-  --cell-highlight: rgba(255, 255, 255, 0.08);
+  --cell-membrane: rgba(127, 209, 214, 0.5);
+  --cell-fill: radial-gradient(120% 120% at 30% 25%, #0e5e66 0%, #0b4a51 70%, #0b3a40 100%);
   --cell-ink: #e6f4f5;
 }
 
 :root[data-theme='dark'] .home-skills__cell:nth-child(3n + 2) {
-  --cell-tint: #0c3237;
+  --cell-fill: radial-gradient(120% 120% at 70% 30%, #0c4f56 0%, #0b3a40 75%, #0a3036 100%);
 }
 
-:root[data-theme='dark'] .home-skills__cell:hover {
-  --cell-fill: color-mix(in srgb, var(--cell-tint) 82%, #ffffff);
+:root[data-theme='dark'] .home-skills__cell:nth-child(4n) {
+  --cell-fill: radial-gradient(120% 120% at 40% 30%, #11666e 0%, #0e5e66 100%);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .home-skills__cell {
-    transition:
-      border-color 250ms ease,
-      --cell-fill 250ms ease;
-  }
-
   .home-skills__cell:hover {
     transform: none;
+  }
+
+  .home-skills__cell:hover .home-skills__cell-body {
+    filter: brightness(1.06);
   }
 }
 
@@ -1089,6 +1055,10 @@
 }
 
 @media (max-width: 620px) {
+  .home-skills {
+    padding: 64px 0 72px;
+  }
+
   .home-skills__groups {
     grid-template-columns: minmax(0, 1fr);
     gap: 32px;
