@@ -2,6 +2,7 @@
   import { afterNavigate } from '$app/navigation';
   import { resolve } from '$app/paths';
   import { contactEmailHref, whatsappHref } from '$lib/contact.js';
+  import en from '$lib/i18n/en.js';
 
   import '@fontsource-variable/cormorant-garamond';
   import '@fontsource-variable/manrope';
@@ -12,6 +13,8 @@
   import '../styles/80-animations.css';
 
   let { children } = $props();
+
+  const t = en;
 
   let mobileMenuOpen = $state(false);
 
@@ -76,23 +79,23 @@
   <div class="nav">
     <div class="wide-container nav-inner">
       <a
-        href={resolve('/')}
+        href={resolve(t.routes.home)}
         class="brand"
-        aria-label="Kamburcito Studio home"
+        aria-label={t.header.homeAria}
         onclick={closeMobileMenu}
       >
         <span class="brand-name">kamburcito</span><span class="brand-studio">studio</span>
       </a>
 
-      <nav class="desktop-nav" aria-label="Main navigation">
-        <a href={resolve('/work')}>Work</a>
-        <a href="{resolve('/')}#about">About</a>
-        <a href="{resolve('/')}#contact">Contact</a>
+      <nav class="desktop-nav" aria-label={t.header.mainNavAria}>
+        <a href={resolve(t.routes.work)}>{t.header.work}</a>
+        <a href="{resolve(t.routes.home)}#about">{t.header.about}</a>
+        <a href="{resolve(t.routes.home)}#contact">{t.header.contact}</a>
       </nav>
 
       <div class="nav-actions">
         <div class="nav-contact-group">
-          <a class="nav-contact" href={contactEmailHref} aria-label="Email me" title="Email me">
+          <a class="nav-contact" href={contactEmailHref} aria-label={t.header.emailAria} title={t.header.emailAria}>
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <rect x="3" y="5" width="18" height="14" rx="2"></rect>
               <path d="m3.5 6.5 8.5 6.5 8.5-6.5"></path>
@@ -103,8 +106,8 @@
             href={whatsappHref}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Chat on WhatsApp"
-            title="Chat on WhatsApp"
+            aria-label={t.header.whatsappAria}
+            title={t.header.whatsappAria}
           >
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <path d="M3.5 20.5 5 16.2A8.5 8.5 0 1 1 8 19.1Z"></path>
@@ -116,8 +119,8 @@
         <button
           type="button"
           class="theme-toggle"
-          aria-label="Toggle light and dark mode"
-          title="Toggle light and dark mode"
+          aria-label={t.header.themeAria}
+          title={t.header.themeAria}
           onclick={toggleTheme}
         >
           <svg class="theme-toggle__sun" viewBox="0 0 24 24" aria-hidden="true">
@@ -130,17 +133,17 @@
         </button>
 
         <a
-          href="{resolve('/')}#contact"
+          href="{resolve(t.routes.home)}#contact"
           class="mini-cta btn-primary"
           onclick={closeMobileMenu}
         >
-          Contact
+          {t.header.cta}
         </a>
         <button
           type="button"
           class:open={mobileMenuOpen}
           class="mobile-menu-toggle"
-          aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+          aria-label={mobileMenuOpen ? t.header.closeMenu : t.header.openMenu}
           aria-controls="mobile-navigation"
           aria-expanded={mobileMenuOpen}
           onclick={() => (mobileMenuOpen = !mobileMenuOpen)}
@@ -152,27 +155,27 @@
     </div>
   </div>
 
-  <nav id="mobile-navigation" class="mobile-menu" aria-label="Mobile navigation" hidden={!mobileMenuOpen}>
-    <a href={resolve('/')} onclick={closeMobileMenu}>Home</a>
-    <a href={resolve('/work')} onclick={closeMobileMenu}>Work</a>
-    <a href="{resolve('/')}#about" onclick={closeMobileMenu}>About</a>
-    <a href="{resolve('/')}#contact" onclick={closeMobileMenu}>Contact</a>
+  <nav id="mobile-navigation" class="mobile-menu" aria-label={t.header.mobileNavAria} hidden={!mobileMenuOpen}>
+    <a href={resolve(t.routes.home)} onclick={closeMobileMenu}>{t.header.mobileHome}</a>
+    <a href={resolve(t.routes.work)} onclick={closeMobileMenu}>{t.header.work}</a>
+    <a href="{resolve(t.routes.home)}#about" onclick={closeMobileMenu}>{t.header.about}</a>
+    <a href="{resolve(t.routes.home)}#contact" onclick={closeMobileMenu}>{t.header.contact}</a>
     <a
       class="mobile-menu-contact"
       href={contactEmailHref}
-      aria-label="Email me"
-      title="Email me"
+      aria-label={t.header.emailAria}
+      title={t.header.emailAria}
       onclick={closeMobileMenu}
-    >Email</a>
+    >{t.header.mobileEmail}</a>
     <a
       class="mobile-menu-contact"
       href={whatsappHref}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label="Chat on WhatsApp"
-      title="Chat on WhatsApp"
+      aria-label={t.header.whatsappAria}
+      title={t.header.whatsappAria}
       onclick={closeMobileMenu}
-    >WhatsApp</a>
+    >{t.header.mobileWhatsapp}</a>
   </nav>
 </header>
 

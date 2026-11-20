@@ -1,11 +1,16 @@
 <script>
+  /** Carousel copy for one language: `t.carousel` from src/lib/i18n. */
+  /** @type {{ t: typeof import('$lib/i18n/en.js').default.carousel }} */
+  let { t } = $props();
+
   /**
    * Display-only cards: no links, buttons or click handlers. Images are
    * decorative (empty alt); the label chip names each card.
    * @typedef {object} HeroCard
+   * @property {string} id     Key into the dictionary's `cards` (label text lives there).
    * @property {'site' | 'stat'} kind
-   * @property {string} title  Card label, or the stat value ("50+").
-   * @property {string} [label] Category, or the stat caption.
+   * @property {string} [title] Client name, or a title or stat value from the dictionary.
+   * @property {string} [label] Category, or the stat caption (from the dictionary).
    * @property {string} [src]   Site cards only.
    * @property {number} [width] Intrinsic width of `src`.
    * @property {number} [height] Intrinsic height of `src`.
@@ -22,48 +27,49 @@
   const cards = [
     {
       kind: 'site',
+      id: 'femsculpt',
       title: 'FemSculpt',
-      label: 'Cosmetic gynecology',
       src: '/images/hero/cards/femsculpt-landing.webp',
       width: 960,
       height: 2525
     },
     {
       kind: 'site',
+      id: 'immigration-law-dfw',
       title: 'Immigration Law DFW',
-      label: 'Law firm',
       src: '/images/hero/cards/immigration-law-dfw-landing.webp',
       width: 960,
       height: 1611
     },
     {
       kind: 'site',
+      id: 'beccar-varela',
       title: 'Beccar Varela',
-      label: 'Law firm',
       src: '/images/hero/cards/beccar-landing.webp',
       width: 960,
       height: 1552
     },
     {
       kind: 'site',
+      id: 'shady-grove',
       title: 'Shady Grove Fertility',
-      label: 'Healthcare',
       src: '/images/hero/cards/shady-grove-landing.webp',
       width: 960,
       height: 1272
     },
     {
       kind: 'site',
+      id: 'nc-builders',
       title: 'NC Builders',
-      label: 'Home builder',
       src: '/images/hero/cards/nc-builders-landing.webp',
       width: 960,
       height: 1406
     },
-    { kind: 'stat', title: '50+', label: 'websites delivered' },
-    { kind: 'stat', title: 'Since 2019', label: 'founder-led studio' },
+    { id: 'websites', kind: 'stat' },
+    { id: 'since', kind: 'stat' },
     {
       kind: 'site',
+      id: 'lark',
       title: 'Lark',
       src: '/images/hero/cards/lark-landing.webp',
       width: 960,
@@ -71,32 +77,30 @@
     },
     {
       kind: 'site',
+      id: 'spry-society',
       title: 'Spry Society',
-      label: 'Wellness',
       src: '/images/hero/cards/spry-society-landing.webp',
       width: 960,
       height: 1881
     },
     {
       kind: 'site',
+      id: 'surfaceworks',
       title: 'SurfaceWorks',
-      label: 'Industrial services',
       src: '/images/hero/cards/surfaceworks-card.webp',
       width: 960,
       height: 600
     },
     {
       kind: 'site',
-      title: 'Plastic surgery practice',
-      label: 'Past project',
+      id: 'plastic-surgery',
       src: '/images/hero/cards/chicago-plastic-surgery-landing.webp',
       width: 960,
       height: 1583
     },
     {
       kind: 'site',
-      title: 'Med spa',
-      label: 'Past project',
+      id: 'med-spa',
       src: '/images/hero/cards/medspa-landing.webp',
       width: 960,
       height: 1946
@@ -108,10 +112,12 @@
   /** Cards per column that can be on screen at load (up to 4 at 1920px); these load eagerly. */
   const EAGER_PER_COLUMN = 4;
 
-  const columns = [
-    cards.filter((_, index) => index % 2 === 0),
-    cards.filter((_, index) => index % 2 === 1)
-  ];
+  const withCopy = $derived(cards.map((card) => ({ ...card, ...t.cards[card.id] })));
+
+  const columns = $derived([
+    withCopy.filter((_, index) => index % 2 === 0),
+    withCopy.filter((_, index) => index % 2 === 1)
+  ]);
 </script>
 
 {#snippet card(/** @type {HeroCard} */ item, /** @type {number} */ index, /** @type {boolean} */ duplicate)}
@@ -137,7 +143,7 @@
   </div>
 {/snippet}
 
-<section class="hc" aria-label="Selected client websites and studio highlights">
+<section class="hc" aria-label={t.aria}>
   <div class="hc__viewport">
     {#each columns as column, columnIndex (columnIndex)}
       <div
@@ -146,12 +152,12 @@
         style:--hc-duration="{column.length * SECONDS_PER_CARD}s"
       >
         <ul class="hc__set">
-          {#each column as item, index (item.title)}
+          {#each column as item, index (item.id)}
             <li>{@render card(item, index, false)}</li>
           {/each}
         </ul>
         <ul class="hc__set hc__set--clone" aria-hidden="true">
-          {#each column as item, index (item.title)}
+          {#each column as item, index (item.id)}
             <li>{@render card(item, index, true)}</li>
           {/each}
         </ul>
