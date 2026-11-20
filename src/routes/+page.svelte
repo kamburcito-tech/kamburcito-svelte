@@ -11,7 +11,13 @@
   import petraValdezImage from '$lib/assets/working_on/petra-valdez-working-on-homepage.webp?enhanced&w=500;360';
   import HeroCardColumns from '$lib/components/HeroCardColumns.svelte';
   import CellsBackground from '$lib/components/CellsBackground.svelte';
-  import { contactEmail, contactEmailHref, linkedinHref, whatsappHref } from '$lib/contact.js';
+  import {
+    contactEmail,
+    contactEmailHref,
+    linkedinHref,
+    upworkHref,
+    whatsappHref
+  } from '$lib/contact.js';
 
   // Client-offer sections (Services, Who I help, How it works, Pricing, the process
   // route, Currently working on, testimonials, the manifesto/Three.js band, FAQ and the
@@ -77,7 +83,7 @@
         addressLocality: 'Buenos Aires',
         addressCountry: 'AR'
       },
-      sameAs: [linkedinHref],
+      sameAs: [linkedinHref, upworkHref],
       worksFor: {
         '@id': 'https://kamburcito.com/#business'
       },
@@ -1973,6 +1979,12 @@ manifestoObserver.observe(
             <span>WhatsApp</span>
             <a href={whatsappHref} target="_blank" rel="noopener noreferrer">
               Chat on WhatsApp
+            </a>
+          </li>
+          <li>
+            <span>Upwork</span>
+            <a href={upworkHref} target="_blank" rel="noopener noreferrer">
+              Find me on Upwork
             </a>
           </li>
         </ul>

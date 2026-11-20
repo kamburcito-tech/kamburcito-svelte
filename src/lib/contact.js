@@ -7,3 +7,5 @@ export const whatsappHref =
   encodeURIComponent("Hi! I'd like to ask about a website.");
 
 export const linkedinHref = 'https://www.linkedin.com/in/patricia-d-ab25a61a6/';
+
+export const upworkHref = 'https://www.upwork.com/freelancers/~01fbbd53529e3ca33f';
