@@ -1,6 +1,7 @@
 <script>
   import '../../styles/20-work.css';
   import CellsBackground from '$lib/components/CellsBackground.svelte';
+  import { dictionaries } from '$lib/i18n';
 
   /** Page copy for one language (src/lib/i18n). */
   /** @type {{ t: typeof import('$lib/i18n/en.js').default }} */
@@ -110,8 +111,16 @@
   />
 
   <link rel="canonical" href={t.work.meta.url} />
+  <link rel="alternate" hreflang="en" href={dictionaries.en.work.meta.url} />
+  <link rel="alternate" hreflang="es-AR" href={dictionaries.es.work.meta.url} />
+  <link rel="alternate" hreflang="x-default" href={dictionaries.en.work.meta.url} />
 
   <meta property="og:type" content="website" />
+  <meta property="og:locale" content={t.ogLocale} />
+  <meta
+    property="og:locale:alternate"
+    content={t.lang === 'en' ? dictionaries.es.ogLocale : dictionaries.en.ogLocale}
+  />
   <meta
     property="og:title"
     content={t.work.meta.title}
@@ -127,6 +136,8 @@
   />
 
   <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={t.work.meta.title} />
+  <meta name="twitter:description" content={t.work.meta.description} />
 </svelte:head>
 
 <section class="work-page-hero">

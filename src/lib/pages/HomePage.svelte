@@ -11,6 +11,7 @@
   import petraValdezImage from '$lib/assets/working_on/petra-valdez-working-on-homepage.webp?enhanced&w=500;360';
   import HeroCardColumns from '$lib/components/HeroCardColumns.svelte';
   import CellsBackground from '$lib/components/CellsBackground.svelte';
+  import { dictionaries } from '$lib/i18n';
   import {
     contactEmail,
     contactEmailHref,
@@ -112,7 +113,7 @@
       publisher: {
         '@id': 'https://kamburcito.com/#business'
       },
-      inLanguage: ['en']
+      inLanguage: [dictionaries.en.htmlLang, dictionaries.es.htmlLang]
     },
     {
       '@type': 'WebPage',
@@ -1340,8 +1341,16 @@ manifestoObserver.observe(
   />
 
   <link rel="canonical" href={t.home.meta.url} />
+  <link rel="alternate" hreflang="en" href={dictionaries.en.home.meta.url} />
+  <link rel="alternate" hreflang="es-AR" href={dictionaries.es.home.meta.url} />
+  <link rel="alternate" hreflang="x-default" href={dictionaries.en.home.meta.url} />
 
   <meta property="og:type" content="website" />
+  <meta property="og:locale" content={t.ogLocale} />
+  <meta
+    property="og:locale:alternate"
+    content={t.lang === 'en' ? dictionaries.es.ogLocale : dictionaries.en.ogLocale}
+  />
   <meta
     property="og:title"
     content={t.home.meta.title}

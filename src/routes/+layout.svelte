@@ -4,6 +4,7 @@
   import { page } from '$app/state';
   import { contactEmailHref } from '$lib/contact.js';
   import { dictionaries, langFromPath } from '$lib/i18n';
+  import LanguageSwitch from '$lib/components/LanguageSwitch.svelte';
 
   import '@fontsource-variable/cormorant-garamond';
   import '@fontsource-variable/manrope';
@@ -16,6 +17,11 @@
   let { children } = $props();
 
   const t = $derived(dictionaries[langFromPath(page.url.pathname)]);
+
+  // The server sets <html lang>; keep it right after client-side navigation too.
+  $effect(() => {
+    document.documentElement.lang = t.htmlLang;
+  });
 
   let mobileMenuOpen = $state(false);
 
@@ -117,6 +123,8 @@
           </a>
         </div>
 
+        <LanguageSwitch />
+
         <button
           type="button"
           class="theme-toggle"
@@ -177,6 +185,7 @@
       title={t.header.whatsappAria}
       onclick={closeMobileMenu}
     >{t.header.mobileWhatsapp}</a>
+    <LanguageSwitch variant="menu" onnavigate={closeMobileMenu} />
   </nav>
 </header>
 
