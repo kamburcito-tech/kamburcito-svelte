@@ -21,10 +21,10 @@
       kind: 'site',
       title: 'FemSculpt',
       label: 'Cosmetic gynecology',
-      src: '/images/hero/cards/femsculpt-card.webp',
-      width: 640,
-      height: 400,
-      alt: 'Homepage of the FemSculpt cosmetic gynecology website',
+      src: '/images/hero/femsculpt-landing-card.webp',
+      width: 960,
+      height: 2525,
+      alt: 'Landing page of the FemSculpt cosmetic gynecology website',
       href: '/work'
     },
     {
