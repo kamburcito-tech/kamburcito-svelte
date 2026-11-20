@@ -1834,11 +1834,11 @@ manifestoObserver.observe(
     </div>
     <figure class="about-studio__visual">
       <img
-        src="/images/about/patricia-diaz-fermin-about-me-2026.webp"
-        alt="Patricia Diaz, independent web designer and developer"
+        src="/images/about/patricia-diaz-about-2026.webp"
+        alt="Patricia Diaz, web designer and developer in Buenos Aires"
         class="about-studio__image"
-        width="1024"
-        height="1536"
+        width="1000"
+        height="1000"
         loading="lazy"
         decoding="async"
       />
