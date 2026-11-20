@@ -20,19 +20,7 @@ export default defineConfig({
             
       },
 
-      adapter: adapter(),
-
-      prerender: {
-        // The CV PDF is supplied separately; until it is in static/, warn
-        // instead of failing the build. Every other broken link still fails.
-        handleHttpError: ({ path, message }) => {
-          if (path === '/Patricia-Diaz-CV.pdf') {
-            console.warn(`Missing static/Patricia-Diaz-CV.pdf (${message})`);
-            return;
-          }
-          throw new Error(message);
-        }
-      }
+      adapter: adapter()
     })
   ]
 });
