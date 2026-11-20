@@ -221,15 +221,7 @@
 </section>
 
 <section id="contact" class="work-closing" aria-labelledby="work-closing-title">
-  <img
-    class="work-closing__image"
-    src="/images/hero/kamkam.webp"
-    alt=""
-    width="1122"
-    height="1402"
-    loading="lazy"
-    decoding="async"
-  />
+  <CellsBackground cellScale={2.2} seed={7} darkness={0.45} drift={0.7} lightAngle={216} />
   <div class="work-closing__content">
     <p class="work-closing__eyebrow">{t.work.closing.eyebrow}</p>
     <h2 id="work-closing-title">{t.work.closing.title}</h2>

@@ -5,13 +5,17 @@
 
 <script>
   // Living cell-tissue background, plain WebGL (no three.js). Shaders, uniforms
-  // and mouse smoothing are ported unchanged from kamburcito-cells-mid.html.
-  // Fills its positioned parent, which supplies the background color.
+  // and mouse smoothing are ported from kamburcito-cells-mid.html; the extra
+  // variation uniforms (scale, seed, darkness, light, drift) reproduce the demo
+  // exactly at their defaults. Fills its positioned parent, which supplies the
+  // background color.
   import { onMount, onDestroy } from 'svelte';
 
   const VS = `attribute vec2 a;void main(){gl_Position=vec4(a,0.,1.);}`;
   const FS = `precision highp float;
 uniform vec2 uRes;uniform float uTime;uniform vec2 uMouse;uniform float uHover;
+uniform float uScale;uniform float uSeed;uniform float uDark;uniform vec2 uLight;uniform float uDrift;
+float ct;
 vec2 h2(vec2 p){p=vec2(dot(p,vec2(127.1,311.7)),dot(p,vec2(269.5,183.3)));return fract(sin(p)*43758.5453);}
 float h1(vec2 p){return fract(sin(dot(p,vec2(12.9898,78.233)))*43758.5453);}
 float n(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);return mix(mix(h1(i),h1(i+vec2(1,0)),f.x),mix(h1(i+vec2(0,1)),h1(i+vec2(1,1)),f.x),f.y);}
@@ -19,27 +23,28 @@ float fbm(vec2 p){float v=0.,a=.5;for(int i=0;i<4;i++){v+=a*n(p);p*=2.02;a*=.5;}
 void vor(vec2 p,out float f1,out float f2,out vec2 id){
  vec2 ip=floor(p),fp=fract(p);f1=8.;f2=8.;id=vec2(0);
  for(int y=-1;y<=1;y++)for(int x=-1;x<=1;x++){
-  vec2 g=vec2(float(x),float(y));vec2 o=h2(ip+g);
-  o=.5+.42*sin(uTime*.25+6.2831*o);
+  vec2 g=vec2(float(x),float(y));vec2 o=h2(ip+g+uSeed);
+  o=.5+.42*sin(ct*.25+6.2831*o);
   vec2 q=g+o-fp;float dd=dot(q,q);
   if(dd<f1){f2=f1;f1=dd;id=ip+g;}else if(dd<f2){f2=dd;}
  }
  f1=sqrt(f1);f2=sqrt(f2);}
 void main(){
  vec2 uv=gl_FragCoord.xy/uRes.y;vec2 m=uMouse*vec2(uRes.x/uRes.y,1.);
- float t=uTime*.06;
+ ct=uTime*uDrift+uSeed*13.;
+ float t=ct*.06;
  vec2 p=uv;
  vec2 d=p-m;float r=length(d);
  float lens=exp(-r*r*7.)*uHover;
  p-=d*lens*.55;
- p+=.12*vec2(fbm(p*2.+t),fbm(p*2.+7.3-t));
- p*=3.1;
+ p+=.12*vec2(fbm(p*2.+t+uSeed),fbm(p*2.+7.3-t+uSeed));
+ p*=uScale;
  float f1,f2;vec2 id;vor(p,f1,f2,id);
  float edge=f2-f1;
  float mem=1.-smoothstep(.0,.04,edge);
- float tone=h1(id);
+ float tone=h1(id+uSeed);
  vec2 sc=gl_FragCoord.xy/uRes;
- float light=smoothstep(-.1,1.1,sc.x*.75+sc.y*.55+.25*fbm(uv*1.6+t)-.15);
+ float light=smoothstep(-.1,1.1,dot(sc-.5,uLight)+.65+.25*fbm(uv*1.6+t+uSeed)-.15);
  vec3 deep=vec3(.039,.184,.208),teal=vec3(.055,.486,.525),lite=vec3(.55,.84,.86),tint=vec3(.90,.957,.96);
  vec3 col=mix(deep,teal,.35+.45*tone);
  col=mix(col,lite,light*(.35+.6*tone));
@@ -52,12 +57,28 @@ void main(){
  col+=tint*lens*.08;
  col+=(h1(gl_FragCoord.xy+uTime)-.5)*.025;
  vec2 c=gl_FragCoord.xy/uRes;float vg=smoothstep(1.25,.15,length(c-.5));col*=.55+.45*vg;
+ col=mix(col,deep,uDark);
  gl_FragColor=vec4(col,1.);}`;
 
   // opacity: canvas opacity once shown (it fades in from 0).
   // interactionTarget: element whose pointer moves drive the lens; defaults to the parent.
   // scale: render scale of CSS size × devicePixelRatio (capped at 1.5) from 768px up; 0.5 below.
-  let { opacity = 1, interactionTarget = undefined, scale = 0.75 } = $props();
+  // cellScale: cells across the short side (3.1 = the demo).
+  // seed: offsets noise, cell positions and time so instances differ (0 = the demo).
+  // darkness: 0–1, mixes the final color toward the deep teal #0A2F35.
+  // lightAngle: direction of the bright area in degrees (0 = right, 90 = top);
+  //   unset keeps the demo's top-right light. 216 puts it bottom-left.
+  // drift: speed multiplier for the slow cell movement.
+  let {
+    opacity = 1,
+    interactionTarget = undefined,
+    scale = 0.75,
+    cellScale = 3.1,
+    seed = 0,
+    darkness = 0,
+    lightAngle = undefined,
+    drift = 1
+  } = $props();
 
   let wrapper;
   let canvas;
@@ -118,6 +139,21 @@ void main(){
 
     const U = (n) => gl.getUniformLocation(pr, n);
     const uR = U('uRes'), uT = U('uTime'), uM = U('uMouse'), uH = U('uHover');
+
+    // Variation uniforms are fixed per instance.
+    const DEMO_LIGHT = [0.75, 0.55];
+    const light =
+      lightAngle === undefined
+        ? DEMO_LIGHT
+        : [
+            Math.hypot(...DEMO_LIGHT) * Math.cos((lightAngle * Math.PI) / 180),
+            Math.hypot(...DEMO_LIGHT) * Math.sin((lightAngle * Math.PI) / 180)
+          ];
+    gl.uniform1f(U('uScale'), cellScale);
+    gl.uniform1f(U('uSeed'), seed);
+    gl.uniform1f(U('uDark'), Math.min(1, Math.max(0, darkness)));
+    gl.uniform2f(U('uLight'), light[0], light[1]);
+    gl.uniform1f(U('uDrift'), drift);
 
     let tm = [0.5, 0.5], cur = [0.5, 0.5], hov = 0, hovT = 0;
 
