@@ -1954,7 +1954,9 @@
 
 .about-studio__container {
   display: grid;
-  grid-template-columns: minmax(0, 11fr) minmax(0, 9fr);
+  /* Text takes the free space; the portrait column is just wide enough for
+     the circle plus even breathing room for the cells around it. */
+  grid-template-columns: minmax(0, 1fr) clamp(300px, 30vw, 420px);
   align-items: center;
   gap: clamp(40px, 5vw, 80px);
   width: min(1280px, calc(100% - 80px));
@@ -2052,36 +2054,31 @@
   letter-spacing: 0.12em;
 }
 
-/* Desktop: a compact 4:5 portrait, about 400px wide and never taller than
-   68vh, centered in its column. */
+/* Desktop: the round cutout portrait, about 300px and never taller than
+   55vh, centered in its column. The image's own transparent corners let
+   the cell background show evenly around the circle. */
 .about-studio__visual {
   position: relative;
   align-self: center;
   justify-self: center;
   width: 100%;
-  max-width: 400px;
-  aspect-ratio: 4 / 5;
-  max-height: 68vh;
+  max-width: 300px;
+  max-height: 55vh;
+  aspect-ratio: 1;
   margin: 0;
-  overflow: hidden;
 }
-
 
 .about-studio__image {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 55% 35%;
+  object-position: center;
 }
 
-.about-studio__visual::after {
-  position: absolute;
-  inset: auto 0 0;
-  height: 16%;
-  background: linear-gradient(transparent, var(--about-background));
-  content: '';
-  pointer-events: none;
+/* Soft shadow that follows the circle's edge (light theme only, as before). */
+:root[data-theme='light'] .about-studio__image {
+  filter: drop-shadow(0 24px 36px rgba(4, 22, 25, 0.45));
 }
 
 @media (max-width: 980px) {
@@ -2089,14 +2086,11 @@
     grid-template-columns: minmax(0, 1fr);
     gap: 50px;
     width: min(760px, calc(100% - 48px));
-    padding-block: 88px 0;
+    padding-block: 88px;
   }
 
   .about-studio__visual {
-    justify-self: center;
-    max-width: 720px;
-    height: 600px;
-    aspect-ratio: auto;
+    max-width: 280px;
     max-height: none;
   }
 
@@ -2106,7 +2100,7 @@
   .about-studio__container {
     gap: 32px;
     width: calc(100% - 40px);
-    padding-block: 72px 0;
+    padding-block: 72px;
   }
 
   .about-studio__eyebrow {
@@ -2132,9 +2126,7 @@
   }
 
   .about-studio__visual {
-    width: calc(100% + 40px);
-    height: clamp(440px, 100vw, 560px);
-    margin-inline: -20px;
+    max-width: 240px;
   }
 
 }
