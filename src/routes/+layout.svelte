@@ -1,8 +1,9 @@
 <script>
   import { afterNavigate } from '$app/navigation';
   import { resolve } from '$app/paths';
-  import { contactEmailHref, whatsappHref } from '$lib/contact.js';
-  import en from '$lib/i18n/en.js';
+  import { page } from '$app/state';
+  import { contactEmailHref } from '$lib/contact.js';
+  import { dictionaries, langFromPath } from '$lib/i18n';
 
   import '@fontsource-variable/cormorant-garamond';
   import '@fontsource-variable/manrope';
@@ -14,7 +15,7 @@
 
   let { children } = $props();
 
-  const t = en;
+  const t = $derived(dictionaries[langFromPath(page.url.pathname)]);
 
   let mobileMenuOpen = $state(false);
 
@@ -103,7 +104,7 @@
           </a>
           <a
             class="nav-contact nav-contact--whatsapp"
-            href={whatsappHref}
+            href={t.whatsappHref}
             target="_blank"
             rel="noopener noreferrer"
             aria-label={t.header.whatsappAria}
@@ -169,7 +170,7 @@
     >{t.header.mobileEmail}</a>
     <a
       class="mobile-menu-contact"
-      href={whatsappHref}
+      href={t.whatsappHref}
       target="_blank"
       rel="noopener noreferrer"
       aria-label={t.header.whatsappAria}

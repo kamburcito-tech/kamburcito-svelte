@@ -1,3 +1,5 @@
+import { whatsappHref } from '$lib/contact.js';
+
 /**
  * English copy for the home page, the Work page, the header and the hero
  * carousel. es.js has the same keys. Client names live in the components and
@@ -7,6 +9,7 @@ export default {
   lang: 'en',
   htmlLang: 'en',
   ogLocale: 'en_US',
+  whatsappHref,
 
   routes: {
     home: '/',

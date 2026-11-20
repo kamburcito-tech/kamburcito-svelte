@@ -1948,7 +1948,7 @@ manifestoObserver.observe(
           </li>
           <li>
             <span>{t.home.contact.whatsapp}</span>
-            <a href={whatsappHref} target="_blank" rel="noopener noreferrer">
+            <a href={t.whatsappHref} target="_blank" rel="noopener noreferrer">
               {t.home.contact.whatsappLink}
             </a>
           </li>
