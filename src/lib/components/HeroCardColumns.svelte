@@ -1,20 +1,22 @@
 <script>
   /**
-   * Display-only cards: no links, buttons or click handlers.
+   * Display-only cards: no links, buttons or click handlers. Images are
+   * decorative (empty alt); the label chip names each card.
    * @typedef {object} HeroCard
    * @property {'site' | 'stat'} kind
-   * @property {string} title  Site name, or the stat value ("50+").
-   * @property {string} [label] Site category, or the stat caption.
+   * @property {string} title  Card label, or the stat value ("50+").
+   * @property {string} [label] Category, or the stat caption.
    * @property {string} [src]   Site cards only.
    * @property {number} [width] Intrinsic width of `src`.
    * @property {number} [height] Intrinsic height of `src`.
-   * @property {string} [alt]
    */
 
   /**
    * Cards alternate between the two columns in array order:
    * even indexes go to column 1, odd indexes to column 2.
-   * Keep the count even and one stat card per column so both loops match.
+   * Strongest projects first, then stats, cards without a landing image,
+   * and "Past project" cards last. Keep the count even and one stat card
+   * per column so both loops match.
    * @type {HeroCard[]}
    */
   const cards = [
@@ -24,8 +26,7 @@
       label: 'Cosmetic gynecology',
       src: '/images/hero/cards/femsculpt-landing.webp',
       width: 960,
-      height: 2525,
-      alt: 'Landing page of the FemSculpt cosmetic gynecology website'
+      height: 2525
     },
     {
       kind: 'site',
@@ -33,8 +34,7 @@
       label: 'Law firm',
       src: '/images/hero/cards/immigration-law-dfw-landing.webp',
       width: 960,
-      height: 1611,
-      alt: 'Landing page of the Immigration Law DFW law firm website'
+      height: 1611
     },
     {
       kind: 'site',
@@ -42,55 +42,40 @@
       label: 'Law firm',
       src: '/images/hero/cards/beccar-landing.webp',
       width: 960,
-      height: 1552,
-      alt: 'Landing page of the Beccar Varela law firm website'
+      height: 1552
     },
-    { kind: 'stat', title: '50+', label: 'websites delivered' },
     {
       kind: 'site',
       title: 'Shady Grove Fertility',
       label: 'Healthcare',
       src: '/images/hero/cards/shady-grove-landing.webp',
       width: 960,
-      height: 1272,
-      alt: 'Landing page of the Shady Grove Fertility healthcare website'
+      height: 1272
     },
-    {
-      kind: 'site',
-      title: 'Chicago Breast + Body',
-      label: 'Cosmetic surgery',
-      src: '/images/hero/cards/chicago-breast-body-landing.webp',
-      width: 960,
-      height: 1583,
-      alt: 'Landing page of the Chicago Breast + Body cosmetic surgery website'
-    },
-    { kind: 'stat', title: 'Since 2019', label: 'founder-led studio' },
     {
       kind: 'site',
       title: 'NC Builders',
       label: 'Home builder',
       src: '/images/hero/cards/nc-builders-landing.webp',
       width: 960,
-      height: 1406,
-      alt: 'Landing page of the NC Builders home builder website'
+      height: 1406
     },
+    { kind: 'stat', title: '50+', label: 'websites delivered' },
+    { kind: 'stat', title: 'Since 2019', label: 'founder-led studio' },
     {
       kind: 'site',
-      title: 'Cielo Weksler',
-      label: 'Aesthetic medicine',
-      src: '/images/hero/cards/cielo-weksler-landing.webp',
+      title: 'Lark',
+      src: '/images/hero/cards/lark-landing.webp',
       width: 960,
-      height: 1946,
-      alt: 'Landing page of the Cielo Weksler aesthetic medicine website'
+      height: 1593
     },
     {
       kind: 'site',
       title: 'Spry Society',
       label: 'Wellness',
-      src: '/images/hero/cards/spry-society-card.webp',
+      src: '/images/hero/cards/spry-society-landing.webp',
       width: 960,
-      height: 600,
-      alt: 'Homepage of the Spry Society wellness website'
+      height: 1881
     },
     {
       kind: 'site',
@@ -98,16 +83,23 @@
       label: 'Industrial services',
       src: '/images/hero/cards/surfaceworks-card.webp',
       width: 960,
-      height: 600,
-      alt: 'Homepage of the SurfaceWorks industrial services website'
+      height: 600
     },
     {
       kind: 'site',
-      title: 'Lark',
-      src: '/images/hero/cards/lark-card.webp',
+      title: 'Plastic surgery practice',
+      label: 'Past project',
+      src: '/images/hero/cards/chicago-plastic-surgery-landing.webp',
       width: 960,
-      height: 565,
-      alt: 'Homepage of the Lark website'
+      height: 1583
+    },
+    {
+      kind: 'site',
+      title: 'Med spa',
+      label: 'Past project',
+      src: '/images/hero/cards/medspa-landing.webp',
+      width: 960,
+      height: 1946
     }
   ];
 
@@ -129,7 +121,7 @@
         src={item.src}
         width={item.width}
         height={item.height}
-        alt={duplicate ? '' : item.alt}
+        alt=""
         loading={!duplicate && index < EAGER_PER_COLUMN ? 'eager' : 'lazy'}
         decoding="async"
       />
