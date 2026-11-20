@@ -476,14 +476,28 @@ function handleStudioKeydown(event) {
     }
   ];
 
-  const skills = [
-    'WordPress',
-    'SvelteKit',
-    'SEO',
-    'HubSpot',
-    'Core Web Vitals',
-    'Elementor',
-    'English and Spanish'
+  const skillGroups = [
+    { id: 'design', label: 'Design', items: ['Website design', 'UI and UX'] },
+    {
+      id: 'build',
+      label: 'Build',
+      items: [
+        'WordPress',
+        'Elementor',
+        'WooCommerce',
+        'SvelteKit',
+        'Tailwind CSS',
+        'Webflow',
+        'Shopify',
+        'Squarespace'
+      ]
+    },
+    {
+      id: 'growth',
+      label: 'Growth',
+      items: ['On-page SEO', 'Core Web Vitals', 'HubSpot automations', 'AI-assisted content']
+    },
+    { id: 'languages', label: 'Languages', items: ['English', 'Spanish'] }
   ];
 
   let workRail;
@@ -1739,12 +1753,23 @@ manifestoObserver.observe(
 
   <section id="skills" class="home-skills" aria-labelledby="skills-title">
     <div class="wide-container home-skills__inner">
-      <h2 id="skills-title" class="home-kicker">Skills</h2>
-      <ul class="home-skills__list">
-        {#each skills as skill (skill)}
-          <li>{skill}</li>
+      <header class="home-skills__heading">
+        <p class="home-kicker">Skills</p>
+        <h2 id="skills-title">What I work with.</h2>
+      </header>
+
+      <div class="home-skills__groups">
+        {#each skillGroups as group (group.id)}
+          <div class="home-skills__group">
+            <h3 id="skills-{group.id}" class="home-skills__label">{group.label}</h3>
+            <ul class="home-skills__cells" aria-labelledby="skills-{group.id}">
+              {#each group.items as item (item)}
+                <li class="home-skills__cell">{item}</li>
+              {/each}
+            </ul>
+          </div>
         {/each}
-      </ul>
+      </div>
     </div>
   </section>
 
