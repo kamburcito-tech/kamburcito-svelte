@@ -6,8 +6,8 @@ export const contactEmailHref = `mailto:${contactEmail}`;
 const whatsappLink = (message) =>
   'https://wa.me/5491138012415?text=' + encodeURIComponent(message);
 
-export const whatsappHref = whatsappLink("Hi! I'd like to ask about a website.");
-export const whatsappHrefEs = whatsappLink('¡Hola! Vi tu portfolio y me gustaría hablar.');
+export const whatsappHref = whatsappLink("Hi Patricia! I'd like to ask about a website.");
+export const whatsappHrefEs = whatsappLink('¡Hola Patricia! Me gustaría consultarte por un sitio web.');
 
 export const linkedinHref = 'https://www.linkedin.com/in/patricia-d-ab25a61a6/';
 

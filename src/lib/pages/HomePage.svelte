@@ -17,8 +17,7 @@
     contactEmail,
     contactEmailHref,
     linkedinHref,
-    upworkHref,
-    whatsappHref
+    upworkHref
   } from '$lib/contact.js';
 
   /** Page copy for one language (src/lib/i18n). */
@@ -1926,7 +1925,7 @@ manifestoObserver.observe(
       <div class="cta-actions">
         <a href="/get-started/" class="btn btn-primary">Get a free website review</a>
         <a
-          href={whatsappHref}
+          href={t.whatsappHref}
           class="btn btn-secondary"
           target="_blank"
           rel="noopener noreferrer"
