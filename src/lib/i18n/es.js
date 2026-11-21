@@ -23,22 +23,22 @@ export default {
     work: 'Trabajos',
     about: 'Sobre mí',
     contact: 'Contacto',
-    emailAria: 'Escribime un email',
-    whatsappAria: 'Escribime por WhatsApp',
     themeAria: 'Cambiar entre modo claro y oscuro',
     cta: 'Contacto',
     openMenu: 'Abrir menú',
     closeMenu: 'Cerrar menú',
     mobileNavAria: 'Navegación móvil',
-    mobileHome: 'Inicio',
-    mobileEmail: 'Email',
-    mobileWhatsapp: 'WhatsApp'
+    mobileHome: 'Inicio'
   },
 
   footer: {
     studio: 'Kamburcito Studio',
     tagline: 'Diseño web y experiencias digitales',
-    madeBy: 'Hecho por Patricia · 2026'
+    madeBy: 'Hecho por Patricia · 2026',
+    contactAria: 'Enlaces de contacto',
+    emailAria: 'Escribime un email',
+    whatsappAria: 'Escribime por WhatsApp',
+    linkedin: 'LinkedIn'
   },
 
   carousel: {

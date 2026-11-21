@@ -11,6 +11,7 @@
   import petraValdezImage from '$lib/assets/working_on/petra-valdez-working-on-homepage.webp?enhanced&w=500;360';
   import HeroCardColumns from '$lib/components/HeroCardColumns.svelte';
   import CellsBackground from '$lib/components/CellsBackground.svelte';
+  import SiteFooter from '$lib/components/SiteFooter.svelte';
   import { dictionaries } from '$lib/i18n';
   import {
     contactEmail,
@@ -1995,11 +1996,5 @@ manifestoObserver.observe(
 {/if}
 </main>
 
-<footer class="footer">
-  <div class="wide-container footer-inner">
-    <p>{t.footer.studio}</p>
-    <p>{t.footer.tagline}</p>
-    <p>{t.footer.madeBy}</p>
-  </div>
-</footer>
+<SiteFooter {t} />
 

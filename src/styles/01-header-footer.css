@@ -44,7 +44,8 @@
   margin: 0 auto;
 
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  /* Equal side columns keep the nav links centred on the page. */
+  grid-template-columns: minmax(max-content, 1fr) auto minmax(max-content, 1fr);
   align-items: center;
 
   gap: clamp(30px, 4vw, 70px);
@@ -157,82 +158,6 @@
 
   gap: 10px;
 }
-
-/* =====================================================
-   CONTACT BUTTONS (email / WhatsApp)
-===================================================== */
-
-.nav-contact-group {
-  display: flex;
-  align-items: center;
-
-  gap: 12px;
-}
-
-.nav-contact {
-  --contact-color: var(--text);
-  --contact-border: color-mix(in srgb, var(--text) 18%, transparent);
-  --contact-bg: transparent;
-  --contact-bg-hover: color-mix(in srgb, var(--text) 8%, transparent);
-
-  width: 44px;
-  height: 44px;
-  flex: 0 0 44px;
-
-  display: grid;
-  place-items: center;
-
-  color: var(--contact-color);
-  background: var(--contact-bg);
-
-  border: 1px solid var(--contact-border);
-  border-radius: 50%;
-
-  transition:
-    background-color 180ms ease,
-    border-color 180ms ease,
-    transform 180ms ease;
-}
-
-.nav-contact--whatsapp {
-  --contact-color: #25d366;
-  --contact-border: rgba(37, 211, 102, 0.3);
-  --contact-bg: rgba(37, 211, 102, 0.07);
-  --contact-bg-hover: rgba(37, 211, 102, 0.16);
-}
-
-.nav-contact svg {
-  width: 24px;
-  height: 24px;
-
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.7;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-.nav-contact:hover {
-  background: var(--contact-bg-hover);
-  transform: translateY(-1px);
-}
-
-.nav-contact:focus-visible {
-  outline: 2px solid #60a5fa;
-  outline-offset: 3px;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .nav-contact:hover {
-    transform: none;
-  }
-}
-
-/* Contact entries in the mobile menu exist only for phones */
-.mobile-menu-contact {
-  display: none;
-}
-
 
 /* =====================================================
    THEME TOGGLE
@@ -549,10 +474,6 @@
     display: block;
   }
 
-  .nav-contact-group {
-    display: none;
-  }
-
   .theme-toggle {
     width: 40px;
     height: 40px;
@@ -621,18 +542,6 @@
   .mobile-menu a:active {
     color: #ffffff;
     background: rgba(59, 130, 246, 0.16);
-  }
-
-  .mobile-menu .mobile-menu-contact {
-    display: flex;
-    color: rgba(255, 255, 255, 0.6);
-  }
-
-  .mobile-menu a:not(.mobile-menu-contact) + .mobile-menu-contact {
-    margin-top: 6px;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
   }
 
   @keyframes mobile-menu-enter {

@@ -22,22 +22,22 @@ export default {
     work: 'Work',
     about: 'About',
     contact: 'Contact',
-    emailAria: 'Email me',
-    whatsappAria: 'Chat on WhatsApp',
     themeAria: 'Toggle light and dark mode',
     cta: 'Contact',
     openMenu: 'Open menu',
     closeMenu: 'Close menu',
     mobileNavAria: 'Mobile navigation',
-    mobileHome: 'Home',
-    mobileEmail: 'Email',
-    mobileWhatsapp: 'WhatsApp'
+    mobileHome: 'Home'
   },
 
   footer: {
     studio: 'Kamburcito Studio',
     tagline: 'Web Design & Digital Experiences',
-    madeBy: 'Made by Patricia · 2026'
+    madeBy: 'Made by Patricia · 2026',
+    contactAria: 'Contact links',
+    emailAria: 'Email me',
+    whatsappAria: 'Chat on WhatsApp',
+    linkedin: 'LinkedIn'
   },
 
   carousel: {

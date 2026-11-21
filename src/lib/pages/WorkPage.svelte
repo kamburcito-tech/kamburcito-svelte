@@ -1,6 +1,7 @@
 <script>
   import '../../styles/20-work.css';
   import CellsBackground from '$lib/components/CellsBackground.svelte';
+  import SiteFooter from '$lib/components/SiteFooter.svelte';
   import { dictionaries } from '$lib/i18n';
 
   /** Page copy for one language (src/lib/i18n). */
@@ -232,10 +233,4 @@
   </div>
 </section>
 
-<footer class="footer">
-  <div class="wide-container footer-inner">
-    <p>{t.footer.studio}</p>
-    <p>{t.footer.tagline}</p>
-    <p>{t.footer.madeBy}</p>
-  </div>
-</footer>
+<SiteFooter {t} />

@@ -2,7 +2,6 @@
   import { afterNavigate } from '$app/navigation';
   import { resolve } from '$app/paths';
   import { page } from '$app/state';
-  import { contactEmailHref } from '$lib/contact.js';
   import { dictionaries, langFromPath } from '$lib/i18n';
   import LanguageSwitch from '$lib/components/LanguageSwitch.svelte';
 
@@ -101,28 +100,6 @@
       </nav>
 
       <div class="nav-actions">
-        <div class="nav-contact-group">
-          <a class="nav-contact" href={contactEmailHref} aria-label={t.header.emailAria} title={t.header.emailAria}>
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <rect x="3" y="5" width="18" height="14" rx="2"></rect>
-              <path d="m3.5 6.5 8.5 6.5 8.5-6.5"></path>
-            </svg>
-          </a>
-          <a
-            class="nav-contact nav-contact--whatsapp"
-            href={t.whatsappHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={t.header.whatsappAria}
-            title={t.header.whatsappAria}
-          >
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M3.5 20.5 5 16.2A8.5 8.5 0 1 1 8 19.1Z"></path>
-              <path d="M9.2 8.6c.2-.5.5-.6.8-.6h.5l.9 2-.6.8a5.6 5.6 0 0 0 2.5 2.5l.8-.6 2 .9v.5c0 .3-.1.6-.6.8-.8.4-2 .3-3.6-.7a8.4 8.4 0 0 1-2.4-2.4c-1-1.6-1.1-2.8-.7-3.6Z"></path>
-            </svg>
-          </a>
-        </div>
-
         <LanguageSwitch />
 
         <button
@@ -169,22 +146,6 @@
     <a href={resolve(t.routes.work)} onclick={closeMobileMenu}>{t.header.work}</a>
     <a href="{resolve(t.routes.home)}#about" onclick={closeMobileMenu}>{t.header.about}</a>
     <a href="{resolve(t.routes.home)}#contact" onclick={closeMobileMenu}>{t.header.contact}</a>
-    <a
-      class="mobile-menu-contact"
-      href={contactEmailHref}
-      aria-label={t.header.emailAria}
-      title={t.header.emailAria}
-      onclick={closeMobileMenu}
-    >{t.header.mobileEmail}</a>
-    <a
-      class="mobile-menu-contact"
-      href={t.whatsappHref}
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label={t.header.whatsappAria}
-      title={t.header.whatsappAria}
-      onclick={closeMobileMenu}
-    >{t.header.mobileWhatsapp}</a>
     <LanguageSwitch variant="menu" onnavigate={closeMobileMenu} />
   </nav>
 </header>
