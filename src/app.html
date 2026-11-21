@@ -9,9 +9,7 @@
 
     <script>
       (() => {
-        const preferredTheme = window.matchMedia('(prefers-color-scheme: light)').matches
-          ? 'light'
-          : 'dark';
+        const preferredTheme = 'light';
         let savedTheme;
         try {
           savedTheme = localStorage.getItem('kamburcito-theme');
@@ -59,7 +57,7 @@
 
     <meta
       name="theme-color"
-      content="#030407"
+      content="#faf8f4"
     />
 
     <!-- Google Analytics -->

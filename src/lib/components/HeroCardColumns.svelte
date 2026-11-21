@@ -176,22 +176,13 @@
     --hc-gap: 24px;
     /* Minimum side space. */
     --hc-pad-x: 12px;
-
-    --hc-teal: #0e7c86;
-    --hc-navy: #0b2540;
-    --hc-border: #d9e4ec;
-
     /* Size containment: the tall tracks never inflate the parent's height. */
     container-type: size;
     width: 100%;
     height: 100%;
     min-width: 0;
     overflow: hidden;
-    background: #e6f4f5;
-  }
-
-  :global(:root[data-theme='dark']) .hc {
-    background: #0b3a40;
+    background: var(--tint);
   }
 
   /* Both columns centered; cards are cut cleanly at the top and bottom edges. */
@@ -264,10 +255,10 @@
     width: var(--hc-card-w);
     height: var(--hc-card-h);
     overflow: hidden;
-    border: 1px solid var(--hc-border);
+    border: 1px solid var(--brand-border);
     border-radius: 6px;
-    background: #fff;
-    box-shadow: 0 12px 32px rgba(11, 37, 64, 0.1);
+    background: var(--paper);
+    box-shadow: 0 12px 32px rgb(var(--shadow-color) / 0.1);
     color: inherit;
     cursor: default;
   }
@@ -289,23 +280,23 @@
     gap: 2px;
     max-width: calc(100% - 24px);
     padding: 8px 12px;
-    border: 1px solid var(--hc-border);
+    border: 1px solid var(--brand-border);
     border-radius: 4px;
-    background: rgba(255, 255, 255, 0.94);
-    box-shadow: 0 4px 12px rgba(11, 37, 64, 0.08);
+    background: color-mix(in srgb, var(--paper) 94%, transparent);
+    box-shadow: 0 4px 12px rgb(var(--shadow-color) / 0.08);
     font-family: 'Manrope Variable', Arial, sans-serif;
     line-height: 1.25;
   }
 
   .hc__chip-title {
-    color: var(--hc-navy);
+    color: var(--brand-navy);
     font-size: 0.78rem;
     font-weight: 700;
     letter-spacing: -0.01em;
   }
 
   .hc__chip-label {
-    color: var(--hc-teal);
+    color: var(--brand-teal);
     font-size: 0.62rem;
     font-weight: 700;
     letter-spacing: 0.12em;
@@ -318,8 +309,8 @@
     justify-content: flex-end;
     padding: 28px 26px;
     border-color: transparent;
-    background: linear-gradient(155deg, #0b3a40 0%, #0e7c86 100%);
-    color: #fff;
+    background: linear-gradient(155deg, var(--brand-teal-dark) 0%, var(--brand-teal) 100%);
+    color: var(--paper);
   }
 
   .hc__stat-value {
@@ -335,7 +326,7 @@
     width: 40px;
     height: 1px;
     margin: 18px 0 14px;
-    background: #c9a96e;
+    background: var(--brand-champagne);
   }
 
   .hc__stat-label {
@@ -344,7 +335,7 @@
     font-weight: 700;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.86);
+    color: color-mix(in srgb, var(--paper) 86%, transparent);
   }
 
   @container (max-width: 420px) {

@@ -92,44 +92,44 @@
     isolation: isolate;
     overflow: hidden;
     padding: clamp(64px, 7vw, 96px) 0;
-    color: #f7f9ff;
+    color: var(--paper);
     background:
-      radial-gradient(ellipse 58% 72% at 76% 48%, rgba(36, 87, 162, 0.42), rgba(22, 61, 122, 0.2) 48%, transparent 82%),
-      linear-gradient(180deg, #09152c 0%, #102a59 48%, #09172f 100%);
+      radial-gradient(ellipse 58% 72% at 76% 48%, color-mix(in srgb, var(--accent) 42%, transparent), color-mix(in srgb, var(--accent) 20%, transparent) 48%, transparent 82%),
+      linear-gradient(180deg, var(--surface) 0%, var(--surface) 48%, var(--surface) 100%);
   }
 
   :global(:root[data-theme='light']) .launch-offer {
     background:
-      radial-gradient(ellipse 58% 72% at 76% 48%, rgba(54, 117, 208, 0.2), transparent 82%),
-      linear-gradient(180deg, #eef3fb 0%, #d4e4fc 50%, #d5e2f5 100%);
+      radial-gradient(ellipse 58% 72% at 76% 48%, color-mix(in srgb, var(--accent) 20%, transparent), transparent 82%),
+      linear-gradient(180deg, var(--bg-soft) 0%, var(--bg-soft) 50%, var(--bg-soft) 100%);
   }
 
   :global(:root[data-theme='light']) .launch-offer h2,
   :global(:root[data-theme='light']) .launch-offer__price,
   :global(:root[data-theme='light']) .launch-offer__terms strong {
-    color: #122c60;
+    color: var(--text);
   }
 
   :global(:root[data-theme='light']) .launch-offer__name {
-    color: #2452a4;
+    color: var(--text);
   }
 
   :global(:root[data-theme='light']) .launch-offer__description {
-    color: #233d71;
+    color: var(--text);
   }
 
   :global(:root[data-theme='light']) .launch-offer__terms,
   :global(:root[data-theme='light']) .launch-offer__scope,
   :global(:root[data-theme='light']) .launch-offer__visual figcaption {
-    color: #294775;
+    color: var(--text);
   }
 
   :global(:root[data-theme='light']) .launch-offer__details {
-    border-top-color: rgba(35, 82, 164, 0.23);
+    border-top-color: color-mix(in srgb, var(--accent) 23%, transparent);
   }
 
   :global(:root[data-theme='light']) .launch-offer__cta:focus-visible {
-    outline-color: #122c60;
+    outline-color: var(--text);
   }
 
 
@@ -156,7 +156,7 @@
   .launch-offer h2 {
     max-width: none;
     margin: 0;
-    color: #f7f9ff;
+    color: var(--text);
     font-family: 'Cormorant Garamond Variable', Georgia, serif;
     font-size: clamp(3rem, 4vw, 4.2rem);
     font-weight: 600;
@@ -172,12 +172,12 @@
   .launch-offer__details {
     margin-top: clamp(16px, 2vw, 26px);
     padding-top: 20px;
-    border-top: 1px solid rgba(157, 196, 255, 0.3);
+    border-top: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
   }
 
   .launch-offer__name {
     margin: 0;
-    color: #b6d0fb;
+    color: var(--muted);
     font-size: 0.78rem;
     font-weight: 800;
     letter-spacing: 0.16em;
@@ -188,7 +188,7 @@
     align-items: baseline;
     gap: 14px;
     margin: 10px 0 0;
-    color: #fff;
+    color: var(--text);
     font-family: 'Cormorant Garamond Variable', Georgia, serif;
     font-variant-numeric: lining-nums tabular-nums;
   }
@@ -210,7 +210,7 @@
   .launch-offer__description {
     max-width: 56ch;
     margin: 16px 0 0;
-    color: #d8e5fa;
+    color: var(--text);
     font-family: 'Manrope Variable', Arial, sans-serif;
     font-size: 1.04rem;
     line-height: 1.65;
@@ -225,11 +225,11 @@
     min-height: 60px;
     margin-top: 24px;
     padding: 0 30px;
-    border: 1px solid rgba(191, 215, 255, 0.48);
+    border: 1px solid color-mix(in srgb, var(--paper) 48%, transparent);
     border-radius: 999px;
-    color: #fff;
-    background: #2254ba;
-    box-shadow: 0 14px 34px rgba(3, 13, 39, 0.25);
+    color: var(--paper);
+    background: var(--accent);
+    box-shadow: 0 14px 34px rgb(var(--shadow-color) / 0.25);
     font-family: 'Manrope Variable', Arial, sans-serif;
     font-size: 0.79rem;
     font-weight: 800;
@@ -240,13 +240,13 @@
 
 
   .launch-offer__cta:hover {
-    background: #316bda;
+    background: var(--accent);
     transform: translateY(-2px);
-    box-shadow: 0 18px 38px rgba(3, 13, 39, 0.32);
+    box-shadow: 0 18px 38px rgb(var(--shadow-color) / 0.32);
   }
 
   .launch-offer__cta:focus-visible {
-    outline: 2px solid #fff;
+    outline: 2px solid var(--text);
     outline-offset: 5px;
   }
 
@@ -255,7 +255,7 @@
     flex-wrap: wrap;
     gap: 8px 28px;
     margin-top: 18px;
-    color: #c6d9f7;
+    color: var(--text);
     font-size: 0.86rem;
     line-height: 1.5;
   }
@@ -269,7 +269,7 @@
   }
 
   .launch-offer__terms strong {
-    color: #fff;
+    color: var(--text);
     font-weight: 800;
     letter-spacing: 0.05em;
     user-select: all;
@@ -278,7 +278,7 @@
   .launch-offer__scope {
     max-width: 55ch;
     margin: 10px 0 0;
-    color: #afc4e4;
+    color: var(--accent);
     font-size: 0.84rem;
     line-height: 1.6;
   }
@@ -293,13 +293,13 @@
     position: absolute;
     z-index: -1;
     inset: -12%;
-    background: radial-gradient(ellipse at center, rgba(45, 111, 203, 0.3), rgba(28, 80, 155, 0.12) 48%, transparent 76%);
+    background: radial-gradient(ellipse at center, color-mix(in srgb, var(--accent) 30%, transparent), color-mix(in srgb, var(--accent) 12%, transparent) 48%, transparent 76%);
     content: '';
     pointer-events: none;
   }
 
   :global(:root[data-theme='light']) .launch-offer__visual::before {
-    background: radial-gradient(ellipse at center, rgba(36, 97, 185, 0.2), transparent 76%);
+    background: radial-gradient(ellipse at center, color-mix(in srgb, var(--accent) 20%, transparent), transparent 76%);
   }
 
   .launch-offer__visual img {
@@ -312,7 +312,7 @@
   .launch-offer__visual figcaption {
     max-width: 44ch;
     margin: 14px auto 0;
-    color: #b9cdee;
+    color: var(--muted);
     font-size: 0.82rem;
     line-height: 1.55;
     text-align: center;

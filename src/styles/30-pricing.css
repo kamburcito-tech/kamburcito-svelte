@@ -7,8 +7,8 @@
   min-height: clamp(520px, 62svh, 580px);
   padding: 112px 0 64px;
   overflow: hidden;
-  color: #f7f9ff;
-  background: linear-gradient(180deg, #040814 0%, #0c1429 58%, #040a18 100%);
+  color: var(--paper);
+  background: linear-gradient(180deg, var(--ink) 0%, var(--ink) 58%, var(--ink) 100%);
   text-align: center;
 }
 
@@ -17,8 +17,8 @@
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse 58% 78% at 50% 46%, rgba(34, 49, 91, 0.52), rgba(22, 39, 78, 0.2) 48%, transparent 82%),
-    radial-gradient(ellipse 48% 70% at 70% 40%, rgba(58, 43, 101, 0.14), transparent 78%);
+    radial-gradient(ellipse 58% 78% at 50% 46%, color-mix(in srgb, var(--ink) 52%, transparent), color-mix(in srgb, var(--ink) 20%, transparent) 48%, transparent 82%),
+    radial-gradient(ellipse 48% 70% at 70% 40%, color-mix(in srgb, var(--surface-sunken) 14%, transparent), transparent 78%);
   pointer-events: none;
 }
 
@@ -35,7 +35,7 @@
 .pricing-hero h1 {
   max-width: 960px;
   margin: 0;
-  color: #f7f9ff;
+  color: var(--paper);
   font-family: 'Cormorant Garamond Variable', Georgia, serif;
   font-size: clamp(3.5rem, 5vw, 5.75rem);
   font-weight: 700;
@@ -47,7 +47,7 @@
 .pricing-hero-inner > p {
   max-width: 65ch;
   margin: 24px auto 0;
-  color: #d4dfef;
+  color: var(--paper);
   font-family: 'Manrope Variable', Arial, sans-serif;
   font-size: clamp(1rem, 1.18vw, 1.13rem);
   line-height: 1.65;
@@ -61,10 +61,10 @@
   min-height: 58px;
   margin-top: 28px;
   padding: 0 32px;
-  border: 1px solid rgba(150, 187, 255, 0.62);
+  border: 1px solid color-mix(in srgb, var(--accent) 62%, transparent);
   border-radius: 999px;
-  color: #fff;
-  background: #2353b9;
+  color: var(--text);
+  background: var(--accent);
   font-family: 'Manrope Variable', Arial, sans-serif;
   font-size: 0.82rem;
   font-weight: 900;
@@ -80,16 +80,16 @@
 }
 
 .pricing-button:focus-visible {
-  outline: 2px solid #fff;
+  outline: 2px solid var(--paper);
   outline-offset: 5px;
 }
 
 .pricing-philosophy {
   padding: clamp(64px, 7vw, 96px) 0;
-  color: #f7f9ff;
+  color: var(--text);
   background:
-    radial-gradient(ellipse 70% 72% at 51% 57%, rgba(18, 39, 80, 0.18), transparent 78%),
-    linear-gradient(180deg, #040a18 0%, #030712 38%, #09152c 100%);
+    radial-gradient(ellipse 70% 72% at 51% 57%, color-mix(in srgb, var(--bg) 18%, transparent), transparent 78%),
+    linear-gradient(180deg, var(--surface) 0%, var(--surface) 38%, var(--surface) 100%);
 }
 
 .pricing-philosophy-heading {
@@ -99,7 +99,7 @@
 .pricing-philosophy-heading h2 {
   max-width: 930px;
   margin: 0;
-  color: #f7f9ff;
+  color: var(--paper);
   font-family: 'Cormorant Garamond Variable', Georgia, serif;
   font-size: clamp(3.2rem, 4.5vw, 5rem);
   font-weight: 600;
@@ -111,7 +111,7 @@
 .pricing-philosophy-heading > p {
   max-width: 64ch;
   margin: 20px 0 0;
-  color: #cddbf1;
+  color: var(--paper);
   font-family: 'Manrope Variable', Arial, sans-serif;
   font-size: clamp(1rem, 1.15vw, 1.12rem);
   line-height: 1.65;
@@ -121,7 +121,7 @@
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   margin-top: clamp(40px, 5vw, 64px);
-  border-top: 1px solid rgba(154, 191, 255, 0.25);
+  border-top: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
 }
 
 .pricing-principle {
@@ -134,13 +134,13 @@
 }
 
 .pricing-principle + .pricing-principle {
-  border-left: 1px solid rgba(154, 191, 255, 0.2);
+  border-left: 1px solid color-mix(in srgb, var(--accent) 20%, transparent);
 }
 
 .pricing-principle__number {
   display: block;
   margin-bottom: 24px;
-  color: #80b3ff;
+  color: var(--accent);
   font-family: 'Manrope Variable', Arial, sans-serif;
   font-size: 0.81rem;
   font-weight: 800;
@@ -149,7 +149,7 @@
 
 .pricing-principle h3 {
   margin: 0;
-  color: #f7f9ff;
+  color: var(--paper);
   font-family: 'Cormorant Garamond Variable', Georgia, serif;
   font-size: clamp(2.05rem, 2.4vw, 2.7rem);
   font-weight: 600;
@@ -160,7 +160,7 @@
 .pricing-principle p {
   max-width: 32ch;
   margin: 14px 0 0;
-  color: #cddbf1;
+  color: var(--paper);
   font-family: 'Manrope Variable', Arial, sans-serif;
   font-size: 0.98rem;
   line-height: 1.65;
@@ -182,12 +182,12 @@
 
 .pricing-final {
   padding: clamp(52px, 5.7vw, 72px) 0;
-  color: #f7f9ff;
+  color: var(--paper);
   text-align: center;
   background:
-    radial-gradient(ellipse 56% 88% at 50% 45%, rgba(37, 34, 83, 0.34), transparent 78%),
-    radial-gradient(ellipse 60% 86% at 50% 35%, rgba(30, 55, 112, 0.15), transparent 80%),
-    linear-gradient(180deg, #09172f 0%, #0d1630 45%, #040711 100%);
+    radial-gradient(ellipse 56% 88% at 50% 45%, color-mix(in srgb, var(--ink) 34%, transparent), transparent 78%),
+    radial-gradient(ellipse 60% 86% at 50% 35%, color-mix(in srgb, var(--accent) 15%, transparent), transparent 80%),
+    linear-gradient(180deg, var(--ink) 0%, var(--ink) 45%, var(--ink) 100%);
 }
 
 .pricing-final-inner {
@@ -196,7 +196,7 @@
 
 .pricing-final h2 {
   margin: 0 auto;
-  color: #f7f9ff;
+  color: var(--paper);
   font-family: 'Cormorant Garamond Variable', Georgia, serif;
   font-size: clamp(3.25rem, 5vw, 5rem);
   font-weight: 600;
@@ -208,7 +208,7 @@
 .pricing-final-description {
   max-width: 65ch;
   margin: 20px auto 0;
-  color: #d4e1f7;
+  color: var(--paper);
   font-family: 'Manrope Variable', Arial, sans-serif;
   font-size: clamp(1rem, 1.2vw, 1.12rem);
   line-height: 1.65;
@@ -244,7 +244,7 @@
 
   .pricing-principle + .pricing-principle {
     border-left: 0;
-    border-top: 1px solid rgba(154, 191, 255, 0.2);
+    border-top: 1px solid color-mix(in srgb, var(--accent) 20%, transparent);
   }
 
   .pricing-principle__number {
@@ -279,39 +279,39 @@
 }
 
 :root[data-theme='light'] .pricing-philosophy {
-  color: #1e3a8a;
+  color: var(--text);
   background:
-    radial-gradient(circle at 42% 20%, rgba(68, 120, 211, 0.12) 0%, transparent 50%),
-    linear-gradient(180deg, #fbfcff 0%, #eef3fb 100%);
+    radial-gradient(circle at 42% 20%, color-mix(in srgb, var(--accent) 12%, transparent) 0%, transparent 50%),
+    linear-gradient(180deg, var(--surface) 0%, var(--bg-soft) 100%);
 }
 
 :root[data-theme='light'] .pricing-philosophy h2,
 :root[data-theme='light'] .pricing-philosophy h3,
 :root[data-theme='light'] .pricing-philosophy p {
-  color: #1e3a8a;
+  color: var(--text);
 }
 
 :root[data-theme='light'] .pricing-principle__number {
-  color: #3156a3;
+  color: var(--accent);
 }
 
 :root[data-theme='light'] .pricing-principles {
-  border-top-color: rgba(30, 58, 138, 0.22);
+  border-top-color: color-mix(in srgb, var(--accent) 22%, transparent);
 }
 
 :root[data-theme='light'] .pricing-principle + .pricing-principle {
-  border-color: rgba(30, 58, 138, 0.18);
+  border-color: color-mix(in srgb, var(--accent) 18%, transparent);
 }
 
 :root[data-theme='light'] .pricing-button {
-  color: #fff;
-  background: #1e3a8a;
-  border-color: #1e3a8a;
-  box-shadow: 0 12px 30px rgba(30, 58, 138, 0.2);
+  color: var(--bg);
+  background: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 12px 30px color-mix(in srgb, var(--accent) 20%, transparent);
 }
 
 :root[data-theme='light'] .pricing-button:hover {
-  background: #172554;
-  border-color: #172554;
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
   filter: none;
 }

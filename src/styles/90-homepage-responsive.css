@@ -105,7 +105,6 @@
     height: min(80vh, 720px);
   }
 
-
   .hero-cinematic__scroll {
     display: none;
   }
@@ -153,6 +152,7 @@
   .hero-cinematic__visual {
     height: 420px;
   }
+
 
   /* Hero */
 
@@ -376,6 +376,7 @@
   }
 
 
+
   .hero-actions {
   gap: 10px;
 }
@@ -486,13 +487,13 @@
     bottom: 146px;
     left: 22px;
     width: 1.5px;
-    background: rgba(148, 174, 212, 0.35);
+    background: color-mix(in srgb, var(--surface-sunken) 35%, transparent);
     pointer-events: none;
   }
 
   .process-list::after {
     width: 2.5px;
-    background: #4c8cff;
+    background: var(--accent);
     transform: scaleY(var(--process-progress));
     transform-origin: top;
   }

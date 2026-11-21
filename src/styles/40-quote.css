@@ -1,55 +1,55 @@
 /* Get Started inquiry — page-local surfaces follow the global data-theme. */
 .quote-page {
   --header-height: 90px;
-  --quote-heading: #fff;
-  --quote-body: #c2cee3;
-  --quote-label: #f5f7fc;
-  --quote-panel: #0b1428;
-  --quote-border: #263754;
-  --quote-input: #1a263c;
-  --quote-input-border: #41516d;
-  --quote-input-text: #f5f7fc;
-  --quote-placeholder: #aab9d1;
-  --quote-separator: #263754;
-  --quote-promo: #142b50;
-  --quote-promo-text: #dbeaff;
-  --quote-selected: #193b76;
-  --quote-focus: #93baff;
-  --quote-error: #ff9aae;
-  --quote-back-hover: #24354f;
-  --quote-button: #2563eb;
-  --quote-button-hover: #1d4ed8;
+  --quote-heading: var(--text);
+  --quote-body: var(--muted);
+  --quote-label: var(--text);
+  --quote-panel: var(--surface);
+  --quote-border: var(--surface);
+  --quote-input: var(--surface);
+  --quote-input-border: var(--line-strong);
+  --quote-input-text: var(--text);
+  --quote-placeholder: var(--muted);
+  --quote-separator: var(--surface);
+  --quote-promo: var(--surface);
+  --quote-promo-text: var(--text);
+  --quote-selected: var(--accent);
+  --quote-focus: var(--accent);
+  --quote-error: var(--danger);
+  --quote-back-hover: var(--surface);
+  --quote-button: var(--accent-hover);
+  --quote-button-hover: var(--accent-hover);
   display: flex;
   align-items: center;
   min-height: calc(100svh - var(--header-height));
   margin-top: var(--header-height);
   padding: 48px 24px;
   color: var(--quote-body);
-  background: radial-gradient(ellipse 75% 65% at -12% 100%, #173a85 0%, transparent 75%),
-    radial-gradient(ellipse 62% 65% at 108% -15%, #30245c 0%, transparent 77%),
-    linear-gradient(145deg, #050a16 28%, #0b1730 100%);
+  background: radial-gradient(ellipse 75% 65% at -12% 100%, var(--accent) 0%, transparent 75%),
+    radial-gradient(ellipse 62% 65% at 108% -15%, var(--surface-sunken) 0%, transparent 77%),
+    linear-gradient(145deg, var(--surface) 28%, var(--surface) 100%);
 }
 
 :root[data-theme='light'] .quote-page {
-  --quote-heading: #080e20;
-  --quote-body: #475569;
-  --quote-label: #101828;
-  --quote-panel: #fff;
-  --quote-border: #dfe5ef;
-  --quote-input: #fff;
-  --quote-input-border: #d6deea;
-  --quote-input-text: #101828;
-  --quote-placeholder: #64748b;
-  --quote-separator: #dfe5ef;
-  --quote-promo: #eaf1fc;
-  --quote-promo-text: #173d85;
-  --quote-selected: #eaf1fc;
-  --quote-focus: #1e3a8a;
-  --quote-error: #a51d39;
-  --quote-back-hover: #eaf1fc;
-  background: radial-gradient(ellipse 65% 75% at -10% 95%, #e6edf9 0%, transparent 75%),
-    radial-gradient(ellipse 58% 75% at 105% 0%, #f3f6fb 0%, transparent 76%),
-    linear-gradient(145deg, #fafaf8 35%, #fff 100%);
+  --quote-heading: var(--text);
+  --quote-body: var(--muted);
+  --quote-label: var(--text);
+  --quote-panel: var(--surface);
+  --quote-border: var(--bg-soft);
+  --quote-input: var(--surface);
+  --quote-input-border: var(--bg-soft);
+  --quote-input-text: var(--text);
+  --quote-placeholder: var(--muted);
+  --quote-separator: var(--bg-soft);
+  --quote-promo: var(--bg-soft);
+  --quote-promo-text: var(--accent);
+  --quote-selected: var(--bg-soft);
+  --quote-focus: var(--accent);
+  --quote-error: var(--danger);
+  --quote-back-hover: var(--bg-soft);
+  background: radial-gradient(ellipse 65% 75% at -10% 95%, var(--bg-soft) 0%, transparent 75%),
+    radial-gradient(ellipse 58% 75% at 105% 0%, var(--bg-soft) 0%, transparent 76%),
+    linear-gradient(145deg, var(--bg-soft) 35%, var(--surface) 100%);
 }
 
 .quote-shell,
@@ -211,7 +211,7 @@
 }
 .quote-options button:hover { background: var(--quote-back-hover); }
 .quote-options button.selected { border-color: var(--quote-focus); background: var(--quote-selected); }
-.quote-options button.selected > span { border: 5px solid var(--quote-button); background: #fff; }
+.quote-options button.selected > span { border: 5px solid var(--quote-button); background: var(--paper); }
 .quote-options button:focus-visible,
 .quote-primary-button:focus-visible,
 .quote-secondary-button:focus-visible {
@@ -236,7 +236,7 @@
 }
 .quote-primary-button {
   margin-left: auto;
-  color: #fff;
+  color: var(--paper);
   background: var(--quote-button);
   border-color: var(--quote-button);
 }
