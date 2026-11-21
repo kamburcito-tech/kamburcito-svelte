@@ -10,6 +10,10 @@ export default {
   lang: 'es',
   htmlLang: 'es-AR',
   ogLocale: 'es_AR',
+  share: {
+    image: 'https://kamburcito.com/og/kamburcito-og-es.jpg',
+    imageAlt: 'Patricia Díaz, diseñadora y desarrolladora web. Sitios web para clínicas y estudios jurídicos.'
+  },
   whatsappHref: whatsappHrefEs,
 
   routes: {

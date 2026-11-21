@@ -2,6 +2,7 @@
   import '../../styles/20-work.css';
   import CellsBackground from '$lib/components/CellsBackground.svelte';
   import SiteFooter from '$lib/components/SiteFooter.svelte';
+  import SharePreviewMeta from '$lib/components/SharePreviewMeta.svelte';
   import { dictionaries } from '$lib/i18n';
 
   /** Page copy for one language (src/lib/i18n). */
@@ -131,15 +132,10 @@
     content={t.work.meta.description}
   />
   <meta property="og:url" content={t.work.meta.url} />
-  <meta
-    property="og:image"
-    content="https://kamburcito.com/images/kamburcito-social-preview.webp"
-  />
-
-  <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={t.work.meta.title} />
   <meta name="twitter:description" content={t.work.meta.description} />
 </svelte:head>
+<SharePreviewMeta share={t.share} />
 
 <section class="work-page-hero">
   <CellsBackground />

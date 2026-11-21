@@ -1,6 +1,8 @@
 <script>
   import { onMount } from 'svelte';
   import PricingLaunchOffer from '../../lib/components/PricingLaunchOffer.svelte';
+  import SharePreviewMeta from '$lib/components/SharePreviewMeta.svelte';
+  import { dictionaries } from '$lib/i18n';
   import '../../styles/30-pricing.css';
 
   let philosophySection;
@@ -51,15 +53,6 @@
   />
 
   <meta
-    property="og:image"
-    content="https://kamburcito.com/images/kamburcito-social-preview.webp"
-  />
-
-  <meta
-    name="twitter:card"
-    content="summary_large_image"
-  />
-  <meta
   name="twitter:title"
   content="Custom Website Proposals | Kamburcito Studio"
 />
@@ -68,12 +61,8 @@
   name="twitter:description"
   content="Custom website proposals tailored to your business goals, priorities, and scope."
 />
-
-<meta
-  name="twitter:image"
-  content="https://kamburcito.com/images/kamburcito-social-preview.webp"
-/>
 </svelte:head>
+<SharePreviewMeta share={dictionaries.en.share} />
 
 
 <section class="pricing-hero">

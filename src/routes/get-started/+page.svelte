@@ -3,6 +3,8 @@
   import { resolve } from '$app/paths';
   import { offerExpiresAt, scheduleOfferExpiry } from '$lib/onePageOffer.js';
   import QuoteFormSevenStep from '$lib/components/QuoteFormSevenStep.svelte';
+  import SharePreviewMeta from '$lib/components/SharePreviewMeta.svelte';
+  import { dictionaries } from '$lib/i18n';
   import '../../styles/40-quote.css';
 
   // Set to true to bring back the previous 7-step quote form.
@@ -171,16 +173,6 @@
   />
 
   <meta
-    property="og:image"
-    content="https://kamburcito.com/images/kamburcito-social-preview.webp"
-  />
-
-  <meta
-    name="twitter:card"
-    content="summary_large_image"
-  />
-
-  <meta
     name="twitter:title"
     content="Request a Website Quote | Kamburcito Studio"
   />
@@ -189,12 +181,8 @@
     name="twitter:description"
     content="Share your project details and receive a personalized website proposal."
   />
-
-  <meta
-    name="twitter:image"
-    content="https://kamburcito.com/images/kamburcito-social-preview.webp"
-  />
 </svelte:head>
+<SharePreviewMeta share={dictionaries.en.share} />
 
 {#if USE_SEVEN_STEP_QUOTE_FORM}
   <QuoteFormSevenStep />

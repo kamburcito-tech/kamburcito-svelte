@@ -9,6 +9,10 @@ export default {
   lang: 'en',
   htmlLang: 'en',
   ogLocale: 'en_US',
+  share: {
+    image: 'https://kamburcito.com/og/kamburcito-og-en.jpg',
+    imageAlt: 'Patricia Diaz, web designer and developer. Websites for healthcare and legal practices.'
+  },
   whatsappHref,
 
   routes: {

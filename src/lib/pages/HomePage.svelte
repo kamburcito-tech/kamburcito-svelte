@@ -10,6 +10,7 @@
   import beachBitesImage from '$lib/assets/working_on/beach-bites-club-working-on-homepage.webp?enhanced&w=500;360';
   import petraValdezImage from '$lib/assets/working_on/petra-valdez-working-on-homepage.webp?enhanced&w=500;360';
   import HeroCardColumns from '$lib/components/HeroCardColumns.svelte';
+  import SharePreviewMeta from '$lib/components/SharePreviewMeta.svelte';
   import CellsBackground from '$lib/components/CellsBackground.svelte';
   import SiteFooter from '$lib/components/SiteFooter.svelte';
   import { dictionaries } from '$lib/i18n';
@@ -79,6 +80,7 @@
       '@id': 'https://kamburcito.com/#patricia-diaz',
       name: 'Patricia Diaz',
       url: 'https://kamburcito.com/',
+      image: t.share.image,
       jobTitle: t.home.meta.jobTitle,
       description: t.home.meta.description,
       address: {
@@ -109,6 +111,7 @@
       '@id': 'https://kamburcito.com/#website',
       url: 'https://kamburcito.com/',
       name: 'Kamburcito Studio',
+      image: t.share.image,
       description: t.home.meta.description,
       publisher: {
         '@id': 'https://kamburcito.com/#business'
@@ -120,6 +123,7 @@
       '@id': `${t.home.meta.url}#webpage`,
       url: t.home.meta.url,
       name: t.home.meta.title,
+      image: t.share.image,
       isPartOf: {
         '@id': 'https://kamburcito.com/#website'
       },
@@ -1360,12 +1364,6 @@ manifestoObserver.observe(
   />
   <meta property="og:url" content={t.home.meta.url} />
   <meta
-    property="og:image"
-    content="https://kamburcito.com/images/kamburcito-social-preview.webp"
-  />
-
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta
     name="twitter:title"
     content={t.home.meta.title}
   />
@@ -1373,13 +1371,10 @@ manifestoObserver.observe(
     name="twitter:description"
     content={t.home.meta.description}
   />
-  <meta
-    name="twitter:image"
-    content="https://kamburcito.com/images/kamburcito-social-preview.webp"
-  />
 
   {@html `<script type="application/ld+json">${JSON.stringify(structuredData)}</script>`}
 </svelte:head>
+<SharePreviewMeta share={t.share} />
 <div class="liquid-cursor"></div>
 
 <main>
