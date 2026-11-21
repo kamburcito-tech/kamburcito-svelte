@@ -648,7 +648,7 @@ function handleStudioKeydown(event) {
     {
       step: '01',
       title: 'Discover',
-      text: 'We talk about your business, goals, audience, and ideas.'
+      text: 'I learn about your business, goals, audience, and ideas.'
     },
     {
       step: '02',
@@ -663,7 +663,7 @@ function handleStudioKeydown(event) {
     {
       step: '04',
       title: 'Refine',
-      text: 'We review, test, and polish the details together.'
+      text: 'You and I review, test, and polish the details together.'
     },
     {
       step: '05',
@@ -931,7 +931,6 @@ function handleStudioKeydown(event) {
 
   onMount(() => {
   if (!window.matchMedia(WEBGL_MEDIA_QUERY).matches) return;
-
   if (!canvas || !manifestoSection) return;
 
   let cancelled = false;
@@ -1547,7 +1546,7 @@ manifestoObserver.observe(
         <p class="eyebrow">The way I work</p>
         <h2 id="process-title">From an idea to something real.</h2>
         <p class="process-heading__subtitle">
-          A thoughtful process, from our first conversation to launch day.
+          A thoughtful process, from the first conversation to launch day.
         </p>
       </header>
 

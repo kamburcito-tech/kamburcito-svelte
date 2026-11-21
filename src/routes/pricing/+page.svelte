@@ -109,7 +109,7 @@
       <article class="pricing-principle">
         <span class="pricing-principle__number" aria-hidden="true">02</span>
         <h3>Clear expectations.</h3>
-        <p>Know what's included before we begin.</p>
+        <p>Know what's included before I begin.</p>
       </article>
       <article class="pricing-principle">
         <span class="pricing-principle__number" aria-hidden="true">03</span>
