@@ -14,6 +14,7 @@ export default {
     image: 'https://kamburcito.com/og/kamburcito-og-es.jpg',
     imageAlt: 'Patricia Díaz, diseñadora y desarrolladora web. Sitios web para clínicas y estudios jurídicos.'
   },
+  cvHref: '/Patricia-Diaz-CV-ES.pdf',
   whatsappHref: whatsappHrefEs,
 
   routes: {

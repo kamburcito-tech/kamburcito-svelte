@@ -1396,7 +1396,7 @@ manifestoObserver.observe(
         <div class="hero-actions">
           <a href={t.home.hero.workHref} class="btn btn-primary">{t.home.hero.work}</a>
           <a
-            href="/Patricia-Diaz-CV.pdf"
+            href={t.cvHref}
             class="btn btn-secondary"
             target="_blank"
             rel="noopener noreferrer"
@@ -1965,7 +1965,7 @@ manifestoObserver.observe(
 
         <div class="cta-actions">
           <a
-            href="/Patricia-Diaz-CV.pdf"
+            href={t.cvHref}
             class="btn btn-primary"
             target="_blank"
             rel="noopener noreferrer"

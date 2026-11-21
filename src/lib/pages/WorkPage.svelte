@@ -153,7 +153,7 @@
         {t.work.hero.explore} <span aria-hidden="true">↓</span>
       </a>
       <a
-        href="/Patricia-Diaz-CV.pdf"
+        href={t.cvHref}
         class="work-hero-button work-hero-button--ghost"
         target="_blank"
         rel="noopener"

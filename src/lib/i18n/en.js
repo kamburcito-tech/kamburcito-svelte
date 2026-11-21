@@ -13,6 +13,7 @@ export default {
     image: 'https://kamburcito.com/og/kamburcito-og-en.jpg',
     imageAlt: 'Patricia Diaz, web designer and developer. Websites for healthcare and legal practices.'
   },
+  cvHref: '/Patricia-Diaz-CV.pdf',
   whatsappHref,
 
   routes: {
