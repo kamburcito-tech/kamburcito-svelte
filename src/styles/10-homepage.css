@@ -50,7 +50,8 @@
 }
 
 .hero-cinematic .hero-cinematic__subtitle {
-  max-width: 560px;
+  /* 40rem gives exactly three lines in English and Spanish from 1280px up. */
+  max-width: 40rem;
   margin: 32px 0 0;
   padding: 0;
   color: #c4cedd;
@@ -58,7 +59,7 @@
   font-size: clamp(1rem, 1.15vw, 1.15rem);
   font-weight: 450;
   line-height: 1.6;
-  letter-spacing: -0.015em;
+  letter-spacing: 0.012em;
   text-align: left;
   text-transform: none;
   text-wrap: pretty;
@@ -1971,6 +1972,7 @@
   font-family: 'Manrope Variable', Arial, sans-serif;
   font-size: clamp(1rem, 1.2vw, 1.13rem);
   line-height: 1.65;
+  letter-spacing: 0.012em;
   text-wrap: pretty;
 }
 
