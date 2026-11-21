@@ -50,7 +50,7 @@
         '@type': 'ImageObject',
         url: 'https://kamburcito.com/android-chrome-512x512.png'
       },
-      image: 'https://kamburcito.com/images/kamburcito-social-preview.webp',
+      image: t.share.image,
       description: t.home.meta.description,
       founder: {
         '@id': 'https://kamburcito.com/#patricia-diaz'
